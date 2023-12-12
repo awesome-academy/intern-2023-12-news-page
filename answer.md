@@ -4,7 +4,7 @@ Câu 1: Có bao nhiêu cách để tạo 1 project trong laravel
 - Có các cách sau:
     + Sử dụng Laravel Installer
     + Sử dụng Composer
-    + Sử dụng docker
+    + Sử dụng Docker
     
 Câu 2: Nêu mục đích chính, ngắn gọn của các thư mục trong dự
 - app: Chứa mã nguồn của ứng dụng, bao gồm các controllers, models, và các thành phần logic khác.
@@ -21,12 +21,93 @@ Câu 2: Nêu mục đích chính, ngắn gọn của các thư mục trong dự
 
 Câu 3: Vòng đời của 1 request trong laravel
 - Nhận yêu cầu (Request): Yêu cầu HTTP được gửi từ trình duyệt hoặc ứng dụng khách đến máy chủ web Laravel.
-- Middleware: Yêu cầu đi qua một loạt các middleware được xác định trong tệp app/Http/Kernel.php. Middleware có thể thực hiện các tác vụ như xác thực, kiểm soát quyền truy cập, và thêm thông tin vào yêu cầu.
+- Middleware: Yêu cầu đi qua một loạt các middleware được xác định trong tệp 
+app/Http/Kernel.php. Middleware có thể thực hiện các tác vụ như xác thực, kiểm soát quyền truy cập, và thêm thông tin vào yêu cầu.
 - Định tuyến (Routing): Hệ thống định tuyến xác định xem yêu cầu sẽ được xử lý bởi controller và hành động (action) nào.
 - Controller: Controller xử lý yêu cầu, thường làm nhiệm vụ xử lý logic kinh doanh và tương tác với các model.
 - Model: Nếu có thao tác với cơ sở dữ liệu, controller thường tương tác với các model để thực hiện các truy vấn cơ sở dữ liệu.
-- Middleware (Sau Controller): Sau khi controller hoàn thành xử lý, yêu cầu có thể đi qua một loạt middleware khác, cung cấp cơ hội để thực hiện các tác vụ bổ sung.
-- Phản hồi (Response): Controller trả về một phản hồi (response), có thể là một trang HTML, dữ liệu JSON, hoặc bất kỳ loại phản hồi nào khác.
-- Middleware (Sau Response): Yêu cầu có thể đi qua một số middleware cuối cùng sau khi phản hồi đã được tạo, trước khi được gửi đến trình duyệt hoặc ứng dụng khách.
-- Gửi phản hồi đến trình duyệt (Browser): Phản hồi được gửi từ máy chủ đến trình duyệt hoặc ứng dụng khách, hoàn thành quá trình xử lý yêu cầu.
+- Middleware (Sau Controller): Sau khi controller hoàn thành xử lý, yêu cầu có 
+thể đi qua một loạt middleware khác, cung cấp cơ hội để thực hiện các tác vụ bổ sung.
+- Phản hồi (Response): Controller trả về một phản hồi (response), có thể
+là một trang HTML, dữ liệu JSON, hoặc bất kỳ loại phản hồi nào khác.
+- Middleware (Sau Response): Yêu cầu có thể đi qua một số middleware cuối
+cùng sau khi phản hồi đã được tạo, trước khi được gửi đến trình duyệt hoặc ứng dụng khách.
+- Gửi phản hồi đến trình duyệt (Browser): Phản hồi được gửi từ máy chủ đến trình 
+duyệt hoặc ứng dụng khách, hoàn thành quá trình xử lý yêu cầu.
+```
+
+# Chapter 2:
+```
+Câu 1: Migration là gì?
+- Migration là một công cụ mạnh mẽ giúp quản lý và thực hiện các thay đổi trong cơ
+sở dữ liệu. Mục tiêu chính của migration là duy trì tính nhất quán của cơ sở dữ liệu giữa các phiên bản của ứng dụng.
+
+Câu 2: Hàm up() và down() trong một class migration dùng để làm gì?
+- Phương thức up(): được sử dụng để định nghĩa các thay đổi bạn muốn thực hiện trên cơ sở dữ liệu khi migration được 
+chạy. Thường thì các thay đổi này bao gồm việc tạo mới các bảng, thêm cột, chỉnh sửa cấu trúc, và các hoạt động khác
+liên quan đến cập nhật cơ sở dữ liệu
+
+- Phương thức down(): được sử dụng để định nghĩa các thay đổi cần được áp dụng khi bạn rollback migration. Cụ thể, down()
+thường chứa các lệnh để xóa các thành phần đã được thêm vào trong phương thức up(). Điều này giúp đảm bảo tính nhất quán
+của cơ sở dữ liệu khi bạn quay lại phiên bản trước của ứng dụng.
+
+Câu 3: Nêu các câu lệnh Migration thông dụng mà bạn biết.
+# php artisan make:migration create_nametable_table
+# php artisan migrate 
+# php artisan migrate:rollback
+# php artisan migrate:refresh
+
+Câu 4: Mass assignment là gì?
+- Mass assignment xảy ra khi một lượng lớn dữ liệu được gán đồng thời cho một đối tượng (object) thông qua một phương 
+thức hoặc phép gán. Điều này thường xảy ra khi người dùng gửi dữ liệu đầu vào từ một biểu mẫu web hoặc các yêu cầu HTTP khác.
+
+Câu 5: Cách xử lý Mass assignment trong Laravel.
+- Sử dụng $fillable hoặc $guarded trong model.
+- Sử dụng Accessors và Mutators.
+- Sử dụng Form Requests.
+
+Câu 6: Tại sao Laravel có cả thuộc tính "fillable" và "guarded".
+- "fillable": được sử dụng để liệt kê các trường cho phép mass assignment.
+- "guarded": được sử dụng để liệt kê các trường không được phép mass assignment.
+
+Câu 7: Với các thuộc tính nằm trong blacklist, ta làm như thế nào đểcập nhập trường dữ liệu đó?
+- Sử dụng phương thức "update".
+- Sử dụng phương thức "fill" và "save".
+- Bỏ qua $guarded trong trường hợp cụ thể
+```
+
+# Chapter 3:
+```
+Câu 1: Kể tên các quan hệ của Laravel và phương thức tương ứng.
+- One to One (hasOne - belongsTo)
+- One to Many (hasMany - belongsTo)
+- Many to Many (belongsToMany - belongsToMany)
+- Polymorphic Relations (morphTo - morphMany)
+- Many to Many Polymorphic Relations (morphedByMany - morphedByMany)
+
+Câu 2: Các hàm attach(), detach(), toggle(), sync() dùng để làm gì?
+- Hàm attach() được sử dụng để thêm mối quan hệ mới vào bảng liên kết (pivot table) trong mối quan hệ nhiều-nhiều.
+// Ví dụ: Một user có nhiều vai trò
+$user = User::find(1);
+$user->roles()->attach(1); // Thêm vai trò có id là 1 cho user có id là 1
+
+- Hàm detach() được sử dụng để xóa mối quan hệ từ bảng liên kết.
+// Ví dụ: Xóa vai trò có id là 1 khỏi user có id là 1
+$user = User::find(1);
+$user->roles()->detach(1);
+
+- Hàm toggle() được sử dụng để thêm hoặc xóa mối quan hệ một cách tự động. Nếu mối quan hệ chưa tồn tại, nó sẽ 
+thêm vào; nếu đã tồn tại, nó sẽ xóa.
+// Ví dụ: Toggle vai trò có id là 1 cho user có id là 1
+$user = User::find(1);
+$user->roles()->toggle(1);
+
+- Hàm sync() được sử dụng để cập nhật mối quan hệ sao cho nó trở thành một tập hợp cụ thể của các khóa ngoại.
+// Ví dụ: Đồng bộ các vai trò của user có id là 1 thành [1, 2, 3]
+$user = User::find(1);
+$user->roles()->sync([1, 2, 3]);
+
+Câu 3: Làm thế nào để lấy dữ liệu từ bảng trung gian trong quan hệ n-n.
+- Sử dụng phương thức withPivot().
+- Sử dụng Các Cột Pivot trong Model.
 ```
