@@ -37,7 +37,6 @@ class CreateUsersTable extends Migration
             $table->date('birthday')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamps();
-
 //            Delete
             $table->string('test_delete')->nullable();
         });
