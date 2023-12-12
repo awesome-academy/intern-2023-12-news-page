@@ -13,15 +13,18 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
+    protected $table = 'users';
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'status_id',
+        'role_id',
     ];
 
     /**
@@ -40,6 +43,9 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'verify_email' => 'date:d-m-Y',
+        'created_at' => 'date:d-m-Y',
+        'updated_at' => 'date:d-m-Y',
+        'birthday' => 'date:d-m-Y',
     ];
 }

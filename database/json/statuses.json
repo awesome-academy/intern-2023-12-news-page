@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Tài Khoản Bình thường",
+        "slug": "normal",
+        "type": "account",
+        "reason": "Tài khoản không vi phạm tiêu chuẩn"
+    },
+    {
+        "name": "Khóa Tài Khoản",
+        "slug": "ban",
+        "type": "account",
+        "reason": "Đăng bài có từ ngữ thô tục"
+    },
+    {
+        "name": "Khóa Tài Khoản",
+        "slug": "ban",
+        "type": "account",
+        "reason": "Đánh giá có từ ngữ thô tục"
+    },
+    {
+        "name": "Bài Đăng Bình Thường",
+        "slug": "normal",
+        "type": "post",
+        "reason": "Bài đăng không vi phạm tiêu chuẩn"
+    },
+    {
+        "name": "Bài Đăng Bị Khóa",
+        "slug": "ban",
+        "type": "post",
+        "reason": "Bài đăng có chứa từ vi phạm tiêu chuẩn"
+    },
+    {
+        "name": "Đánh Giá Bình Thường",
+        "slug": "normal",
+        "type": "review",
+        "reason": "Đánh giá không chứa từ vi phạm tiêu chuẩn"
+    },
+    {
+        "name": "Đánh Giá Bị Khóa",
+        "slug": "ban",
+        "type": "review",
+        "reason": "Đánh giá chứa từ vi phạm tiêu chuẩn"
+    }
+]

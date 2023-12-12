@@ -17,12 +17,19 @@ let build_scss = [
 ];
 
 let build_js = [
-
+    {
+        from: 'Modules/Login/Resources/assets/js/pages/login.js',
+        to: 'css/login.js',
+    },
+    {
+        from: 'Modules/Login/Resources/assets/js/pages/register.js',
+        to: 'css/register.js',
+    },
 ];
 
 
 build_js.map((file) => {
-    mix.js(file.from, file.to).vue()
+    mix.js(file.from, file.to)
 });
 
 build_scss.map((file) => {

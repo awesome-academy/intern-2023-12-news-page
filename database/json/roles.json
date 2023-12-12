@@ -1,0 +1,17 @@
+[
+    {
+        "name": "User",
+        "slug": "user",
+        "level": 1
+    },
+    {
+        "name": "Moderator",
+        "slug": "mod",
+        "level": 2
+    },
+    {
+        "name": "Administrator",
+        "slug": "admin",
+        "level": 3
+    }
+]
