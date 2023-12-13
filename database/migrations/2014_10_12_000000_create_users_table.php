@@ -15,9 +15,9 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name',255);
+            $table->string('username',255);
             $table->text('password');
-            $table->string('email',320);
+            $table->string('email',320)->unique();
             $table->integer('role_id');
             $table->integer('status_id');
             $table->boolean('verify')->default(false);
@@ -26,15 +26,8 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('gender')->nullable();
             $table->date('birthday')->nullable();
             $table->rememberToken()->nullable();
+            $table->rememberToken()->nullable();
             $table->timestamps();
-//            Delete
-            $table->string('test_delete')->nullable();
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            if (Schema::hasColumn('users', 'test_delete')) {
-                $table->dropColumn('test_delete');
-            }
         });
     }
 
