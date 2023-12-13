@@ -15,4 +15,9 @@ class Category extends Model
         'created_at' => 'date:d-m-Y',
         'updated_at' => 'date:d-m-Y',
     ];
+
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }

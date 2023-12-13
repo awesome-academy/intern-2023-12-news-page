@@ -15,4 +15,14 @@ class PostHashtag extends Model
         'created_at' => 'date:d-m-Y',
         'updated_at' => 'date:d-m-Y',
     ];
+
+    public function post(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Post::class, 'post_id', 'id');
+    }
+
+    public function hashtag(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Hashtag::class, 'hashtag_id', 'id');
+    }
 }

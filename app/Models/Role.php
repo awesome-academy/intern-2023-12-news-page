@@ -15,4 +15,9 @@ class Role extends Model
         'created_at' => 'date:d-m-Y',
         'updated_at' => 'date:d-m-Y',
     ];
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(User::class, 'role_id', 'id');
+    }
 }

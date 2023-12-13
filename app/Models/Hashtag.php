@@ -15,4 +15,9 @@ class Hashtag extends Model
         'created_at' => 'date:d-m-Y',
         'updated_at' => 'date:d-m-Y',
     ];
+
+    public function post_hashtags(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PostHashtag::class, 'hashtag_id', 'id');
+    }
 }
