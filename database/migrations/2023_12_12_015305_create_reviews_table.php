@@ -17,7 +17,7 @@ class CreateReviewsTable extends Migration
             $table->increments('id');
             $table->integer('user_id');
             $table->integer('post_id');
-            $table->integer('status_id');
+            $table->integer('status_id')->default(1);
             $table->text('content');
             $table->timestamps();
         });

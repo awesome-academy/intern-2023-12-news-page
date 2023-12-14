@@ -10,4 +10,9 @@ class Role extends Model
     use HasFactory;
 
     protected $table = 'roles';
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(User::class, 'role_id', 'id');
+    }
 }
