@@ -110,3 +110,39 @@ Câu 3: Làm thế nào để lấy dữ liệu từ bảng trung gian trong qua
 - Sử dụng phương thức withPivot().
 - Sử dụng Các Cột Pivot trong Model.
 ```
+
+# Chapter 4:
+
+```
+Câu 1: Accessors/Mutators dùng để làm gì?
+- Accessors: được sử dụng để chuyển đổi giá trị của một thuộc tính khi nó được truy cập.
+- Mutators: được sử dụng để chuyển đổi giá trị của một thuộc tính trước khi nó được lưu vào cơ sở dữ liệu.
+
+Câu 2: Tạo Accessors/Mutators như thế nào?
+- Accessors: 
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => ucfirst($value),
+        );
+    }
+- Mutators:
+    protected function firstName(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower($value),
+        );
+    }
+    
+=> Kết quả trả về là 1 Attribute
+Với get sẽ lấy giá trị của cột đó sau khi đi qua logic hàm.
+Còn set thì sẽ đi qua logic của hàm trước khi được luu.
+
+Câu 3: Scope dùng để làm gì?
+- Scope là một cách để định nghĩa các điều kiện truy vấn thông qua các phương thức trong mô hình Eloquent. Scopes giúp bạn
+ tái sử dụng logic truy vấn phổ biến và giữ mã nguồn dễ đọc và quản lý.
+
+Câu 4: Nêu các loại scope của Laravel?:
++ Global Scopes
++ Local Scopes
+```

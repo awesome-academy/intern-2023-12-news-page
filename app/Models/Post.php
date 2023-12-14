@@ -43,4 +43,14 @@ class Post extends Model
     {
         return $this->belongsToMany(Hashtag::class, 'post_hashtag', 'post_id', 'hashtag_id');
     }
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = htmlspecialchars($value);
+    }
+
+    public function setTypeAttribute($value)
+    {
+        $this->attributes['type'] = htmlspecialchars($value);
+    }
 }

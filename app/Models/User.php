@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DragonCode\Support\Facades\Helpers\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -98,5 +99,20 @@ class User extends Authenticatable
     public function userReport(): HasMany
     {
         return $this->hasMany(Report::class, 'user_id', 'id');
+    }
+
+    public function getNameAttribute($value): string
+    {
+        return ucfirst($value);
+    }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = htmlspecialchars($value);
+    }
+
+    public function getSlugNameEmailAttribute(): string
+    {
+        return Str::hash("{$this->name} {$this->email}");
     }
 }
