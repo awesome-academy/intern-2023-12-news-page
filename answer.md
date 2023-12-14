@@ -30,3 +30,45 @@ Câu 3: Vòng đời của 1 request trong laravel
 - Middleware (Sau Response): Yêu cầu có thể đi qua một số middleware cuối cùng sau khi phản hồi đã được tạo, trước khi được gửi đến trình duyệt hoặc ứng dụng khách.
 - Gửi phản hồi đến trình duyệt (Browser): Phản hồi được gửi từ máy chủ đến trình duyệt hoặc ứng dụng khách, hoàn thành quá trình xử lý yêu cầu.
 ```
+
+# Chapter 2:
+```
+Câu 1: Migration là gì?
+- Migration là một công cụ mạnh mẽ giúp quản lý và thực hiện các thay đổi trong cơ
+sở dữ liệu. Mục tiêu chính của migration là duy trì tính nhất quán của cơ sở dữ liệu giữa các phiên bản của ứng dụng.
+
+Câu 2: Hàm up() và down() trong một class migration dùng để làm gì?
+- Phương thức up(): được sử dụng để định nghĩa các thay đổi bạn muốn thực hiện trên cơ sở dữ liệu khi migration được 
+chạy. Thường thì các thay đổi này bao gồm việc tạo mới các bảng, thêm cột, chỉnh sửa cấu trúc, và các hoạt động khác
+liên quan đến cập nhật cơ sở dữ liệu
+
+- Phương thức down(): được sử dụng để định nghĩa các thay đổi cần được áp dụng khi bạn rollback migration. Cụ thể, down()
+thường chứa các lệnh để xóa các thành phần đã được thêm vào trong phương thức up(). Điều này giúp đảm bảo tính nhất quán
+của cơ sở dữ liệu khi bạn quay lại phiên bản trước của ứng dụng.
+
+NOTE: up() có thể sử dụng để thêm cột, thêm bảng, v.v..., ngược lại down có thể thực hiện xóa bảng, cột.
+
+Câu 3: Nêu các câu lệnh Migration thông dụng mà bạn biết.
+# php artisan make:migration create_nametable_table
+# php artisan migrate 
+# php artisan migrate:rollback
+# php artisan migrate:refresh
+
+Câu 4: Mass assignment là gì?
+- Mass assignment xảy ra khi một lượng lớn dữ liệu được gán đồng thời cho một đối tượng (object) thông qua một phương 
+thức hoặc phép gán. Điều này thường xảy ra khi người dùng gửi dữ liệu đầu vào từ một biểu mẫu web hoặc các yêu cầu HTTP khác.
+
+Câu 5: Cách xử lý Mass assignment trong Laravel.
+- Sử dụng $fillable hoặc $guarded trong model.
+- Sử dụng Accessors và Mutators.
+- Sử dụng Form Requests.
+
+Câu 6: Tại sao Laravel có cả thuộc tính "fillable" và "guarded".
+- "fillable": được sử dụng để liệt kê các trường cho phép mass assignment.
+- "guarded": được sử dụng để liệt kê các trường không được phép mass assignment.
+
+Câu 7: Với các thuộc tính nằm trong blacklist, ta làm như thế nào đểcập nhập trường dữ liệu đó?
+- Sử dụng phương thức "update".
+- Sử dụng phương thức "fill" và "save".
+- Bỏ qua $guarded trong trường hợp cụ thể
+```
