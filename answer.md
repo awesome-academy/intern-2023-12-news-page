@@ -190,3 +190,31 @@ Câu 2: Kể tên các hàm trong Resources Controller và phươngthức/công 
 - update: Cập nhật thông tin của một mục.
 - destroy: Xoá một mục
 ```
+
+# Chapter 7:
+```
+Câu 1: Middleware dùng để làm gì?
+- Kết nối và Giao tiếp: Tạo cầu nối giữa các thành phần phần mềm khác nhau, giúp chúng tương tác và truyền thông tin.
+- Trung gian thông tin: Đóng vai trò là trung gian để đảm bảo truyền thông tin hiệu quả và đáng tin cậy.
+- Quản lý phiên và Trạng thái: Duy trì thông tin trạng thái và quản lý phiên làm việc giữa các yêu cầu.
+- Bảo mật: Cung cấp cơ chế bảo mật để bảo vệ dữ liệu khi truyền qua mạng hoặc giữa các thành phần của hệ thống.
+- Quản lý Tài nguyên: Hỗ trợ quản lý tài nguyên hệ thống, bao gồm quản lý kết nối cơ sở dữ liệu và phân phối tải công 
+việc.
+- Tích hợp hệ thống: Kết nối và tích hợp các hệ thống và ứng dụng khác nhau.
+- Quản lý Lỗi và Ghi nhật ký: Cung cấp cơ chế quản lý lỗi và ghi nhật ký để theo dõi và chẩn đoán vấn đề.
+- Điều phối và Phân phối: Điều phối tác vụ giữa các thành phần, đồng bộ hóa hoạt động và phân phối công việc để tối ưu 
+hiệu suất hệ thống.
+
+Câu 2: Phân biệt Global Middleware, Group Middleware và Route Middleware
+- Global Middleware:
+    + Áp dụng trên mọi request.
+    + Đăng ký trong $middleware của app/Http/Kernel.php.
+
+- Group Middleware:
+    + Áp dụng cho một nhóm route cụ thể.
+    + Đăng ký trong $middlewareGroups của app/Http/Kernel.php.
+    
+- Route Middleware:
+    + Áp dụng chỉ cho một hoặc một nhóm route.
+    + Đăng ký trong $routeMiddleware của app/Http/Kernel.php.        
+```
