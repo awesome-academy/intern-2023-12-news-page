@@ -1,4 +1,5 @@
 # Chapter 1:
+
 ```
 Câu 1: Có bao nhiêu cách để tạo 1 project trong laravel
 - Có các cách sau:
@@ -32,6 +33,7 @@ Câu 3: Vòng đời của 1 request trong laravel
 ```
 
 # Chapter 2:
+
 ```
 Câu 1: Migration là gì?
 - Migration là một công cụ mạnh mẽ giúp quản lý và thực hiện các thay đổi trong cơ
@@ -71,4 +73,40 @@ Câu 7: Với các thuộc tính nằm trong blacklist, ta làm như thế nào 
 - Sử dụng phương thức "update".
 - Sử dụng phương thức "fill" và "save".
 - Bỏ qua $guarded trong trường hợp cụ thể
+```
+
+# Chapter 3:
+
+```
+Câu 1: Kể tên các quan hệ của Laravel và phương thức tương ứng.
+- One to One (hasOne - belongsTo)
+- One to Many (hasMany - belongsTo)
+- Many to Many (belongsToMany - belongsToMany)
+- Polymorphic Relations (morphTo - morphMany)
+- Many to Many Polymorphic Relations (morphedByMany - morphedByMany)
+- Has Many Through
+- Has One Through
+
+Câu 2: Các hàm attach(), detach(), toggle(), sync() dùng để làm gì?
+- Hàm attach() được sử dụng để thêm mối quan hệ mới vào bảng liên kết (pivot table) trong mối quan hệ nhiều-nhiều.
+    // Ví dụ: Một user có nhiều vai trò
+    $user = User::find(1);
+    $user->roles()->attach(1); // Thêm vai trò có id là 1 cho user có id là 1
+- Hàm detach() được sử dụng để xóa mối quan hệ từ bảng liên kết.
+    // Ví dụ: Xóa vai trò có id là 1 khỏi user có id là 1
+    $user = User::find(1);
+    $user->roles()->detach(1);
+- Hàm toggle() được sử dụng để thêm hoặc xóa mối quan hệ một cách tự động. Nếu mối quan hệ chưa tồn tại, nó sẽ 
+thêm vào; nếu đã tồn tại, nó sẽ xóa.
+    // Ví dụ: Toggle vai trò có id là 1 cho user có id là 1
+    $user = User::find(1);
+    $user->roles()->toggle(1);
+- Hàm sync() được sử dụng để cập nhật mối quan hệ sao cho nó trở thành một tập hợp cụ thể của các khóa ngoại.
+    // Ví dụ: Đồng bộ các vai trò của user có id là 1 thành [1, 2, 3]
+    $user = User::find(1);
+    $user->roles()->sync([1, 2, 3]);
+
+Câu 3: Làm thế nào để lấy dữ liệu từ bảng trung gian trong quan hệ n-n.
+- Sử dụng phương thức withPivot().
+- Sử dụng Các Cột Pivot trong Model.
 ```
