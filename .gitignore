@@ -5,6 +5,7 @@
 /public/js
 /public/vendor
 /public/mix-manifest.json
+/public/bower_components/*
 /storage/*.key
 /vendor
 .env

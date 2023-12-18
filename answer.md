@@ -220,7 +220,6 @@ Câu 2: Phân biệt Global Middleware, Group Middleware và Route Middleware
 ```
 
 # Chapter 8:
-
 ```
 Câu 1: Bạn biết những starter kit Authentication nào của Laravel?
 - Laravel Breeze
@@ -232,4 +231,22 @@ Câu 1: Bạn biết những starter kit Authentication nào của Laravel?
 Câu 2: Trong quicktask bạn sử dụng starter kit nào? Khi cần customize logic thì cần sửa ở đâu?
 - Laravel Breeze
 - Customize các file trong Controller, Middleware, Requests trong của file app
+```
+
+# Chapter 10:
+```
+Câu 1: Package manager như bower, npm dùng để làm gì?
+- Bower và npm thường được sử dụng cho phần front-end của dự án web. Bower quản lý thư viện JavaScript và CSS, 
+trong khi npm thường được sử dụng cho các gói Node.js và công cụ front-end.
+
+Câu 2: Tại sao chúng ta nên thực hiện compile các file CSS/SASS/JS/v.v... thay vì viết trực tiếp vào public? 
+Bạn sử dụng công cụ nào của Laravel để quản lý và compile các file đó?
+- Các lý do cần compile thay vì viết trực tiếp:
++ Tối ưu hóa và Tối giản hóa mã nguồn
++ Tích hợp Dễ dàng
++ Quản lý Phiên bản
++ Tích hợp Hệ thống Quản lý Gói (Package)
++ Phát triển hiệu suất
++ Quản lý Dependencies
+- Laravel mix
 ```
