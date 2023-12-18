@@ -51,4 +51,9 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
+    public function profile(Request $request)
+    {
+        return view('profile');
+    }
 }

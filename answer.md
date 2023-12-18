@@ -218,3 +218,18 @@ Câu 2: Phân biệt Global Middleware, Group Middleware và Route Middleware
     + Áp dụng chỉ cho một hoặc một nhóm route.
     + Đăng ký trong $routeMiddleware của app/Http/Kernel.php.        
 ```
+
+# Chapter 8:
+
+```
+Câu 1: Bạn biết những starter kit Authentication nào của Laravel?
+- Laravel Breeze
+- Laravel Jetstream
+- Laravel Fortify
+- Laravel Sail
+- Laravel Sanctum
+
+Câu 2: Trong quicktask bạn sử dụng starter kit nào? Khi cần customize logic thì cần sửa ở đâu?
+- Laravel Breeze
+- Customize các file trong Controller, Middleware, Requests trong của file app
+```
