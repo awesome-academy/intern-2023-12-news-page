@@ -16,4 +16,9 @@ class Hashtag extends Model
     {
         return $this->belongsToMany(Post::class, 'post_hashtag', 'hashtag_id', 'post_id');
     }
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = htmlspecialchars($value);
+    }
 }

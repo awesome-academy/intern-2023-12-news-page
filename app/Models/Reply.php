@@ -26,4 +26,9 @@ class Reply extends Model
     {
         return $this->belongsTo(Status::class, 'status_id', 'id');
     }
+
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = htmlspecialchars($value);
+    }
 }
