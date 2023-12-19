@@ -1,5 +1,4 @@
 # Chapter 1:
-
 ```
 Câu 1: Có bao nhiêu cách để tạo 1 project trong laravel
 - Có các cách sau:
@@ -33,7 +32,6 @@ Câu 3: Vòng đời của 1 request trong laravel
 ```
 
 # Chapter 2:
-
 ```
 Câu 1: Migration là gì?
 - Migration là một công cụ mạnh mẽ giúp quản lý và thực hiện các thay đổi trong cơ
@@ -76,7 +74,6 @@ Câu 7: Với các thuộc tính nằm trong blacklist, ta làm như thế nào 
 ```
 
 # Chapter 3:
-
 ```
 Câu 1: Kể tên các quan hệ của Laravel và phương thức tương ứng.
 - One to One (hasOne - belongsTo)
@@ -112,7 +109,6 @@ Câu 3: Làm thế nào để lấy dữ liệu từ bảng trung gian trong qua
 ```
 
 # Chapter 4:
-
 ```
 Câu 1: Accessors/Mutators dùng để làm gì?
 - Accessors: được sử dụng để chuyển đổi giá trị của một thuộc tính khi nó được truy cập.
@@ -147,8 +143,7 @@ Câu 4: Nêu các loại scope của Laravel?:
 + Local Scopes
 ```
 
-# Chapter 5: 
-
+# Chapter 5:
 ```
 Câu 3: Seeder/Factory/Faker dùng để làm gì?
 - Seeder:
@@ -174,4 +169,24 @@ Câu 4: Khi nào nên sử dụng Seeder? Khi nào nên sử dụng Factory?
 + Tạo Bản Ghi Mẫu
 + Tạo Dữ Liệu Mẫu Đa Dạng
 + Kiểm Thử và Phát Triển Linh Hoạt
+```
+
+# Chapter 6
+```
+Câu 1: Mô tả cấu trúc một route trong Laravel?
+- HTTP Method: Là phương thức HTTP như GET, POST, PUT, DELETE, vv. Điều này xác định loại yêu cầu mà route sẽ xử lý.
+- URI (Uniform Resource Identifier): Địa chỉ URL mà route sẽ phản hồi. Ví dụ, nếu bạn muốn xử lý yêu cầu đến từ
+"example.com/about", thì URI sẽ là '/about'.
+- Controller@action: Điều này là cặp controller và action mà route sẽ chạy khi nó được gọi. Controller là một class
+chứa các phương thức (actions) để xử lý các yêu cầu, và action là phương thức trong controller đó.
+- Name(Tùy chọn): giúp đặt tên cho route, và có thể sử dụng tên đó thay vì URI khi tạo liên kết hoặc chuyển hướng.
+
+Câu 2: Kể tên các hàm trong Resources Controller và phươngthức/công dụng tương ứng.
+- index: Trả về danh sách tất cả các mục
+- create: Trả về giao diện để tạo mới một mục
+- store: Lưu trữ một mục mới được tạo
+- show: Hiển thị thông tin chi tiết của một mục
+- edit: Trả về giao diện để sửa đổi thông tin của một mục
+- update: Cập nhật thông tin của một mục.
+- destroy: Xoá một mục
 ```
