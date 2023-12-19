@@ -146,3 +146,32 @@ Câu 4: Nêu các loại scope của Laravel?:
 + Global Scopes
 + Local Scopes
 ```
+
+# Chapter 5: 
+
+```
+Câu 3: Seeder/Factory/Faker dùng để làm gì?
+- Seeder:
++ Seeder được sử dụng để điền dữ liệu mẫu hoặc khởi tạo dữ liệu ban đầu cho cơ sở dữ liệu.
++ Thường được sử dụng khi muốn tạo dữ liệu mẫu để phát triển và kiểm thử ứng dụng.
+
+- Factory:
++ Factory là một cách để định nghĩa các mô hình (models) mà có thể tạo ra nhanh chóng với dữ liệu mẫu.
++ Sử dụng Factory khi cần tạo ra nhiều bản ghi mẫu của một mô hình để sử dụng trong Seeder hoặc trong quá 
+trình kiểm thử.
+
+- Faker:
++  Faker là một thư viện được tích hợp trong Laravel giúp tạo dữ liệu giả mạo (fake data) một cách dễ dàng.
++ Sử dụng Faker để tạo dữ liệu giả mạo cho các trường trong mô hình đang làm việc. Điều này giúp tạo ra các
+bản ghi mẫu với dữ liệu ngẫu nhiên, thích hợp để sử dụng trong quá trình phát triển và kiểm thử.
+
+Câu 4: Khi nào nên sử dụng Seeder? Khi nào nên sử dụng Factory?
+- Seeder:
++ Khởi tạo Dữ liệu Ban Đầu
++ Kiểm Thử và Phát Triển
++ Điền Cơ Sở Dữ Liệu Với Dữ Liệu Mẫu
+- Factory:
++ Tạo Bản Ghi Mẫu
++ Tạo Dữ Liệu Mẫu Đa Dạng
++ Kiểm Thử và Phát Triển Linh Hoạt
+```
