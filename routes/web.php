@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingPageController::class, 'landingPage']);
 
-Route::middleware(['user.login:moderator', 'user.verify', 'user.status'])->group(function () {
+Route::middleware(['user.permission:moderator', 'user.verify', 'user.status'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
