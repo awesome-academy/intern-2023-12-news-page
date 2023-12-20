@@ -40,4 +40,9 @@ class UserController extends Controller
     {
         //
     }
+
+    public function managerUsersIndex()
+    {
+        return view('auth/pages/managerUser/index');
+    }
 }

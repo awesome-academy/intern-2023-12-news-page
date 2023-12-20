@@ -8,12 +8,12 @@ class PostController extends Controller
 {
     public function index()
     {
-        //
+        return view('auth/pages/post/index');
     }
 
     public function create()
     {
-        //
+        return view('auth/pages/post/create');
     }
 
     public function store(Request $request)
@@ -39,5 +39,10 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function managerPostsIndex()
+    {
+        return view('auth/pages/managerPost/index');
     }
 }
