@@ -4,6 +4,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,17 +20,23 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
+Route::get('/search', [LandingPageController::class, 'search'])->name('search');
+Route::get('/detail', [LandingPageController::class, 'detail'])->name('detail');
+Route::get('/info', [LandingPageController::class, 'info'])->name('info');
 
-Route::middleware(['user.permission:moderator', 'user.verify', 'user.status'])->group(function () {
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-    Route::post('/users', [UserController::class, 'store'])->name('users.store');
-    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-    Route::delete('/users/{user}', [UserController::class, 'delete'])->name('users.delete');
+Route::middleware(['user.verify', 'user.status', 'user.permission:moderator'])->group(function () {
+    Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::get('/manager-posts', [PostController::class, 'managerPostsIndex'])->name('manager.post.index');
+});
+
+Route::middleware(['user.verify', 'user.status', 'user.permission:admin|moderator'])->group(function () {
+    Route::get('/manager-users', [UserController::class, 'managerUsersIndex'])->name('manager.users.index');
 });
 
 Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
+    Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])
         ->name('dashboard');
     Route::resource('posts', PostController::class, [

@@ -22,4 +22,3 @@ mix.js('resources/js/profile.js', 'public/js')
         require('tailwindcss'),
         require('autoprefixer'),
     ])
-

@@ -1,3 +1,13 @@
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/profile.js') }}" defer></script>
+@endsection
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

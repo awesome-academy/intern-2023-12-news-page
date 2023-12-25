@@ -3,6 +3,7 @@
 /public/storage
 /public/css
 /public/js
+/public/icon
 /public/vendor
 /public/mix-manifest.json
 /public/bower_components/*
@@ -18,3 +19,4 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+/public/fonts/

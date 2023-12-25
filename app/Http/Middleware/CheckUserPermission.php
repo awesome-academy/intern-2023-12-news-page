@@ -18,7 +18,7 @@ class CheckUserPermission
     {
         $user = auth()->user();
 
-        if ($user && strval($user->role->slug) === $slug) {
+        if ($user && (strval($user->role->slug) === $slug || strpos($slug, $user->role->slug) !== false)) {
             return $next($request);
         }
 
