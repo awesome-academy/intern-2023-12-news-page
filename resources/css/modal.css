@@ -1,0 +1,11 @@
+button.close {
+    background: transparent;
+    border: none;
+}
+
+.modal-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #000;
+}
