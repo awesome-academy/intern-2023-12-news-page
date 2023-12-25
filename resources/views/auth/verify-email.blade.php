@@ -1,3 +1,13 @@
+@section('styles')
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+@endsection
+
+@section('scripts')
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+@endsection
+
 <x-guest-layout>
     <x-auth-card>
         <x-slot name="logo">
