@@ -21,4 +21,55 @@ mix.js('resources/js/profile.js', 'public/js')
     .postCss('resources/css/profile.css', 'public/css', [
         require('tailwindcss'),
         require('autoprefixer'),
-    ])
+    ]);
+
+mix.js('resources/js/dashboard.js', 'public/js')
+    .postCss('resources/css/dashboard.css', 'public/css', [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
+
+mix.postCss('resources/css/post.css', 'public/css', [
+    require('tailwindcss'),
+    require('autoprefixer'),
+]);
+
+mix.js('resources/js/follow.js', 'public/js')
+    .postCss('resources/css/follow.css', 'public/css', [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
+
+mix.postCss('resources/css/index.css', 'public/css', [
+    require('tailwindcss'),
+    require('autoprefixer'),
+]);
+
+mix.js('resources/js/main.js', 'public/js')
+    .postCss('resources/css/main.css', 'public/css', [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
+
+mix.postCss('resources/css/create_post.css', 'public/css', [
+    require('tailwindcss'),
+    require('autoprefixer'),
+]);
+
+mix.js('resources/js/detail.js', 'public/js')
+    .postCss('resources/css/detail.css', 'public/css', [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
+
+mix.js('resources/js/modalReport.js', 'public/js')
+    .postCss('resources/css/modal.css', 'public/css', [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);
+
+mix.js('resources/js/info.js', 'public/js')
+    .postCss('resources/css/info.css', 'public/css', [
+        require('tailwindcss'),
+        require('autoprefixer'),
+    ]);

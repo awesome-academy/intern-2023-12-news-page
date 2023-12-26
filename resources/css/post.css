@@ -1,0 +1,106 @@
+.table-custom {
+    background-color: transparent;
+    border-spacing: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+}
+
+.table-custom > caption + thead > tr:first-child > td,
+.table-custom > caption + thead > tr:first-child > th,
+.table-custom > colgroup + thead > tr:first-child > td,
+.table-custom > colgroup + thead > tr:first-child > th,
+.table-custom > thead:first-child > tr:first-child > td,
+.table-custom > thead:first-child > tr:first-child > th {
+    border-top: 0;
+}
+
+.table-custom > thead > tr > th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+
+.table-custom>tbody>tr>td,
+.table-custom>tbody>tr>th,
+.table-custom>tfoot>tr>td,
+.table-custom>tfoot>tr>th,
+.table-custom>thead>tr>td,
+.table-custom>thead>tr>th {
+    padding: 8px;
+    line-height: 1.42857143;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+
+th {
+    text-align: left;
+}
+
+td, th {
+    padding: 0;
+}
+
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+.btn-success:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+
+.btn-warning {
+    color: #fff;
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+
+.btn-warning:hover {
+    color: #fff;
+    background-color: #ec971f;
+    border-color: #d58512;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}
+
+.btn-danger:hover {
+    color: #fff;
+    background-color: #c9302c;
+    border-color: #ac2925;
+}
+
+.btn-add-post {
+    margin-bottom: 15px;
+}

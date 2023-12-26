@@ -3,10 +3,6 @@
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/index.js') }}" defer></script>
-@endsection
-
 @section('content')
     <div class="container-fluid">
         <div class="container">

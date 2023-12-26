@@ -1,0 +1,68 @@
+.card-dashboard-main {
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card-dashboard {
+    width: 49%;
+}
+
+.card-dashboard:nth-child(n+3) {
+    margin-top: 20px;
+}
+
+.card-dashboard-container {
+    margin-bottom: 10px;
+}
+
+.card-dashboard-total {
+    font-size: 45px;
+    font-weight: 700;
+    margin-right: 10px;
+}
+
+@media (max-width: 1150px) and (min-width: 951px) {
+    .nav-content {
+        max-width: 430px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+}
+
+@media (max-width: 950px) and (min-width: 806px) {
+    .nav-content {
+        max-width: 350px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+    .tag {
+        display: none!important;
+    }
+}
+
+@media (max-width: 805px) and (min-width: 640px) {
+    .nav-content {
+        max-width: 280px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+    .tag {
+        display: none!important;
+    }
+}
+
+@media (max-width: 640px) {
+    .tag {
+        width: 100%!important;
+    }
+}
+
+@media (max-width: 400px) {
+    .card-dashboard {
+        width: 100%!important;
+    }
+
+    .card-dashboard:not(:first-child) {
+        margin-top: 20px !important;
+    }
+}
