@@ -1097,6 +1097,7 @@
     "Birthday": "Sinh nhật",
     "Info User": "Thông tin người dùng",
     "views": "Lượt xem",
+    "Views": "Lượt xem",
     "posts": "Bài viết",
     "follows": "Người theo dõi",
     "Total Views": "Tổng số lượt xem",
@@ -1145,5 +1146,12 @@
     "Reports": "Báo cáo",
     "Pending": "Chưa giải quyết",
     "Publish": "Công bố",
-    "Handle": "Xử lý"
+    "Handle": "Xử lý",
+    "Avatar": "Ảnh đại diện",
+    "Status": "Trạng thái",
+    "Time": "Thời gian",
+    "Created_at": "Ngày tạo",
+    "Updated_at": "Ngày sửa",
+    "Users": "Người dùng",
+    "Banned": "Bị cấm"
 }

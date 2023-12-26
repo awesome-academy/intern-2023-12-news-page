@@ -1138,6 +1138,7 @@
     "Åland Islands": "Åland Islands",
     "Info User": "Info User",
     "views": "views",
+    "Views": "Views",
     "posts": "posts",
     "follows": "follows",
     "Total Views": "Total Views",
@@ -1185,5 +1186,11 @@
     "Reports": "Reports",
     "Pending": "Pending",
     "Publish": "Publish",
-    "Handle": "Handle"
+    "Handle": "Handle",
+    "Avatar": "Avatar",
+    "Status": "Status",
+    "Time": "Time",
+    "Created_at": "Created_at",
+    "Updated_at": "Updated_at",
+    "Banned": "Banned"
 }

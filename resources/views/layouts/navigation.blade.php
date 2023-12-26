@@ -17,7 +17,7 @@
                         {{ __('Posts') }}
                     </x-nav-link>
 
-                    <x-nav-link :href="route('follows.indexAuth')" :active="request()->routeIs('follows.indexAuth')">
+                    <x-nav-link :href="route('follows.index')" :active="request()->routeIs('follows.index')">
                         {{ __('Follows') }}
                     </x-nav-link>
 
@@ -145,7 +145,7 @@
                 {{ __('Posts') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('follows.indexAuth')" :active="request()->routeIs('follows.indexAuth')">
+            <x-responsive-nav-link :href="route('follows.index')" :active="request()->routeIs('follows.index')">
                 {{ __('Follows') }}
             </x-responsive-nav-link>
 
