@@ -119,9 +119,8 @@
                     class="tab-pane fade"
                     id="reports"
                     role="tabpanel"
-                    aria-labelledby="ex3-tab-3"
-                >
-                    Tab 3 content
+                    aria-labelledby="ex3-tab-3">
+                    @include('components.pages.report.containerReport')
                 </div>
             </div>
         </div>

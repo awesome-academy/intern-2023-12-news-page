@@ -55,8 +55,8 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
-    Route::get('follows', [FollowController::class, 'indexAuth'])
-        ->name('follows.indexAuth');
+    Route::get('follows', [FollowController::class, 'index'])
+        ->name('follows.index');
 
     Route::get('profile', [AuthenticatedSessionController::class, 'profile'])
         ->name('profile');

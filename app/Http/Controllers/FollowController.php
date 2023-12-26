@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 class FollowController extends Controller
 {
-    public function indexAuth()
+    public function index()
     {
         return view('auth/pages/follow/index');
     }

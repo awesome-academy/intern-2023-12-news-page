@@ -15,12 +15,12 @@
     @yield('scripts')
 </head>
 <body>
-{{--@include('components.pages.main.header')--}}
+@include('components.pages.main.header')
 <div id="main-content">
-{{--    @include('components.pages.main.nav')--}}
+    @include('components.pages.main.nav')
     @yield('content')
 </div>
-{{--@include('components.pages.main.footer')--}}
-{{--@include('components.pages.main.subHeader')--}}
+@include('components.pages.main.footer')
+@include('components.pages.main.subHeader')
 </body>
 </html>
