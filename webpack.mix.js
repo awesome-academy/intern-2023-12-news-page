@@ -17,11 +17,7 @@ mix.js('resources/js/app.js', 'public/js')
         require('autoprefixer'),
     ]);
 
-mix.js('resources/js/profile.js', 'public/js')
-    .postCss('resources/css/profile.css', 'public/css', [
-        require('tailwindcss'),
-        require('autoprefixer'),
-    ]);
+mix.js('resources/js/profile.js', 'public/js');
 
 mix.js('resources/js/dashboard.js', 'public/js')
     .postCss('resources/css/dashboard.css', 'public/css', [

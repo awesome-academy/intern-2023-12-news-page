@@ -17,8 +17,9 @@ class CheckStatusUser
     public function handle(Request $request, Closure $next)
     {
         $statusUser = auth()->user()->status;
+        $ruleMiddleware = config('constants.userBanned');
 
-        if ($statusUser->slug === 'ban' && $statusUser->type === 'account') {
+        if ($statusUser->slug === $ruleMiddleware['slug'] && $statusUser->type === $ruleMiddleware['type']) {
             abort(404);
         }
 

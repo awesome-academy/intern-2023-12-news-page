@@ -24,7 +24,7 @@
 @media (max-width: 1150px) and (min-width: 951px) {
     .nav-content {
         max-width: 430px;
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
     }
 }
@@ -32,7 +32,7 @@
 @media (max-width: 950px) and (min-width: 806px) {
     .nav-content {
         max-width: 350px;
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
     }
     .tag {
@@ -43,7 +43,7 @@
 @media (max-width: 805px) and (min-width: 640px) {
     .nav-content {
         max-width: 280px;
-        overflow-x: scroll;
+        overflow-x: auto;
         overflow-y: hidden;
     }
     .tag {

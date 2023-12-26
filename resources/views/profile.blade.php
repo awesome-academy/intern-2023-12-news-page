@@ -1,6 +1,5 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/profile.css') }}">
 @endsection
 
 @section('scripts')
@@ -48,30 +47,11 @@
 
                         </div>
                         <div style="margin-bottom: 20px;" class="flex items-center">
-                            <div style="width:50%">
+                            <div style="width:100%">
                                 <x-label for="gender" :value="__('Name')"/>
-
                                 <input class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300
                                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
                                     id="name" type="text" name="name" required="required" autofocus="autofocus">
-                            </div>
-                            <div style="margin: 0 10px; width:20%">
-                                <x-label for="gender" :value="__('Gender')"/>
-
-                                <select name="gender" class="form-control rounded-md shadow-sm border-gray-300
-                                    focus:border-indigo-300 focus:ring focus:ring-indigo-200
-                                    focus:ring-opacity-50 block mt-1 w-full">
-                                    <option value="male">{{ __('Male') }}</option>
-                                    <option value="female">{{ __('Female') }}</option>
-                                    <option value="other">{{ __('Other')  }}</option>
-                                </select>
-                            </div>
-                            <div style="width:30%">
-                                <x-label for="birthday" :value="__('Birthday')"/>
-
-                                <input type="date" name="birthday" class="form-control rounded-md shadow-sm
-                                    border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200
-                                    focus:ring-opacity-50 block mt-1 w-full">
                             </div>
                         </div>
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border
