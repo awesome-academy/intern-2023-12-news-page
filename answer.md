@@ -250,3 +250,69 @@ Bạn sử dụng công cụ nào của Laravel để quản lý và compile cá
 + Quản lý Dependencies
 - Laravel mix
 ```
+
+# Chapter 12:
+```
+Câu 1: Cách hoạt động của Eloquent ORM và Query Builder
+- Eloquent ORM:
++ Định nghĩa Mô hình
++ Thực hiện Truy vấn
++ Mối quan hệ
+
+- Query Builder:
++ Tạo Truy vấn
++ Điều kiện
++ Kết hợp
++ Thực hiện Truy vấn
+
+Câu 2: Nêu ưu/nhược điểm của chúng
+* Eloquent ORM:
+- Ưu điểm:
++ Dễ đọc và viết
++ Tích hợp mạnh mẽ
++ Quản lý mô hình
+
+- Nhược điểm:
++ Hiệu suất
++ Khả năng tùy chỉnh hạn chế
+
+* Query Builder:
+- Ưu điểm:
++ Hiệu suất
++ Tích hợp linh hoạt
+
+- Nhược điểm:
++ Khó đọc hơn
++ Khả năng mất tích hợp
+
+Câu 3: Khi nào nên dùng Eloquent ORM hoặc Query Builder?
+- Sử dụng Eloquent ORM khi:
++ Đối tượng và Mối quan hệ (Object and Relationships)
++ Lập trình hướng đối tượng (Object-Oriented Programming - OOP)
++ Tích hợp với các tính năng Laravel khác
+
+- Sử dụng Query Builder khi:
++ Truy vấn phức tạp
++ Hiệu suất
++ Cần tích hợp với dữ liệu từ nhiều nguồn
++ Tự do tuyệt đối
+
+Câu 4: Phân biệt Lazy loading và Eager loading
+- Lazy Loading:
++ Độ trễ
++ Tải dữ liệu khi cần
++ Tiết kiệm tài nguyên, vì dữ liệu chỉ được tải khi cần thiết. Đặc biệt hữu ích khi bạn chỉ cần một phần nhỏ dữ liệu 
+liên quan.
++ Tăng số lần truy vấn đến cơ sở dữ liệu khi cần truy cập nhiều đối tượng liên quan, có thể dẫn đến vấn đề N+1.
+
+- Eager Loading:
++ Tải trước
++ Tất cả một lượt
++ Hiệu suất tốt hơn khi cần truy cập nhiều đối tượng liên quan, giảm số lần truy vấn xuống cơ sở dữ liệu.
++ Có thể làm tăng khối lượng dữ liệu được truy vấn khi không cần thiết, đặc biệt khi chỉ cần một số ít thông tin của 
+đối tượng chính.
+
+Câu 5: Phân biệt with() và load()
+- with() nó sẽ thực thi ngay sau câu truy vấn đầu và khi nó gặp các phương phức dạng như get(), first(), all(), ... 
+- load() thì nó sẽ chạy phương thức đầu tiên load ra các bản ghi, và load các mối quan hệ ở thời điểm sau này.
+```

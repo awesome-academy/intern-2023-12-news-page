@@ -1192,5 +1192,6 @@
     "Time": "Time",
     "Created_at": "Created_at",
     "Updated_at": "Updated_at",
-    "Banned": "Banned"
+    "Banned": "Banned",
+    "Thumbnail": "Thumbnail"
 }
