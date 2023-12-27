@@ -50,6 +50,8 @@ Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
             'destroy' => 'posts.destroy',
         ],
     ]);
+
+    Route::patch('posts/{post}/edit-status', [PostController::class, 'editStatus'])->name('post.editStatus');
 });
 
 Route::get('language/{lang}', [LanguageController::class, 'changeLanguage'])->name('locale');

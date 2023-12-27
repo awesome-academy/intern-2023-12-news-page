@@ -1,4 +1,4 @@
-@import "bootstrap";
+@import "bootstrap/dist/css/bootstrap.css";
 
 html, body {
     background: #e1e1e1;
@@ -6,6 +6,14 @@ html, body {
 
 a {
     text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li{
+    list-style: none;
 }
 
 .bg-main {
@@ -34,12 +42,12 @@ a {
 }
 
 .main-navbar__logo {
-    width: 100px;
     height: 40px;
+    width: fit-content!important;
 }
 
 .main-navbar__logo svg {
-    width: 100px;
+    width: fit-content!important;
     height: 40px;
 }
 

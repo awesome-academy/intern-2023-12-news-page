@@ -1,3 +1,7 @@
+@import "bootstrap/dist/css/bootstrap.css";
+@import "select2/dist/css/select2.css";
+@import "summernote/dist/summernote-lite.css";
+
 span.select2.select2-container.select2-container--default{
     width: 100%!important;
 }
@@ -9,13 +13,14 @@ form {
 .hashtag-result {
     position: absolute;
     width: 100%;
-    height: 130px;
+    max-height: 130px;
     background: #fff;
     border-radius: 0 0 16px 16px;
     transition: all 0.3s ease-in-out;
     overflow-y: scroll;
     overflow-x: hidden;
     display: none;
+    height: fit-content;
 }
 
 .hashtag-result li {
