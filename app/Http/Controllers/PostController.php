@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Repository\CategoryRepository;
 use App\Repository\HashtagRepository;
+use App\Repository\PostRepository;
 use App\Services\PostService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
@@ -13,17 +14,20 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     protected $postService;
+    protected $postRepository;
     protected $hashtagRepository;
     protected $categoryRepository;
 
     public function __construct(
         PostService $postService,
         CategoryRepository $categoryRepository,
-        HashtagRepository $hashtagRepository
+        HashtagRepository $hashtagRepository,
+        PostRepository $postRepository
     ) {
         $this->postService = $postService;
         $this->categoryRepository = $categoryRepository;
         $this->hashtagRepository = $hashtagRepository;
+        $this->postRepository = $postRepository;
     }
 
     public function __getDataTab($tab): LengthAwarePaginator
@@ -86,7 +90,7 @@ class PostController extends Controller
     {
         $listCategory = $this->categoryRepository->getListCategory();
         $listHashtag = $this->hashtagRepository->getListHashtag();
-        $data = $this->postService->getPostById($id);
+        $data = $this->postRepository->getPostById($id);
         $dataView = [
             'data' => $data,
             'categories' => $listCategory,

@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
 Route::get('/search', [LandingPageController::class, 'search'])->name('search');
 Route::get('/detail', [LandingPageController::class, 'detail'])->name('detail');
+Route::post('/comment', [LandingPageController::class, 'comment'])->name('comment');
 Route::get('/info', [LandingPageController::class, 'info'])->name('info');
 
 Route::middleware(['user.verify', 'user.status', 'user.permission:moderator'])->group(function () {

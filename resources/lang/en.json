@@ -1198,5 +1198,8 @@
     "Edit Post": "Edit Post",
     "All": "All",
     "Hidden": "Hidden",
-    "Description": "Description"
+    "Description": "Description",
+    "Incognito": "Incognito",
+    "Please do not leave it blank": "Please do not leave it blank",
+    "Post successfully, Reload the page to see you post": "Post successfully, Reload the page to see you post"
 }

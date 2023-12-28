@@ -1159,5 +1159,8 @@
     "Edit Post": "Chỉnh sửa bài viết",
     "All": "Tất cả",
     "Hidden": "Ẩn",
-    "Description": "Mô tả"
+    "Description": "Mô tả",
+    "Incognito": "Ẩn danh",
+    "Please do not leave it blank": "Vui lòng không để trống",
+    "Post successfully, Reload the page to see you post": "Đã đăng thành công, Tải lại trang để xem"
 }

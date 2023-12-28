@@ -21,6 +21,14 @@ class PostRepository
         $this->postHashtagRepository = $postHashtagRepository;
     }
 
+    public function getPostByCategoryId($categoryId, $statusId, $postId)
+    {
+        return Post::where('category_id', $categoryId)
+            ->where('status_id', $statusId)
+            ->where('id', '!=', $postId)
+            ->get();
+    }
+
     public function getPostByStatus($id, $slug): LengthAwarePaginator
     {
         $paginate = config('constants.paginate');
@@ -56,6 +64,20 @@ class PostRepository
     public function getPostById($id)
     {
         return Post::with(['category', 'status', 'hashtags'])->where('id', $id)->first();
+    }
+
+    public function handlePostIndexById($id, $statusId)
+    {
+        return Post::with([
+            'category',
+            'status',
+            'hashtags',
+            'user.followers',
+            'reviews' => function ($query) use ($statusId) {
+                $query->where('status_id', $statusId);
+            },
+            'reviews.user',
+        ])->where('id', $id)->first();
     }
 
     public function getPostNotRelationshipById($id)
