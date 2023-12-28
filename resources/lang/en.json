@@ -1193,5 +1193,10 @@
     "Created_at": "Created_at",
     "Updated_at": "Updated_at",
     "Banned": "Banned",
-    "Thumbnail": "Thumbnail"
+    "Thumbnail": "Thumbnail",
+    "thumbnail": "thumbnail",
+    "Edit Post": "Edit Post",
+    "All": "All",
+    "Hidden": "Hidden",
+    "Description": "Description"
 }

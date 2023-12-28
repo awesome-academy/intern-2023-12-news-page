@@ -12,7 +12,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Create Post') }}
+            {{ __('Edit Post') }}
         </h2>
     </x-slot>
     <div style="padding: 7rem 0">
@@ -27,15 +27,20 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{route('posts.store')}}" method="post" class="position-relative" id="posts"
+                <form action="{{route('posts.update',['post' => $data->id])}}" method="post" class="position-relative"
+                    id="posts"
                     enctype="multipart/form-data">
+                    {{ method_field('PATCH') }}
                     @csrf
                     <div class="form-group">
                         <label for="title">{{ __('Category') }}: </label>
                         <select class="form-control" name='category'>
                             <option value="">-- {{ __('Pick one') . ' ' . __('category') }} --</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}"
+                                    {{ $data->category_id === $category->id ? 'selected' : '' }}>
+                                    {{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -54,36 +59,39 @@
                                     type="file"
                                     id="file-input"
                                     accept="image/*"
-                                    class="hidden"
+                                    class="hidden" value="{{ $data->thumbnail }}"
                                 />
                                 <!-- Image upload input -->
-                                <div class="preview-container hidden items-center justify-center flex-col">
-                                    <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md"></div>
+                                <div class="preview-container flex items-center justify-center flex-col">
+                                    <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md"
+                                         style="background-image: url('{{ asset($data->thumbnail) }}');"></div>
                                     <span class="file-name my-4 text-sm font-medium"></span>
                                     <p class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1 border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white">
                                         {{ __('Delete') }}</p>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="mt-4" for="title">{{ __('Title') }}: </label>
-                        <input type="text" class="form-control" name="title">
+                        <input type="text" class="form-control" name="title" value="{{ $data->title }}">
                     </div>
                     <div class="form-group">
                         <label class="mt-4" for="description">{{ __('Description') }}: </label>
                         <textarea name="description" id="description" class="form-control" cols="30"
-                            rows="10"></textarea>
+                            rows="10">{{ $data->description }}</textarea>
                     </div>
                     <div class="form-group">
                         <label class="mt-4" for="content">{{ __('Content') }}: </label>
-                        <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                        <textarea name="content" id="content" cols="30" rows="10">{!! $data->content !!}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="hashtag">{{ __('Hashtag') }}:
                             ({{ __('Press Back Until Empty Input To Remove Box Tag Or Click Outside The Search Block') }}
                             )</label>
-                        <input type="text" class="form-control" name="hashtag">
+                        <input type="text" class="form-control" name="hashtag" value="{{$data->hashtags}}"
+                            data-type = "edit">
                         <ul id="tagList">
                         </ul>
                         <input type="text" class="form-control" id="newTag">

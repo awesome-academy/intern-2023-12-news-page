@@ -1,7 +1,15 @@
 import $ from "jquery"
-import "./profile"
+import "select2/dist/js/select2"
+import 'summernote/dist/summernote-lite';
 
 (function () {
+    $('#content').summernote({
+        placeholder: '...',
+        tabsize: 2,
+        height: 300
+    });
+    $('select').select2();
+
     let tagList = [];
     let idList = [];
 
@@ -9,6 +17,19 @@ import "./profile"
     const $newTag = $("#newTag");
     const $boxSearch = $('.hashtag-result');
     const $storageTag = $("input[name=hashtag]");
+
+    $(document).ready(function () {
+        let $type = $storageTag.attr('data-type');
+        if ($type !== undefined) {
+            let $dataUpdate = JSON.parse($storageTag.val());
+
+            $dataUpdate.forEach(function (value) {
+                tagList.push(value.slug);
+                idList.push(value.id);
+            });
+        }
+        tagList_render();
+    });
 
     $(document).on('click', function (event) {
         if (!$(event.target).closest($boxSearch).length) {
@@ -20,13 +41,11 @@ import "./profile"
         event.stopPropagation();
     });
 
-    tagList_render();
-
     function tagList_render()
     {
         $tagList.empty();
         tagList.map(function (_tag) {
-            var temp = '<li>' + _tag + '<span class="rmTag">&times;</span></li>';
+            let temp = '<li>' + _tag + '<span class="rmTag">&times;</span></li>';
             $tagList.append(temp);
         });
     }
@@ -37,14 +56,28 @@ import "./profile"
             $boxSearch.hide();
         } else {
             $boxSearch.show();
+            $boxSearch.find('li').each((index, value) => {
+                let $valueSearch = $(value).text().toLowerCase();
+                let $slugSearch = $(value).data('slug');
+
+                if (tagList.includes($slugSearch)) {
+                    $(value).hide();
+                } else {
+                    if ($valueSearch.includes($val)) {
+                        $(value).show();
+                    } else {
+                        $(value).hide();
+                    }
+                }
+            });
         }
     });
 
-    $('.hashtag-result li').click((e) => {
+    $boxSearch.find('li').click((e) => {
         let $slug = $(e.target).attr('data-slug');
         let $id = $(e.target).attr('data-id');
 
-        if ($slug.replace(/\s/g, '') !== '') {
+        if ($slug.replace(/\s/g, '') !== '' && !tagList.includes($slug)) {
             idList.push($id);
             tagList.push($slug);
             $newTag.val('');
@@ -62,7 +95,9 @@ import "./profile"
     $('#posts').one('submit', function (e) {
         e.preventDefault();
         $storageTag.val(null);
-        $storageTag.val(idList.join(','));
+        if (idList.length > 0) {
+            $storageTag.val(idList.join(','));
+        }
         $(this).submit();
     });
 })();

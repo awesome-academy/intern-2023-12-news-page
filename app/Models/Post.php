@@ -14,6 +14,8 @@ class Post extends Model
 
     protected $table = 'posts';
 
+    protected $fillable = ['title', 'content', 'user_id', 'thumbnail', 'description', 'category_id', 'status_id'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -42,11 +44,6 @@ class Post extends Model
     public function hashtags(): BelongsToMany
     {
         return $this->belongsToMany(Hashtag::class, 'post_hashtag', 'post_id', 'hashtag_id');
-    }
-
-    public function setContentAttribute($value)
-    {
-        $this->attributes['content'] = htmlspecialchars($value);
     }
 
     public function setTypeAttribute($value)
