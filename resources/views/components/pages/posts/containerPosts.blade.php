@@ -13,20 +13,20 @@
                 <hr>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lgr">
                     <div class="tabs-custom flex">
-                        <a href="{{ route('posts.index', ['tab' => config('constants.postStatusDefault')]) }}"
-                           class="tab-item {{ ($tab === null || $tab === config('constants.postStatusDefault')) ? 'active' : '' }}">
+                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusDefault')]) }}"
+                           class="tab-item {{ ($tab === null || $tab === config('constants.post.postStatusDefault')) ? 'active' : '' }}">
                             {{ __('All') }}
                         </a>
-                        <a href="{{ route('posts.index', ['tab' => config('constants.postStatusSlugPending')]) }}"
-                           class="tab-item {{ ($tab === config('constants.postStatusSlugPending')) ? 'active' : '' }}">
+                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPending')]) }}"
+                           class="tab-item {{ ($tab === config('constants.post.postStatusSlugPending')) ? 'active' : '' }}">
                             {{ __('Pending') }}
                         </a>
-                        <a href="{{ route('posts.index', ['tab' => config('constants.postStatusSlugPublish')]) }}"
-                           class="tab-item {{ ($tab === config('constants.postStatusSlugPublish')) ? 'active' : '' }}">
+                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPublish')]) }}"
+                           class="tab-item {{ ($tab === config('constants.post.postStatusSlugPublish')) ? 'active' : '' }}">
                             {{ __('Publish') }}
                         </a>
-                        <a href="{{ route('posts.index', ['tab' => config('constants.postStatusSlugHidden')]) }}"
-                           class="tab-item {{ ($tab === config('constants.postStatusSlugHidden')) ? 'active' : '' }}">
+                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugHidden')]) }}"
+                           class="tab-item {{ ($tab === config('constants.post.postStatusSlugHidden')) ? 'active' : '' }}">
                             {{ __('Hidden') }}
                         </a>
                         <div class="line"></div>
@@ -77,7 +77,7 @@
                                             </form>
                                         </td>
                                         <td style="flex-wrap: wrap;">
-                                            @if ($item->status->slug === config('constants.postStatusSlugPublish'))
+                                            @if ($item->status->slug === config('constants.post.postStatusSlugPublish'))
                                                 <form action="{{ route('post.editStatus',['post' => $item->id]) }}"
                                                       method="post" class="position-relative"
                                                       id="posts" style="width: fit-content;margin: auto"
@@ -85,12 +85,12 @@
                                                     @csrf
                                                     {{ method_field('PATCH') }}
                                                     <input name="status" class="hidden" type="text"
-                                                           value="{{ config('constants.postStatusSlugHidden') }}">
+                                                           value="{{ config('constants.post.postStatusSlugHidden') }}">
                                                     <button class="btn btn-danger">
                                                         {{ __('Hidden') }}
                                                     </button>
                                                 </form>
-                                            @elseif ($item->status->slug === config('constants.postStatusSlugHidden'))
+                                            @elseif ($item->status->slug === config('constants.post.postStatusSlugHidden'))
                                                 <form action="{{route('post.editStatus',['post' => $item->id])}}"
                                                       method="post" class="position-relative"
                                                       id="posts" style="width: fit-content;"
@@ -98,7 +98,7 @@
                                                     @csrf
                                                     {{ method_field('PATCH') }}
                                                     <input name="status" class="hidden" type="text"
-                                                           value="{{ config('constants.postStatusSlugPublish') }}">
+                                                           value="{{ config('constants.post.postStatusSlugPublish') }}">
                                                     <button class="btn btn-success">
                                                         {{ __('Publish') }}
                                                     </button>

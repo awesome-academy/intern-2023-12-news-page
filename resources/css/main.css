@@ -4,6 +4,10 @@ html, body {
     background: #e1e1e1;
 }
 
+.right-0{
+    right: 0;
+}
+
 a {
     text-decoration: none;
 }

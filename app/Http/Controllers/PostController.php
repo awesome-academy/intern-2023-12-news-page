@@ -28,11 +28,12 @@ class PostController extends Controller
 
     public function __getDataTab($tab): LengthAwarePaginator
     {
-        if ($tab === config('constants.postStatusDefault') || empty($tab)) {
-            return $this->postService->getPostByStatus();
+        $id = userAuth()->id;
+        if ($tab === config('constants.post.postStatusDefault') || empty($tab)) {
+            return $this->postService->getPostByStatus($id);
         }
 
-        return $this->postService->getPostByStatus($tab);
+        return $this->postService->getPostByStatus($id, $tab);
     }
 
     public function index(Request $request)
@@ -69,7 +70,7 @@ class PostController extends Controller
             'hashtag' => $request['hashtag'],
             'thumbnail' => $request['file'],
         ];
-        $action = config('constants.postStore');
+        $action = config('constants.post.postStore');
 
         $this->postService->handlePost($dataInsert, $action);
 
@@ -105,7 +106,7 @@ class PostController extends Controller
             'hashtag' => $request['hashtag'],
             'thumbnail' => $request['file'],
         ];
-        $action = config('constants.postUpdate');
+        $action = config('constants.post.postUpdate');
 
         $this->postService->handlePost($dataAction, $action, $id);
 

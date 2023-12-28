@@ -14,7 +14,7 @@ class PostHashtagRepository
 
     public function insertPostHashtag($postId, $hashtags, $action)
     {
-        if ($action === config('constants.postUpdate')) {
+        if ($action === config('constants.post.postUpdate')) {
             $this->deleteHashtagByPostId($postId);
         }
 
@@ -27,5 +27,10 @@ class PostHashtagRepository
 
             PostHashtag::create($dataInsert);
         }
+    }
+
+    public function listPostByHashtagId($id)
+    {
+        return PostHashtag::where('hashtag_id', $id)->select('post_id')->pluck('post_id');
     }
 }

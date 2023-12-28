@@ -25,15 +25,15 @@ class PostService
         $this->statusRepository = $statusRepository;
     }
 
-    public function getPostByStatus($slug = null): LengthAwarePaginator
+    public function getPostByStatus($id, $slug = null): LengthAwarePaginator
     {
-        return $this->postRepository->getPostByStatus($slug);
+        return $this->postRepository->getPostByStatus($id, $slug);
     }
 
     public function handlePost($dataHandle, $action, $id = null)
     {
-        $configPostSlug = config('constants.postStatusSlugPending');
-        $configPostType = config('constants.postType');
+        $configPostSlug = config('constants.post.postStatusSlugPending');
+        $configPostType = config('constants.post.postType');
         $hashtags = stringToArr($dataHandle['hashtag']);
         $content = $dataHandle['content'];
         libxml_use_internal_errors(true);
@@ -104,7 +104,7 @@ class PostService
 
     public function updateStatusPost($id, $status)
     {
-        $configPostType = config('constants.postType');
+        $configPostType = config('constants.post.postType');
         $statusUpdate = $this->statusRepository->getIdBySlug($status, $configPostType);
 
         $this->postRepository->updateStatusPost($id, $statusUpdate);

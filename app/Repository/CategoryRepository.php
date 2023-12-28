@@ -10,4 +10,14 @@ class CategoryRepository
     {
         return Category::all();
     }
+
+    public function getIdBySlug($slug)
+    {
+        return Category::where('slug', $slug)->select('id')->first()->id;
+    }
+
+    public function getNameBySlug($slug)
+    {
+        return Category::where('slug', $slug)->select('name')->first()->name;
+    }
 }
