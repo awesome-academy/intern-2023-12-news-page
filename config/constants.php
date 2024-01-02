@@ -113,12 +113,26 @@ return [
         'slug' => 'ban',
         'type' => 'account',
     ],
-    'postStore' => 'storage',
-    'postUpdate' => 'update',
-    'postStatusSlugPending' => 'pending',
-    'postStatusSlugPublish' => 'published',
-    'postStatusSlugHidden' => 'hidden',
-    'postStatusDefault' => 'all',
-    'postType' => 'post',
+    'post' => [
+        'postStore' => 'storage',
+        'postUpdate' => 'update',
+        'postStatusSlugPending' => 'pending',
+        'postStatusSlugPublish' => 'published',
+        'postStatusSlugHidden' => 'hidden',
+        'postStatusDefault' => 'all',
+        'postType' => 'post',
+    ],
+    'tab' => [
+        'tabNewPosts' => 'newPosts',
+        'tabHighInteractionsPosts' => 'interactionsPosts',
+        'tabAuthenticatedPosts' => 'authenticatedPosts',
+    ],
+    'hashtag' => [
+        'hashtagType' => 'hashtag',
+    ],
+    'category' => [
+        'categoryType' => 'category',
+    ],
     'paginate' => 10,
+    'verify' => 1,
 ];

@@ -7,28 +7,42 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class PostRepository
 {
-    public function getPostByStatus($slug): LengthAwarePaginator
+    protected $categoryRepository;
+    protected $hashtagRepository;
+    protected $postHashtagRepository;
+
+    public function __construct(
+        CategoryRepository $categoryRepository,
+        HashtagRepository $hashtagRepository,
+        PostHashtagRepository $postHashtagRepository
+    ) {
+        $this->categoryRepository = $categoryRepository;
+        $this->hashtagRepository = $hashtagRepository;
+        $this->postHashtagRepository = $postHashtagRepository;
+    }
+
+    public function getPostByStatus($id, $slug): LengthAwarePaginator
     {
         $paginate = config('constants.paginate');
 
         if (empty($slug)) {
             return Post::with(['category', 'status'])
-                ->where('user_id', userAuth()->id)
+                ->where('user_id', $id)
                 ->paginate($paginate);
         }
 
         return Post::with(['category', 'status'])
-            ->where('user_id', userAuth()->id)
+            ->where('user_id', $id)
             ->whereHas('status', function ($query) use ($slug) {
                 $query->where('slug', $slug)
-                    ->where('type', config('constants.postType'));
+                    ->where('type', config('constants.post.postType'));
             })
             ->paginate($paginate);
     }
 
     public function handlePost($data, $action, $id)
     {
-        if ($action === config('constants.postStore')) {
+        if ($action === config('constants.post.postStore')) {
             $post = Post::create($data);
 
             return $post->id;
@@ -59,5 +73,48 @@ class PostRepository
         Post::where('id', $id)->update([
             'status_id' => $status,
         ]);
+    }
+
+    public function getPostsWithCondition($status, $condition, $searchPostId = null, $typeSearchPost = null)
+    {
+        $query = Post::with(['user', 'reviews'])->where('status_id', $status);
+        if (!empty($searchPostId) && !empty($typeSearchPost)) {
+            if ($typeSearchPost === config('constants.category.categoryType')) {
+                $query->where('category_id', $searchPostId);
+            } else {
+                $query->whereIn('id', $searchPostId);
+            }
+        }
+
+        switch ($condition) {
+            case config('constants.tab.tabNewPosts'):
+                return $query
+                    ->orderBy('created_at', 'DESC')
+                    ->select(['title', 'created_at', 'views', 'user_id', 'id'])->get();
+            case config('constants.tab.tabHighInteractionsPosts'):
+                return $query
+                    ->orderBy('views', 'DESC')
+                    ->select(['title', 'created_at', 'views', 'user_id', 'id'])->get();
+            default:
+                return $query
+                    ->where('verify', config('constants.verify'))
+                    ->orderBy('created_at', 'DESC')
+                    ->select(['title', 'created_at', 'views', 'user_id', 'id'])->get();
+        }
+    }
+
+    public function searchPostsWithCondition($status, $condition, $dataSearch)
+    {
+        if ($dataSearch['type'] !== config('constants.category.categoryType')) {
+            $queryId = $this->hashtagRepository->getIdBySlug($dataSearch['slug']);
+            $listPostId = $this->postHashtagRepository->listPostByHashtagId($queryId);
+
+            return $this
+                ->getPostsWithCondition($status, $condition, $listPostId, $dataSearch['type']);
+        }
+
+        $queryId = $this->categoryRepository->getIdBySlug($dataSearch['slug']);
+
+        return $this->getPostsWithCondition($status, $condition, $queryId, $dataSearch['type']);
     }
 }

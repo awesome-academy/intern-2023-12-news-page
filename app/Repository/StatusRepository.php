@@ -8,6 +8,6 @@ class StatusRepository
 {
     public function getIdBySlug($slug, $type)
     {
-        return Status::where('slug', $slug)->where('type', $type)->select('id')->first()->id;
+        return Status::where('slug', $slug)->where('type', $type)->select('id')->first()->id ?? null;
     }
 }

@@ -19,7 +19,7 @@
                     <label>
                         <input value="" id = "searchMain" placeholder="{{ __('Search for posts/user/hashtag') }}">
                     </label>
-                    <button class="btn btn-dark position-absolute">
+                    <button class="btn btn-dark position-absolute right-0">
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                              style="width: 15px;height: 15px;"
                              fill="#000000" height="800px" width="800px" version="1.1" id="Capa_1"
