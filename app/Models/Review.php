@@ -13,6 +13,8 @@ class Review extends Model
 
     protected $table = 'reviews';
 
+    protected $fillable = ['post_id', 'user_id', 'content', 'status_id'];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -36,10 +38,5 @@ class Review extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(Status::class, 'status_id', 'id');
-    }
-
-    public function setContentAttribute($value)
-    {
-        $this->attributes['content'] = htmlspecialchars($value);
     }
 }

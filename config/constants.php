@@ -133,6 +133,10 @@ return [
     'category' => [
         'categoryType' => 'category',
     ],
+    'review' => [
+        'reviewStatusPublish' => 'published',
+        'reviewType' => 'review',
+    ],
     'paginate' => 10,
     'verify' => 1,
 ];

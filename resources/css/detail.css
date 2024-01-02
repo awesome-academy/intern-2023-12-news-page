@@ -1,4 +1,9 @@
 @import "emojionearea/dist/emojionearea.css";
+@import "toastify-js/src/toastify.css";
+
+.toast-close{
+    font-size: 12px;
+}
 
 .main-content__box {
     overflow-x: hidden;
@@ -44,8 +49,11 @@ h3.title-detail {
     margin: 15px 0!important;
 }
 
-img {
+#main img,figure {
     border-radius: 16px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .tags-detail {
@@ -117,7 +125,8 @@ img {
 }
 
 .container-posts-category {
-    height: 600px;
+    height: fit-content;
+    max-height: 600px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -135,7 +144,7 @@ img {
         justify-content: flex-start!important;
     }
 
-    img {
+    #main img,figure {
         width: 100%!important;
     }
 }

@@ -10,7 +10,7 @@
                 <h4>{{ __('New Posts') }}</h4>
                 <div class="main-content__list-item">
                     @foreach ($newPosts as $item)
-                        <a href="{{ route('detail') }}" class="main-content__item">
+                        <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">
                                     <img
@@ -63,7 +63,7 @@
                 <h4>{{ __('Authenticated Posts') }}</h4>
                 <div class="main-content__list-item">
                     @foreach ($authenticatedPosts as $item)
-                        <a href="{{ route('detail') }}" class="main-content__item">
+                        <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">
                                     <img
@@ -116,7 +116,7 @@
                 <h4>{{ __('High View Posts') }}</h4>
                 <div class="main-content__list-item">
                     @foreach ($interactionsPosts as $item)
-                        <a href="{{ route('detail') }}" class="main-content__item">
+                        <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">
                                     <img

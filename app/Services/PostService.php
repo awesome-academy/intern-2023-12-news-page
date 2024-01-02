@@ -74,11 +74,6 @@ class PostService
         }
     }
 
-    public function getPostById($id)
-    {
-        return $this->postRepository->getPostById($id);
-    }
-
     public function deletePost($id)
     {
         $post = $this->postRepository->getPostNotRelationshipById($id);
@@ -108,5 +103,18 @@ class PostService
         $statusUpdate = $this->statusRepository->getIdBySlug($status, $configPostType);
 
         $this->postRepository->updateStatusPost($id, $statusUpdate);
+    }
+
+    public function handlePostIndexById($id, $statusId, $statusIdReview)
+    {
+        $post = $this->postRepository->getPostNotRelationshipById($id);
+        if ($post && $post->status_id === $statusId) {
+            $post->views += 1;
+            $post->save();
+
+            return $this->postRepository->handlePostIndexById($id, $statusIdReview);
+        }
+
+        return false;
     }
 }
