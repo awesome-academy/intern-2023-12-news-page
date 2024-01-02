@@ -39,15 +39,15 @@ return [
         ],
         [
             'type' => 'post',
-            'slug' => 'ban',
-            'name' => 'Banned',
-            'reason' => 'Post is banned',
+            'slug' => 'reject',
+            'name' => 'Reject',
+            'reason' => 'Post is reject',
         ],
         [
             'type' => 'post',
-            'slug' => 'locked',
-            'name' => 'Locked',
-            'reason' => 'Locked is hidden',
+            'slug' => 'banned',
+            'name' => 'Banned',
+            'reason' => 'Post is banned',
         ],
         [
             'type' => 'review',
@@ -119,6 +119,8 @@ return [
         'postStatusSlugPending' => 'pending',
         'postStatusSlugPublish' => 'published',
         'postStatusSlugHidden' => 'hidden',
+        'postStatusSlugReject' => 'reject',
+        'postStatusSlugBanned' => 'banned',
         'postStatusDefault' => 'all',
         'postType' => 'post',
     ],
@@ -133,10 +135,19 @@ return [
     'category' => [
         'categoryType' => 'category',
     ],
+    'modSlug' => [
+        'moderator',
+        'admin',
+    ],
     'review' => [
         'reviewStatusPublish' => 'published',
         'reviewType' => 'review',
     ],
+    'notification' => [
+        'updateSuccess' => 'Update this resource success',
+        'storeSuccess' => 'Store this resource success',
+    ],
     'paginate' => 10,
     'verify' => 1,
+    'countStart' => 0,
 ];

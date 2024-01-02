@@ -8,29 +8,50 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
         <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md">
             @if (request()->routeIs('posts.index'))
-                <a href="{{route('posts.create')}}"
-                   class="btn btn-md btn-success btn-add-post">{{__ ('Create Post')}}</a>
+                <a href="{{ route('posts.create') }}"
+                   class="btn btn-md btn-success btn-add-post">{{ __('Create Post') }}</a>
                 <hr>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lgr">
-                    <div class="tabs-custom flex">
-                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusDefault')]) }}"
-                           class="tab-item {{ ($tab === null || $tab === config('constants.post.postStatusDefault')) ? 'active' : '' }}">
-                            {{ __('All') }}
-                        </a>
-                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPending')]) }}"
-                           class="tab-item {{ ($tab === config('constants.post.postStatusSlugPending')) ? 'active' : '' }}">
-                            {{ __('Pending') }}
-                        </a>
-                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPublish')]) }}"
-                           class="tab-item {{ ($tab === config('constants.post.postStatusSlugPublish')) ? 'active' : '' }}">
-                            {{ __('Publish') }}
-                        </a>
-                        <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugHidden')]) }}"
-                           class="tab-item {{ ($tab === config('constants.post.postStatusSlugHidden')) ? 'active' : '' }}">
-                            {{ __('Hidden') }}
-                        </a>
-                        <div class="line"></div>
+                    <div class="flex justify-between items-center">
+                        <div class="tabs-custom flex">
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusDefault')]) }}"
+                               class="tab-item {{ ($tab === null || $tab === config('constants.post.postStatusDefault')) ? 'active' : '' }}">
+                                {{ __('All') }}
+                            </a>
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPending')]) }}"
+                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugPending')) ? 'active' : '' }}">
+                                {{ __('Pending') }}
+                            </a>
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPublish')]) }}"
+                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugPublish')) ? 'active' : '' }}">
+                                {{ __('Publish') }}
+                            </a>
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugHidden')]) }}"
+                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugHidden')) ? 'active' : '' }}">
+                                {{ __('Hidden') }}
+                            </a>
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugBanned')]) }}"
+                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugBanned')) ? 'active' : '' }}">
+                                {{ __('Banned') }}
+                            </a>
+                            <div class="line"></div>
+                        </div>
+                        <form method="get" action="{{route('posts.index')}}" id="form-search">
+                            <div class="position-relative container-form-search">
+                                <input name="tab" class="hidden" value="{{$tab ?? null}}">
+                                <input name="search" placeholder="{{ __('Enter the title you want to search for') }}"
+                                       class="p-4 bg-white border-b border-gray-200 w-full rounded-md">
+                                <button class="btn btn-success mt-2">{{ __('Search') }}</button>
+                            </div>
+                        </form>
                     </div>
+                    @if(!empty(session('success')))
+                        <div class="bg-success mt-6">
+                            <p>
+                                {{ __(session('success')) }}
+                            </p>
+                        </div>
+                    @endif
                     <div class="tab-content-custom">
                         <div class="tab-pane active">
                             <table class="table table-custom">
@@ -59,9 +80,11 @@
                                         <td class="text-center">{{ formatDate($item->created_at) }}</td>
                                         <td class="text-center">{{ formatDate($item->updated_at) }}</td>
                                         <td class="flex text-center justify-center" style="flex-wrap: wrap;">
-                                            <a href="{{ route('posts.show',[ 'post' => $item->id ]) }}"
-                                               style="margin-right: 5px;"
-                                               class="btn btn-success">{{ __('Show') }}</a>
+                                            @if($item->status->slug === config('constants.post.postStatusSlugPublish'))
+                                                <a href="{{ route('detail', ['id' => $item->id]) }}"
+                                                   style="margin-right: 5px;" target="_blank"
+                                                   class="btn btn-success">{{ __('Show') }}</a>
+                                            @endif
                                             <a href="{{ route('posts.edit',[ 'post' => $item->id ]) }}"
                                                style="margin-right: 5px;"
                                                class="btn btn-warning">{{ __('Edit') }}</a>
@@ -107,7 +130,7 @@
                                         </td>
                                     </tr>
                                 @endforeach
-                                {{ $data->appends(['tab' => $tab])->links() }}
+                                {{ $data->appends(['tab' => $tab, 'search' => $search])->links() }}
                                 </tbody>
                             </table>
                         </div>

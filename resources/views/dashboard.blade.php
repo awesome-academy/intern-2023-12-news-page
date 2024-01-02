@@ -24,7 +24,8 @@
                     </h2>
                 </div>
                 <div class="flex card-dashboard-content items-center">
-                     <div class="counter card-dashboard-total text-green-600" data-target="290"></div>  {{ __('views') }}
+                    <div class="counter card-dashboard-total text-green-600"
+                         data-target="{{ $countViews }}"></div> {{ __('views') }}
                 </div>
             </div>
             <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md card-dashboard">
@@ -34,7 +35,8 @@
                     </h2>
                 </div>
                 <div class="flex card-dashboard-content items-center">
-                    <div class="counter card-dashboard-total text-green-600" data-target="10"></div> {{ __('posts') }}
+                    <div class="counter card-dashboard-total text-yellow"
+                         data-target="{{ $countPosts }}"></div> {{ __('posts') }}
                 </div>
             </div>
             <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md card-dashboard">
@@ -44,7 +46,8 @@
                     </h2>
                 </div>
                 <div class="flex card-dashboard-content items-center">
-                    <div class="counter card-dashboard-total text-indigo-600" data-target="10"></div> {{ __('follows') }}
+                    <div class="counter card-dashboard-total text-indigo-600"
+                         data-target="{{ $countFollows }}"></div> {{ __('follows') }}
                 </div>
             </div>
             @if(Auth::user()->role->slug === 'moderator' || Auth::user()->role->slug === 'admin')
@@ -55,7 +58,8 @@
                         </h2>
                     </div>
                     <div class="flex card-dashboard-content items-center">
-                        <div class="counter card-dashboard-total text-red-600" data-target="290"></div>  {{ __('reports') }}
+                        <div class="counter card-dashboard-total text-red-600"
+                             data-target="{{ $countReports ?? config('constants.countStart') }}"></div> {{ __('reports') }}
                     </div>
                 </div>
             @endif

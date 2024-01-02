@@ -19,3 +19,9 @@
 .tag-mb {
     font-size: 12px;
 }
+.bg-success{
+    background: #5cb85c;
+    color: #fff;
+    padding: 15px;
+    border-radius: 16px;
+}
