@@ -1160,7 +1160,13 @@
     "All": "Tất cả",
     "Hidden": "Ẩn",
     "Description": "Mô tả",
+    "Reject": "Từ chối",
+    "Are you sure you want to update this resource?": "Bạn có chắc muốn sửa tài nguyên này?",
+    "Update this resource success": "Cập nhật tài nguyên thành công",
+    "Store this resource success": "Lưu trữ tài nguyên thành công",
+    "Ban": "Cấm",
     "Incognito": "Ẩn danh",
     "Please do not leave it blank": "Vui lòng không để trống",
-    "Post successfully, Reload the page to see you post": "Đã đăng thành công, Tải lại trang để xem"
+    "Post successfully, Reload the page to see you post": "Đã đăng thành công, Tải lại trang để xem",
+    "Enter the title you want to search for": "Điền tiêu đề bạn cần tìm kiếm"
 }

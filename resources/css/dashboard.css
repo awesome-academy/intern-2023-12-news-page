@@ -1,3 +1,7 @@
+.text-yellow{
+    color: yellow;
+}
+
 .card-dashboard-main {
     flex-wrap: wrap;
     justify-content: space-between;

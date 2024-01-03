@@ -30,23 +30,22 @@ class PostController extends Controller
         $this->postRepository = $postRepository;
     }
 
-    public function __getDataTab($tab): LengthAwarePaginator
+    public function __getDataTab($tab, $search): LengthAwarePaginator
     {
         $id = userAuth()->id;
-        if ($tab === config('constants.post.postStatusDefault') || empty($tab)) {
-            return $this->postService->getPostByStatus($id);
-        }
 
-        return $this->postService->getPostByStatus($id, $tab);
+        return $this->postService->getPostByStatus($id, $tab, $search);
     }
 
     public function index(Request $request)
     {
         $tab = $request['tab'];
+        $search = $request['search'];
 
         $dataView = [
-            'data' => $this->__getDataTab($tab),
+            'data' => $this->__getDataTab($tab, $search),
             'tab' => $tab,
+            'search' => $search,
         ];
 
         return view('auth/pages/post/index')->with($dataView);
@@ -78,12 +77,8 @@ class PostController extends Controller
 
         $this->postService->handlePost($dataInsert, $action);
 
-        return redirect()->route('posts.index');
-    }
-
-    public function show($id)
-    {
-        //
+        return redirect()->route('posts.index')
+            ->with('success', config('constants.notification.storeSuccess'));
     }
 
     public function edit($id)
@@ -114,7 +109,8 @@ class PostController extends Controller
 
         $this->postService->handlePost($dataAction, $action, $id);
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')
+            ->with('success', config('constants.notification.updateSuccess'));
     }
 
     public function destroy($id): RedirectResponse
@@ -124,16 +120,12 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function managerPostsIndex()
-    {
-        return view('auth/pages/managerPost/index');
-    }
-
     public function editStatus(Request $request, $id): RedirectResponse
     {
         $status = $request['status'];
         $this->postService->updateStatusPost($id, $status);
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')
+            ->with('success', config('constants.notification.updateSuccess'));
     }
 }

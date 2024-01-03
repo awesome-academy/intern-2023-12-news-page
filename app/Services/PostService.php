@@ -25,9 +25,9 @@ class PostService
         $this->statusRepository = $statusRepository;
     }
 
-    public function getPostByStatus($id, $slug = null): LengthAwarePaginator
+    public function getPostByStatus($id, $slug = null, $search = null): LengthAwarePaginator
     {
-        return $this->postRepository->getPostByStatus($id, $slug);
+        return $this->postRepository->getPostByStatus($id, $slug, $search);
     }
 
     public function handlePost($dataHandle, $action, $id = null)

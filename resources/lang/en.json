@@ -1198,8 +1198,14 @@
     "Edit Post": "Edit Post",
     "All": "All",
     "Hidden": "Hidden",
-    "Description": "Description",
     "Incognito": "Incognito",
     "Please do not leave it blank": "Please do not leave it blank",
-    "Post successfully, Reload the page to see you post": "Post successfully, Reload the page to see you post"
+    "Post successfully, Reload the page to see you post": "Post successfully, Reload the page to see you post",
+    "Update this resource success": "Update this resource success",
+    "Store this resource success": "Store this resource success",
+    "Description": "Description",
+    "Reject": "Reject",
+    "Are you sure you want to update this resource?": "Are you sure you want to update this resource?",
+    "Ban": "Ban",
+    "Enter the title you want to search for": "Enter the title you want to search for"
 }

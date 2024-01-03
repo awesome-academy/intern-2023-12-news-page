@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\ManagerPostController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\UserController;
@@ -27,7 +28,8 @@ Route::get('/info', [LandingPageController::class, 'info'])->name('info');
 
 Route::middleware(['user.verify', 'user.status', 'user.permission:moderator'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::get('/manager-posts', [PostController::class, 'managerPostsIndex'])->name('manager.post.index');
+    Route::get('/manager-posts', [ManagerPostController::class, 'index'])->name('manager.post.index');
+    Route::patch('/handle-manager-posts', [ManagerPostController::class, 'handle'])->name('handle.manager.post');
 });
 
 Route::middleware(['user.verify', 'user.status', 'user.permission:admin|moderator'])->group(function () {
@@ -45,7 +47,6 @@ Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
             'index' => 'posts.index',
             'create' => 'posts.create',
             'store' => 'posts.store',
-            'show' => 'posts.show',
             'edit' => 'posts.edit',
             'update' => 'posts.update',
             'destroy' => 'posts.destroy',

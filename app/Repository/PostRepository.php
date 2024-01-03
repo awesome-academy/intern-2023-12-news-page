@@ -29,13 +29,14 @@ class PostRepository
             ->get();
     }
 
-    public function getPostByStatus($id, $slug): LengthAwarePaginator
+    public function getPostByStatus($id, $slug, $search): LengthAwarePaginator
     {
         $paginate = config('constants.paginate');
 
-        if (empty($slug)) {
+        if (empty($slug) || $slug === config('constants.post.postStatusDefault')) {
             return Post::with(['category', 'status'])
                 ->where('user_id', $id)
+                ->where('title', 'like', '%' . $search . '%')
                 ->paginate($paginate);
         }
 
@@ -45,6 +46,7 @@ class PostRepository
                 $query->where('slug', $slug)
                     ->where('type', config('constants.post.postType'));
             })
+            ->where('title', 'like', '%' . $search . '%')
             ->paginate($paginate);
     }
 
@@ -138,5 +140,15 @@ class PostRepository
         $queryId = $this->categoryRepository->getIdBySlug($dataSearch['slug']);
 
         return $this->getPostsWithCondition($status, $condition, $queryId, $dataSearch['type']);
+    }
+
+    public function countViews($userId)
+    {
+        return Post::where('user_id', $userId)->sum('views');
+    }
+
+    public function countPosts($userId)
+    {
+        return Post::where('user_id', $userId)->count();
     }
 }
