@@ -77,7 +77,7 @@ ul li{
     outline: none;
     line-height: 1;
     width: 100%;
-    padding: 0.65rem calc(45px) 0.65rem 1.5rem;
+    padding: 0.65rem calc(45px) 0.65rem 0.5rem;
     border-radius: 3px;
     border: 1px solid #ccc;
 }
@@ -166,6 +166,10 @@ ul li{
     font-weight: 700;
     text-transform: uppercase;
     text-decoration: none;
+}
+
+.category-link:hover {
+    color: #fff!important;
 }
 
 .category-item {

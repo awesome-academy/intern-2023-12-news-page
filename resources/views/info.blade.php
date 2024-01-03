@@ -54,7 +54,7 @@
                                                     d="M4 9V3H12.0284L10.0931 5.70938C9.96896 5.88323 9.96896 6.11677 10.0931 6.29062L12.0284 9H4ZM4 10H13C13.4067 10 13.6432 9.54032 13.4069 9.20938L11.1145 6L13.4069 2.79062C13.6432 2.45968 13.4067 2 13 2H3.5C3.22386 2 3 2.22386 3 2.5V13.5C3 13.7761 3.22386 14 3.5 14C3.77614 14 4 13.7761 4 13.5V10Z"
                                                     fill="#9F9F9F"></path>
                                             </svg>
-                                            0
+                                            {{ $countReports }}
                                         </div>
                                     @endif
                                     <div>
@@ -93,13 +93,6 @@
                         {{ __('Posts') }}
                     </a>
                 </li>
-                @if (!empty(Auth::user()) && in_array(Auth::user()->role->slug, config('constants.modSlug')))
-                    <li class="nav-item">
-                        <a class="nav-link" href="#reports" data-toggle="tab">
-                            {{ __('Reports') }}
-                        </a>
-                    </li>
-                @endif
             </ul>
             <div class="tab-content" id="ex2-content">
                 <div
@@ -116,15 +109,6 @@
                     aria-labelledby="ex3-tab-2">
                     @include('components.pages.posts.containerPosts')
                 </div>
-                @if (!empty(Auth::user()) && in_array(Auth::user()->role->slug, config('constants.modSlug')))
-                    <div
-                        class="tab-pane fade"
-                        id="reports"
-                        role="tabpanel"
-                        aria-labelledby="ex3-tab-3">
-                        @include('components.pages.report.containerReport')
-                    </div>
-                @endif
             </div>
         </div>
     </div>

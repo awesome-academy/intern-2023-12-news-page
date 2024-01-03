@@ -22,7 +22,7 @@
                         </div>
                         <div class="info-detail">
                             <h5>
-                                <a href="{{ route('info') }}">{{ $post->user->name }}</a>
+                                <a href="{{ route('info', ['id' => $post->user_id]) }}">{{ $post->user->name }}</a>
                             </h5>
                             <div class="d-flex justify-content-between">
                                 <span class="item-footer mr-2">{{ formatDate($post->created_at) }}</span>

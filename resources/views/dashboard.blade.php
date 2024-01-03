@@ -50,7 +50,7 @@
                          data-target="{{ $countFollows }}"></div> {{ __('follows') }}
                 </div>
             </div>
-            @if(Auth::user()->role->slug === 'moderator' || Auth::user()->role->slug === 'admin')
+            @if (in_array(Auth::user()->role->slug, config('constants.modSlug')))
                 <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md card-dashboard">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg card-dashboard-container">
                         <h2 class="font-semibold text-xl text-gray-800 leading-tight">

@@ -11,8 +11,10 @@ use App\Repository\StatusRepository;
 use App\Repository\UserRepository;
 use App\Services\LandingPageService;
 use App\Services\PostService;
+use App\Services\ReportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LandingPageController extends Controller
 {
@@ -23,6 +25,7 @@ class LandingPageController extends Controller
     protected $postService;
     protected $statusRepository;
     protected $reviewRepository;
+    protected $reportService;
     protected $reportRepository;
     protected $userRepository;
     protected $listCategory;
@@ -36,6 +39,7 @@ class LandingPageController extends Controller
         PostRepository $postRepository,
         StatusRepository $statusRepository,
         ReviewRepository $reviewRepository,
+        ReportService $reportService,
         ReportRepository $reportRepository,
         UserRepository $userRepository
     ) {
@@ -46,6 +50,7 @@ class LandingPageController extends Controller
         $this->postRepository = $postRepository;
         $this->statusRepository = $statusRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->reportService = $reportService;
         $this->reportRepository = $reportRepository;
         $this->userRepository = $userRepository;
 
@@ -102,16 +107,24 @@ class LandingPageController extends Controller
 
     public function info(Request $request)
     {
+        $getIdStatusPublishPost = $this->statusRepository
+            ->getIdBySlug(config('constants.post.postStatusSlugPublish'), config('constants.post.postType'));
+        $role = Auth::user()->role->slug;
         $userId = $request['id'];
         $dataView = [
             'categories' => $this->listCategory,
             'hashtags' => $this->listHashtag,
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
+            'posts' => $this->postRepository->getPostsByUserId($userId, $getIdStatusPublishPost),
             'countFollows' => 0,
             'userInfo' => $this->userRepository->getUserById($userId),
             'userId' => $userId,
         ];
+
+        if (in_array($role, config('constants.modSlug'))) {
+            $dataView['countReports'] = $this->reportService->countReports($userId);
+        }
 
         return view('info')->with($dataView);
     }
