@@ -8,6 +8,7 @@ use App\Repository\PostRepository;
 use App\Repository\ReportRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\StatusRepository;
+use App\Repository\UserRepository;
 use App\Services\LandingPageService;
 use App\Services\PostService;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,7 @@ class LandingPageController extends Controller
     protected $statusRepository;
     protected $reviewRepository;
     protected $reportRepository;
-
+    protected $userRepository;
     protected $listCategory;
     protected $listHashtag;
 
@@ -35,7 +36,8 @@ class LandingPageController extends Controller
         PostRepository $postRepository,
         StatusRepository $statusRepository,
         ReviewRepository $reviewRepository,
-        ReportRepository $reportRepository
+        ReportRepository $reportRepository,
+        UserRepository $userRepository
     ) {
         $this->landingPageService = $landingPageService;
         $this->postService = $postService;
@@ -45,6 +47,7 @@ class LandingPageController extends Controller
         $this->statusRepository = $statusRepository;
         $this->reviewRepository = $reviewRepository;
         $this->reportRepository = $reportRepository;
+        $this->userRepository = $userRepository;
 
         $this->listCategory = $categoryRepository->getListCategory();
         $this->listHashtag = $hashtagRepository->getListHashtag();
@@ -97,9 +100,20 @@ class LandingPageController extends Controller
         return view('search')->with($dataView);
     }
 
-    public function info()
+    public function info(Request $request)
     {
-        return view('info');
+        $userId = $request['id'];
+        $dataView = [
+            'categories' => $this->listCategory,
+            'hashtags' => $this->listHashtag,
+            'countViews' => $this->postRepository->countViews($userId),
+            'countPosts' => $this->postRepository->countPosts($userId),
+            'countFollows' => 0,
+            'userInfo' => $this->userRepository->getUserById($userId),
+            'userId' => $userId,
+        ];
+
+        return view('info')->with($dataView);
     }
 
     public function detail(Request $request)
