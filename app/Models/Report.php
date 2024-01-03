@@ -12,6 +12,8 @@ class Report extends Model
 
     protected $table = 'reports';
 
+    protected $fillable = ['report_id', 'type', 'content', 'user_id'];
+
     public function review(): BelongsTo
     {
         return $this->belongsTo(Review::class, 'report_id', 'id');

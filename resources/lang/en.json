@@ -1182,6 +1182,7 @@
     "Other reasons": "Other reasons",
     "Opinion": "Opinion",
     "Other feedback content": "Other feedback content",
+    "Feedback content": "Feedback content",
     "Follows": "Follows",
     "Reports": "Reports",
     "Pending": "Pending",
@@ -1207,5 +1208,6 @@
     "Reject": "Reject",
     "Are you sure you want to update this resource?": "Are you sure you want to update this resource?",
     "Ban": "Ban",
-    "Enter the title you want to search for": "Enter the title you want to search for"
+    "Enter the title you want to search for": "Enter the title you want to search for",
+    "Report successfully": "Report successfully"
 }

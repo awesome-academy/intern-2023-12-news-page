@@ -21,7 +21,7 @@
                         {{ __('Follows') }}
                     </x-nav-link>
 
-                    @if(Auth::user()->role->slug === 'moderator')
+                    @if (Auth::user()->role->slug === 'moderator')
                         <x-nav-link :href="route('manager.post.index')"
                             :active="request()->routeIs('manager.post.index')">
                             {{ __('Handle') . ' ' . __('Posts') }}
@@ -149,7 +149,7 @@
                 {{ __('Follows') }}
             </x-responsive-nav-link>
 
-            @if(Auth::user()->role->slug === 'moderator')
+            @if (Auth::user()->role->slug === 'moderator')
                 <x-responsive-nav-link :href="route('manager.post.index')"
                     :active="request()->routeIs('manager.post.index')">
                     {{ __('Handle') . ' ' . __('Posts') }}

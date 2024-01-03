@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repository\CategoryRepository;
 use App\Repository\HashtagRepository;
 use App\Repository\PostRepository;
+use App\Repository\ReportRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\StatusRepository;
 use App\Services\LandingPageService;
@@ -21,6 +22,7 @@ class LandingPageController extends Controller
     protected $postService;
     protected $statusRepository;
     protected $reviewRepository;
+    protected $reportRepository;
 
     protected $listCategory;
     protected $listHashtag;
@@ -32,7 +34,8 @@ class LandingPageController extends Controller
         HashtagRepository $hashtagRepository,
         PostRepository $postRepository,
         StatusRepository $statusRepository,
-        ReviewRepository $reviewRepository
+        ReviewRepository $reviewRepository,
+        ReportRepository $reportRepository
     ) {
         $this->landingPageService = $landingPageService;
         $this->postService = $postService;
@@ -41,6 +44,7 @@ class LandingPageController extends Controller
         $this->postRepository = $postRepository;
         $this->statusRepository = $statusRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->reportRepository = $reportRepository;
 
         $this->listCategory = $categoryRepository->getListCategory();
         $this->listHashtag = $hashtagRepository->getListHashtag();
@@ -137,5 +141,19 @@ class LandingPageController extends Controller
         $review = $this->reviewRepository->getReviewById($reviewId);
 
         return response()->json($review);
+    }
+
+    public function report(Request $request): JsonResponse
+    {
+        $dataInsert = [
+            'report_id' => $request['id'],
+            'type' => $request['type'],
+            'content' => $request['content'],
+            'user_id' => $request['user_id'],
+        ];
+
+        $this->reportRepository->insertReport($dataInsert);
+
+        return response()->json();
     }
 }
