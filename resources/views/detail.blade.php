@@ -127,7 +127,11 @@
                             </div>
                             <div class="info-detail d-flex flex-column">
                                 <h5>
-                                    <a href="{{ route('info') }}">{{ $item->user->name ?? __('Incognito') }}</a>
+                                    @if (!empty($item->user_id))
+                                        <a href="{{ route('info', ['id' => $item->user_id]) }}">{{ $item->user->name }}</a>
+                                    @else
+                                        <a>{{ __('Incognito') }}</a>
+                                    @endif
                                     <span class="js-title-report">
                                     {!! $item->content !!}
                                 </span>
@@ -136,7 +140,8 @@
                                     <div class="mb-2 d-flex justify-content-between">
                                         <div class="d-flex item-footer">
                                             <a href="#" class="js-report" data-toggle="modal"
-                                               data-target="#reportModal">
+                                               data-type="{{ config('constants.review.reviewType') }}"
+                                               data-target="#reportModal" data-id="{{ $item->id }}">
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path

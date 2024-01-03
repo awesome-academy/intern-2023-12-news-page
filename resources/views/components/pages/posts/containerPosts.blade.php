@@ -45,7 +45,7 @@
                             </div>
                         </form>
                     </div>
-                    @if(!empty(session('success')))
+                    @if (!empty(session('success')))
                         <div class="bg-success mt-6">
                             <p>
                                 {{ __(session('success')) }}
@@ -80,7 +80,7 @@
                                         <td class="text-center">{{ formatDate($item->created_at) }}</td>
                                         <td class="text-center">{{ formatDate($item->updated_at) }}</td>
                                         <td class="flex text-center justify-center" style="flex-wrap: wrap;">
-                                            @if($item->status->slug === config('constants.post.postStatusSlugPublish'))
+                                            @if ($item->status->slug === config('constants.post.postStatusSlugPublish'))
                                                 <a href="{{ route('detail', ['id' => $item->id]) }}"
                                                    style="margin-right: 5px;" target="_blank"
                                                    class="btn btn-success">{{ __('Show') }}</a>

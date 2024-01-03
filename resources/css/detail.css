@@ -19,7 +19,7 @@
     height: 50px;
     border-radius: 50%;
 }
-.info-detail a {
+.info-detail a,span {
     color: #000;
     transition: all 0.3s ease-in-out;
 }
