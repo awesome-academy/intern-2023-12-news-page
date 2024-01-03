@@ -51,7 +51,7 @@ h3.title-detail {
 
 #main img,figure {
     border-radius: 16px;
-    width: 100%!important;
+    max-width: 100%!important;
     height: 100%;
     object-fit: cover;
 }
