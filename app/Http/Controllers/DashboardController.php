@@ -3,24 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Repository\PostRepository;
-use App\Repository\RoleRepository;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     protected $postRepository;
-    protected $roleRepository;
 
-    public function __construct(PostRepository $postRepository, RoleRepository $roleRepository)
+    public function __construct(PostRepository $postRepository)
     {
         $this->postRepository = $postRepository;
-        $this->roleRepository = $roleRepository;
     }
 
     public function dashboard()
     {
         $userId = Auth::user()->id;
-        $role = $this->roleRepository->getSlugbyId($userId);
+        $role = Auth::user()->role->slug;
         $dataView = [
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),

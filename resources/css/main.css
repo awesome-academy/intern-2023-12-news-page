@@ -20,6 +20,10 @@ ul li{
     list-style: none;
 }
 
+.nav-custom {
+    z-index: 100!important;
+}
+
 .bg-main {
     background: #e1e1e1;
 }
