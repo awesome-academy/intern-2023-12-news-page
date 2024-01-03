@@ -43,11 +43,11 @@
                                     <td>2023-01-01 10:00:00</td>
                                     <td>2023-01-05 15:30:00</td>
                                     <td>
-                                        <a href="{{route('posts.show',['post'=>1])}}"
+                                        <a href="{{ route('posts.show', ['post' => 1]) }}"
                                            class="btn btn-success">{{ __('Show') }}</a>
-                                        <a href="{{route('posts.edit',['post'=>1])}}"
+                                        <a href="{{ route('posts.edit', ['post' => 1]) }}"
                                            class="btn btn-warning">{{ __('Edit') }}</a>
-                                        <a href="{{route('posts.destroy',['post'=>1])}}"
+                                        <a href="{{ route('posts.destroy', ['post' => 1]) }}"
                                            class="btn btn-danger">{{ __('Delete') }}</a>
                                     </td>
                                 </tr>
@@ -60,11 +60,11 @@
                                     <td>2023-02-10 08:45:00</td>
                                     <td>2023-02-15 12:20:00</td>
                                     <td>
-                                        <a href="{{route('posts.show',['post'=>1])}}"
+                                        <a href="{{ route('posts.show', ['post' => 1]) }}"
                                            class="btn btn-success">{{ __('Show') }}</a>
-                                        <a href="{{route('posts.edit',['post'=>1])}}"
+                                        <a href="{{ route('posts.edit', ['post' => 1]) }}"
                                            class="btn btn-warning">{{ __('Edit') }}</a>
-                                        <a href="{{route('posts.destroy',['post'=>1])}}"
+                                        <a href="{{ route('posts.destroy', ['post' => 1]) }}"
                                            class="btn btn-danger">{{ __('Delete') }}</a>
                                     </td>
                                 </tr>
@@ -96,11 +96,11 @@
                                     <td>2023-01-01 10:00:00</td>
                                     <td>2023-01-05 15:30:00</td>
                                     <td>
-                                        <a href="{{route('posts.show',['post'=>1])}}"
+                                        <a href="{{ route('posts.show', ['post' => 1]) }}"
                                            class="btn btn-success">{{ __('Show') }}</a>
-                                        <a href="{{route('posts.edit',['post'=>1])}}"
+                                        <a href="{{ route('posts.edit', ['post' => 1]) }}"
                                            class="btn btn-warning">{{ __('Edit') }}</a>
-                                        <a href="{{route('posts.destroy',['post'=>1])}}"
+                                        <a href="{{ route('posts.destroy', ['post' => 1]) }}"
                                            class="btn btn-danger">{{ __('Delete') }}</a>
                                     </td>
                                 </tr>
@@ -113,11 +113,11 @@
                                     <td>2023-02-10 08:45:00</td>
                                     <td>2023-02-15 12:20:00</td>
                                     <td>
-                                        <a href="{{route('posts.show',['post'=>1])}}"
+                                        <a href="{{ route('posts.show', ['post' => 1]) }}"
                                            class="btn btn-success">{{ __('Show') }}</a>
-                                        <a href="{{route('posts.edit',['post'=>1])}}"
+                                        <a href="{{ route('posts.edit', ['post' => 1]) }}"
                                            class="btn btn-warning">{{ __('Edit') }}</a>
-                                        <a href="{{route('posts.destroy',['post'=>1])}}"
+                                        <a href="{{ route('posts.destroy', ['post' => 1]) }}"
                                            class="btn btn-danger">{{ __('Delete') }}</a>
                                     </td>
                                 </tr>
@@ -159,7 +159,6 @@
                         <td>2023-02-10 08:45:00</td>
                         <td>2023-02-15 12:20:00</td>
                     </tr>
-                    <!-- Add more rows as needed -->
                     </tbody>
                 </table>
             @endif

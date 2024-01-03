@@ -1,4 +1,4 @@
-<div class="container-fluid bg-main nav">
+<div class="container-fluid bg-main nav nav-custom">
     <div class="container">
         <header class="main-navbar d-flex align-items-center">
             <div class="d-flex main-navbar__left align-items-center">

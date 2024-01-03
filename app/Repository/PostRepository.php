@@ -151,4 +151,9 @@ class PostRepository
     {
         return Post::where('user_id', $userId)->count();
     }
+
+    public function getPostsByUserId($userId)
+    {
+        return Post::where('user_id', $userId)->get();
+    }
 }

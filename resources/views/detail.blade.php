@@ -22,7 +22,7 @@
                         </div>
                         <div class="info-detail">
                             <h5>
-                                <a href="{{ route('info') }}">{{ $post->user->name }}</a>
+                                <a href="{{ route('info', ['id' => $post->user_id]) }}">{{ $post->user->name }}</a>
                             </h5>
                             <div class="d-flex justify-content-between">
                                 <span class="item-footer mr-2">{{ formatDate($post->created_at) }}</span>
@@ -72,7 +72,9 @@
                     </div>
                 </div>
                 <div class="action-detail col-md-6 d-flex align-items-center justify-content-end">
-                    <a class="btn btn-danger js-report" data-toggle="modal" data-target="#reportModal">
+                    <a class="btn btn-danger js-report" data-toggle="modal"
+                        data-type="{{ config('constants.post.postType') }}"
+                        data-target="#reportModal" data-id="{{ $post->id }}">
                         <h6 class="m-0">{{ __("Report") }}</h6>
                     </a>
                     <a class="btn btn-success">
@@ -95,7 +97,7 @@
             </div>
             <div class="tags-detail d-flex flex-wrap">
                 <h3 class="txt">{{ __('Tags') }}:</h3>
-                @foreach($post->hashtags as $item)
+                @foreach ($post->hashtags as $item)
                     <h4 class="item-tag">
                         <a href="{{ route('search', ['slug' => $item->slug, 'type' => config('constants.hashtag.hashtagType')]) }}"
                            title="{{ $item->name }}">{{ $item->name }}</a>
@@ -109,13 +111,13 @@
                     <input name="name" class="d-none" value="{{ __('Incognito') }}">
                     <textarea name="review" class="textarea-emoji"></textarea>
                     <div class="w-100 text-end">
-                        <button type="submit" class="btn btn-success mt-2" data-user="{{ Auth::user()->id ?? null }}"
-                                data-post="{{ $post->id }}"
-                                data-validate-true="{{ __('Post successfully, Reload the page to see you post') }}"
-                                data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Save') }}</button>
+                        <button type="submit" class="btn btn-success mt-2 mb-2" data-user="{{ Auth::user()->id ?? null }}"
+                            data-post="{{ $post->id }}"
+                            data-validate-true="{{ __('Post successfully, Reload the page to see you post') }}"
+                            data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Save') }}</button>
                     </div>
                 </form>
-                @foreach($post->reviews as $item)
+                @foreach ($post->reviews as $item)
                     <div class="item-comment-detail js-parent">
                         <div class="d-flex flex-wrap">
                             <div class="icon-detail">
@@ -125,7 +127,11 @@
                             </div>
                             <div class="info-detail d-flex flex-column">
                                 <h5>
-                                    <a href="{{ route('info') }}">{{ $item->user->name ?? __('Incognito') }}</a>
+                                    @if (!empty($item->user_id))
+                                        <a href="{{ route('info', ['id' => $item->user_id]) }}">{{ $item->user->name }}</a>
+                                    @else
+                                        <a>{{ __('Incognito') }}</a>
+                                    @endif
                                     <span class="js-title-report">
                                     {!! $item->content !!}
                                 </span>
@@ -134,7 +140,8 @@
                                     <div class="mb-2 d-flex justify-content-between">
                                         <div class="d-flex item-footer">
                                             <a href="#" class="js-report" data-toggle="modal"
-                                               data-target="#reportModal">
+                                               data-type="{{ config('constants.review.reviewType') }}"
+                                               data-target="#reportModal" data-id="{{ $item->id }}">
                                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                                                      xmlns="http://www.w3.org/2000/svg">
                                                     <path

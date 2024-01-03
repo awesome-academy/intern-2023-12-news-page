@@ -25,6 +25,7 @@ Route::get('/search', [LandingPageController::class, 'search'])->name('search');
 Route::get('/detail', [LandingPageController::class, 'detail'])->name('detail');
 Route::post('/comment', [LandingPageController::class, 'comment'])->name('comment');
 Route::get('/info', [LandingPageController::class, 'info'])->name('info');
+Route::post('/report', [LandingPageController::class, 'report'])->name('report');
 
 Route::middleware(['user.verify', 'user.status', 'user.permission:moderator'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');

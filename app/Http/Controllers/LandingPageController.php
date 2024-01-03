@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Repository\CategoryRepository;
 use App\Repository\HashtagRepository;
 use App\Repository\PostRepository;
+use App\Repository\ReportRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\StatusRepository;
+use App\Repository\UserRepository;
 use App\Services\LandingPageService;
 use App\Services\PostService;
+use App\Services\ReportService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LandingPageController extends Controller
 {
@@ -21,6 +25,9 @@ class LandingPageController extends Controller
     protected $postService;
     protected $statusRepository;
     protected $reviewRepository;
+    protected $reportService;
+    protected $reportRepository;
+    protected $userRepository;
 
     protected $listCategory;
     protected $listHashtag;
@@ -32,7 +39,10 @@ class LandingPageController extends Controller
         HashtagRepository $hashtagRepository,
         PostRepository $postRepository,
         StatusRepository $statusRepository,
-        ReviewRepository $reviewRepository
+        ReviewRepository $reviewRepository,
+        ReportService $reportService,
+        ReportRepository $reportRepository,
+        UserRepository $userRepository
     ) {
         $this->landingPageService = $landingPageService;
         $this->postService = $postService;
@@ -41,6 +51,9 @@ class LandingPageController extends Controller
         $this->postRepository = $postRepository;
         $this->statusRepository = $statusRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->reportService = $reportService;
+        $this->reportRepository = $reportRepository;
+        $this->userRepository = $userRepository;
 
         $this->listCategory = $categoryRepository->getListCategory();
         $this->listHashtag = $hashtagRepository->getListHashtag();
@@ -93,9 +106,26 @@ class LandingPageController extends Controller
         return view('search')->with($dataView);
     }
 
-    public function info()
+    public function info(Request $request)
     {
-        return view('info');
+        $role = Auth::user()->role->slug;
+        $userId = $request['id'];
+        $dataView = [
+            'categories' => $this->listCategory,
+            'hashtags' => $this->listHashtag,
+            'countViews' => $this->postRepository->countViews($userId),
+            'countPosts' => $this->postRepository->countPosts($userId),
+            'posts' => $this->postRepository->getPostsByUserId($userId),
+            'countFollows' => 0,
+            'userInfo' => $this->userRepository->getUserById($userId),
+            'userId' => $userId,
+        ];
+
+        if (in_array($role, config('constants.modSlug'))) {
+            $dataView['countReports'] = $this->reportService->countReports($userId);
+        }
+
+        return view('info')->with($dataView);
     }
 
     public function detail(Request $request)
@@ -137,5 +167,19 @@ class LandingPageController extends Controller
         $review = $this->reviewRepository->getReviewById($reviewId);
 
         return response()->json($review);
+    }
+
+    public function report(Request $request): JsonResponse
+    {
+        $dataInsert = [
+            'report_id' => $request['id'],
+            'type' => $request['type'],
+            'content' => $request['content'],
+            'user_id' => $request['user_id'],
+        ];
+
+        $this->reportRepository->insertReport($dataInsert);
+
+        return response()->json();
     }
 }

@@ -137,7 +137,7 @@
                     </div>
                 </div>
             @else
-                <table class="table table-custom">
+                <table class="table table-custom mt-4">
                     <thead>
                     <tr>
                         <th scope="col">{{ __('ID') }}</th>
@@ -150,24 +150,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Sample Title 1</td>
-                        <td>Category A</td>
-                        <td>100</td>
-                        <td>Active</td>
-                        <td>2023-01-01 10:00:00</td>
-                        <td>2023-01-05 15:30:00</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sample Title 2</td>
-                        <td>Category B</td>
-                        <td>150</td>
-                        <td>Inactive</td>
-                        <td>2023-02-10 08:45:00</td>
-                        <td>2023-02-15 12:20:00</td>
-                    </tr>
+                    @foreach ($posts as $post)
+                        <tr>
+                            <td>{{ $post->id }}</td>
+                            <td>{{ $post->title }}</td>
+                            <td>{{ $post->category->name }}</td>
+                            <td>{{ $post->views }}</td>
+                            <td>{{ $post->status->name }}</td>
+                            <td>{{ formatDate($post->created_at) }}</td>
+                            <td>{{ formatDate($post->updated_at) }}</td>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
             @endif

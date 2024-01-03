@@ -37,7 +37,7 @@
                         </div>
                     </form>
                 </div>
-                @if(!empty(session('success')))
+                @if (!empty(session('success')))
                     <div class="bg-success mt-6">
                         <p>
                             {{ __(session('success')) }}
@@ -70,7 +70,7 @@
                                     <td class="text-center">{{ formatDate($item->created_at) }}</td>
                                     <td class="text-center">{{ formatDate($item->updated_at) }}</td>
                                     <td class="flex text-center justify-center" style="flex-wrap: wrap;">
-                                        @if($tab === null || $tab === config('constants.post.postStatusSlugPending'))
+                                        @if ($tab === null || $tab === config('constants.post.postStatusSlugPending'))
                                             <form
                                                 action="{{ route('handle.manager.post', ['post' => $item->id, 'status' => config('constants.post.postStatusSlugPublish')]) }}"
                                                 method="post" class="position-relative js-delete"
@@ -93,7 +93,7 @@
                                                     data-ask="{{ __('Are you sure you want to update this resource?') }}"
                                                     class="btn btn-danger ml-2">{{ __('Reject') }}</button>
                                             </form>
-                                        @elseif($tab === config('constants.post.postStatusSlugPublish'))
+                                        @elseif ($tab === config('constants.post.postStatusSlugPublish'))
                                             <a href="{{ route('detail', ['id' => $item->id]) }}"
                                                style="margin-right: 5px;" target="_blank"
                                                class="btn btn-success">{{ __('Show') }}</a>
@@ -108,7 +108,7 @@
                                                     data-ask="{{ __('Are you sure you want to update this resource?') }}"
                                                     class="btn btn-danger ml-2">{{ __('Ban') }}</button>
                                             </form>
-                                        @elseif($tab === config('constants.post.postStatusSlugReject'))
+                                        @elseif ($tab === config('constants.post.postStatusSlugReject'))
                                             <form
                                                 action="{{ route('handle.manager.post', ['post' => $item->id, 'status' => config('constants.post.postStatusSlugPublish')]) }}"
                                                 method="post" class="position-relative js-delete"

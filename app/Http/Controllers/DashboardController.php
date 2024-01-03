@@ -3,31 +3,31 @@
 namespace App\Http\Controllers;
 
 use App\Repository\PostRepository;
-use App\Repository\RoleRepository;
+use App\Services\ReportService;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     protected $postRepository;
-    protected $roleRepository;
+    protected $reportService;
 
-    public function __construct(PostRepository $postRepository, RoleRepository $roleRepository)
+    public function __construct(PostRepository $postRepository, ReportService $reportService)
     {
         $this->postRepository = $postRepository;
-        $this->roleRepository = $roleRepository;
+        $this->reportService = $reportService;
     }
 
     public function dashboard()
     {
         $userId = Auth::user()->id;
-        $role = $this->roleRepository->getSlugbyId($userId);
+        $role = Auth::user()->role->slug;
         $dataView = [
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
             'countFollows' => 0,
         ];
         if (in_array($role, config('constants.modSlug'))) {
-            $dataView['countReports'] = 0;
+            $dataView['countReports'] = $this->reportService->countReports();
         }
 
         return view('dashboard')->with($dataView);

@@ -19,7 +19,7 @@
     height: 50px;
     border-radius: 50%;
 }
-.info-detail a {
+.info-detail a,span {
     color: #000;
     transition: all 0.3s ease-in-out;
 }
@@ -51,7 +51,7 @@ h3.title-detail {
 
 #main img,figure {
     border-radius: 16px;
-    width: 100%!important;
+    max-width: 100%!important;
     height: 100%;
     object-fit: cover;
 }
