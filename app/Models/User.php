@@ -27,7 +27,6 @@ class User extends Authenticatable
     protected $guarded = [
         'id',
         'role_id',
-        'status_id',
         'verify',
         'email_verified_at',
     ];

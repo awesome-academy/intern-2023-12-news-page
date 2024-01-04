@@ -12,5 +12,5 @@
 @endsection
 
 <x-app-layout>
-    @include('components.pages.report.containerReport');
+    @include('components.pages.report.containerReport')
 </x-app-layout>

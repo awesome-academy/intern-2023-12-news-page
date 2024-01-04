@@ -12,5 +12,5 @@
 @endsection
 
 <x-app-layout>
-    @include('components.pages.managerPost.containerManagerPost');
+    @include('components.pages.managerPost.containerManagerPost')
 </x-app-layout>

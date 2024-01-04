@@ -141,6 +141,7 @@ return [
     ],
     'review' => [
         'reviewStatusPublish' => 'published',
+        'reviewStatusBan' => 'banned',
         'reviewType' => 'review',
     ],
     'notification' => [
@@ -154,6 +155,21 @@ return [
     ],
     'user' => [
         'userType' => 'user',
+        'userStatusActive' => 'active',
+        'userStatusType' => 'account',
+        'userStatusBan' => 'banned',
+    ],
+    'report' => [
+        'reportTabDefault' => 'all',
+        'reportTabUser' => 'user',
+        'reportTabPost' => 'post',
+        'reportTabReview' => 'review',
+        'reportAction' => 'banned',
+    ],
+    'reportActionUnban' => [
+        'account' => 'active',
+        'post' => 'published',
+        'review' => 'published',
     ],
     'paginate' => 10,
     'verify' => 1,
