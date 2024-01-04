@@ -147,6 +147,9 @@ return [
         'updateSuccess' => 'Update this resource success',
         'storeSuccess' => 'Store this resource success',
     ],
+    'user' => [
+        'userType' => 'user',
+    ],
     'paginate' => 10,
     'verify' => 1,
     'countStart' => 0,
