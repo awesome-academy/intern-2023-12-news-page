@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
         <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lgr">
-                <div class="flex justify-between items-center">
+                <div class="flex justify-between items-center flex-wrap">
                     <div class="tabs-custom flex">
                         <a href="{{ route('manager.post.index', ['tab' => config('constants.post.postStatusSlugPending')]) }}"
                            class="tab-item {{ ($tab === null || $tab === config('constants.post.postStatusSlugPending')) ? 'active' : '' }}">

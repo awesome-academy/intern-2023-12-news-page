@@ -11,17 +11,15 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="reason">{{ __('Opinion') }}:</label>
-                    <textarea name="content" class="form-control"
-                        placeholder="{{ __('Feedback content') }}"></textarea>
+                    <label for="reason">{{ __('Reports') }}:</label>
+                    <textarea name="content" class="form-control" placeholder="{{ __('Feedback content') }}"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
                 <button type="button" class="btn btn-primary js-submit-report" data-route="{{ route('report') }}"
-                    data-validate-true="{{ __('Report successfully') }}"
-                    data-user-id="{{ Auth::user()->id ?? null }}"
-                    data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Send') }}</button>
+                        data-validate-true="{{ __('Report successfully') }}" data-user-id="{{ Auth::user()->id ?? null }}"
+                        data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Send') }}</button>
             </div>
         </div>
     </div>

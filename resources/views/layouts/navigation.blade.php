@@ -52,10 +52,10 @@
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20">
+                                         viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
-                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                            clip-rule="evenodd"/>
+                                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                              clip-rule="evenodd"/>
                                     </svg>
                                 </div>
                             </button>
@@ -80,9 +80,8 @@
                                 transition duration-150 ease-in-out">
                                 <div class="flex items-center">
                                     <div style="width: 40px; height: 40px; margin-right: 10px;">
-                                        <img style="border-radius: 50%;"
-                                            src="{{ asset(!empty(Auth::user()->avatar) ? Auth::user()->avatar : 'images/avatar_default.png') }}"
-                                            title="Avatar của {{Auth::user()->name}}" class="w-100 h-100">
+                                        <img style="border-radius: 50%;" title="Avatar của {{ Auth::user()->name }}" class="w-100 h-100"
+                                            src="{{ asset(!empty(Auth::user()->avatar) ? Auth::user()->avatar : 'images/avatar_default.png') }}">
                                     </div>
                                     <div>
                                         <span style="color: #000">{{ Auth::user()->name }}</span>
@@ -92,7 +91,7 @@
                                 </div>
                                 <div class="ml-1" style="color: #000">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 20 20">
+                                         viewBox="0 0 20 20">
                                         <path fill-rule="evenodd"
                                             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                                             clip-rule="evenodd"/>
@@ -171,9 +170,8 @@
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="px-4 flex items-center">
                 <div style="width: 50px; height: 50px; margin-right: 10px">
-                    <img style="border-radius: 50%;"
+                    <img style="border-radius: 50%;" title="Avatar của {{ Auth::user()->name }}" class="w-100 h-100">
                         src="{{asset(!empty(Auth::user()->avatar) ? Auth::user()->avatar : 'images/avatar_default.png')}}"
-                        title="Avatar của {{Auth::user()->name}}" class="w-100 h-100">
                 </div>
                 <div>
                     <div class="font-medium text-base text-gray-800 flex items-center">
