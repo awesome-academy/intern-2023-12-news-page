@@ -158,6 +158,9 @@ return [
         'userStatusActive' => 'active',
         'userStatusType' => 'account',
         'userStatusBan' => 'banned',
+        'userSlug' => 'user',
+        'moderatorSlug' => 'moderator',
+        'adminSlug' => 'admin',
     ],
     'report' => [
         'reportTabDefault' => 'all',
