@@ -21,12 +21,6 @@ return [
         ],
         [
             'type' => 'post',
-            'slug' => 'pending',
-            'name' => 'Pending',
-            'reason' => 'Post is pending',
-        ],
-        [
-            'type' => 'post',
             'slug' => 'published',
             'name' => 'Published',
             'reason' => 'Post is published',
@@ -39,15 +33,9 @@ return [
         ],
         [
             'type' => 'post',
-            'slug' => 'reject',
-            'name' => 'Reject',
-            'reason' => 'Post is reject',
-        ],
-        [
-            'type' => 'post',
-            'slug' => 'banned',
-            'name' => 'Banned',
-            'reason' => 'Post is banned',
+            'slug' => 'delete',
+            'name' => 'Delete',
+            'reason' => 'Post is delete',
         ],
         [
             'type' => 'review',
@@ -121,6 +109,7 @@ return [
         'postStatusSlugHidden' => 'hidden',
         'postStatusSlugReject' => 'reject',
         'postStatusSlugBanned' => 'banned',
+        'postStatusSlugDelete' => 'delete',
         'postStatusDefault' => 'all',
         'postType' => 'post',
     ],

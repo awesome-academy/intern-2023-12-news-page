@@ -7,7 +7,6 @@ use App\Repository\PostRepository;
 use App\Repository\StatusRepository;
 use DOMDocument;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Str;
 
 class PostService
 {
@@ -32,7 +31,7 @@ class PostService
 
     public function handlePost($dataHandle, $action, $id = null)
     {
-        $configPostSlug = config('constants.post.postStatusSlugPending');
+        $configPostSlug = config('constants.post.postStatusSlugPublish');
         $configPostType = config('constants.post.postType');
         $hashtags = stringToArr($dataHandle['hashtag']);
         $content = $dataHandle['content'];
@@ -76,24 +75,18 @@ class PostService
 
     public function deletePost($id)
     {
+        $configPostSlug = config('constants.post.postStatusSlugDelete');
+        $configPostType = config('constants.post.postType');
+        $status = $this->statusRepository->getIdBySlug($configPostSlug, $configPostType);
+
         $post = $this->postRepository->getPostNotRelationshipById($id);
 
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadHTML('<?xml encoding="UTF-8">' . $post->content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
-        $images = $dom->getElementsByTagName('img');
 
-        foreach ($images as $img) {
-            $src = $img->getAttribute('src');
-            $path = Str::of($src)->after('/');
-
-            deleteImageByPath($path);
-        }
-
-        deleteImageByPath($post->thumbnail);
-
-        $this->postRepository->deletePost($post);
+        $this->postRepository->deletePost($post, $status);
         $this->postHashtagRepository->deleteHashtagByPostId($id);
     }
 
@@ -102,7 +95,7 @@ class PostService
         $configPostType = config('constants.post.postType');
         $statusUpdate = $this->statusRepository->getIdBySlug($status, $configPostType);
 
-        $this->postRepository->updateStatusPost($id, $statusUpdate);
+        $this->postRepository->updateStatusPost($id, $statusUpdate, $status);
     }
 
     public function handlePostIndexById($id, $statusId, $statusIdReview)
