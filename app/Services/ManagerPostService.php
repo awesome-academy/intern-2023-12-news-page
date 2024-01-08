@@ -19,9 +19,19 @@ class ManagerPostService
     public function changeStatusPostByManager($data)
     {
         $postId = $data['id'];
-        $dataUpdate = [
-            'status_id' => $this->statusRepository->getIdBySlug($data['status_id'], config('constants.post.postType')),
-        ];
+        if (
+            $data['status_id'] === config('constants.post.postStatusSlugVerify') ||
+            $data['status_id'] === config('constants.post.postStatusSlugNotVerify')
+        ) {
+            $dataUpdate = [
+                'verify' => config('constants.post.' . $data['status_id']),
+            ];
+        } else {
+            $dataUpdate = [
+                'status_id' => $this->statusRepository
+                    ->getIdBySlug($data['status_id'], config('constants.post.postType')),
+            ];
+        }
 
         $this->managerPostRepository->changeStatusPostByManager($dataUpdate, $postId);
     }

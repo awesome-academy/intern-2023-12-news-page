@@ -15,7 +15,7 @@ return [
         ],
         [
             'type' => 'account',
-            'slug' => 'ban',
+            'slug' => 'banned',
             'name' => 'Banned',
             'reason' => 'Account is banned',
         ],
@@ -27,9 +27,9 @@ return [
         ],
         [
             'type' => 'post',
-            'slug' => 'hidden',
-            'name' => 'Hidden',
-            'reason' => 'Post is hidden',
+            'slug' => 'banned',
+            'name' => 'Banned',
+            'reason' => 'Post is banned',
         ],
         [
             'type' => 'post',
@@ -98,20 +98,20 @@ return [
         'Thời sự và Tin tức Toàn cầu ',
     ],
     'userBanned' => [
-        'slug' => 'ban',
+        'slug' => 'banned',
         'type' => 'account',
     ],
     'post' => [
         'postStore' => 'storage',
         'postUpdate' => 'update',
-        'postStatusSlugPending' => 'pending',
         'postStatusSlugPublish' => 'published',
-        'postStatusSlugHidden' => 'hidden',
-        'postStatusSlugReject' => 'reject',
         'postStatusSlugBanned' => 'banned',
         'postStatusSlugDelete' => 'delete',
-        'postStatusDefault' => 'all',
+        'postStatusSlugVerify' => 'verify',
+        'postStatusSlugNotVerify' => 'notVerify',
         'postType' => 'post',
+        'verify' => true,
+        'notVerify' => false,
     ],
     'tab' => [
         'tabNewPosts' => 'newPosts',

@@ -269,6 +269,26 @@ ul li{
     color: #000;
 }
 
+.info-post-verify{
+    width: fit-content;
+    position: relative;
+    padding-right: 16px;
+    margin-bottom: 0;
+}
+
+.info-post-verify svg{
+    width: 15px;
+    position: absolute;
+    top: 5px;
+    right: -1px;
+}
+
+.verifyText {
+    margin-left: 10px;
+    font-size: 12px;
+    color: #725858;
+}
+
 .main-content__item h5 {
     white-space: nowrap;
     overflow: hidden;
@@ -297,6 +317,7 @@ ul li{
 .item-footer {
     font-size: 14px;
     color: #919191;
+    margin-left: 6px;
 }
 
 .item-footer svg {

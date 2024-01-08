@@ -118,17 +118,14 @@ class PostRepository
         switch ($condition) {
             case config('constants.tab.tabNewPosts'):
                 return $query
-                    ->orderBy('created_at', 'DESC')
-                    ->select(['title', 'created_at', 'views', 'user_id', 'id'])->get();
+                    ->orderBy('created_at', 'DESC')->get();
             case config('constants.tab.tabHighInteractionsPosts'):
                 return $query
-                    ->orderBy('views', 'DESC')
-                    ->select(['title', 'created_at', 'views', 'user_id', 'id'])->get();
+                    ->orderBy('views', 'DESC')->get();
             default:
                 return $query
                     ->where('verify', config('constants.verify'))
-                    ->orderBy('created_at', 'DESC')
-                    ->select(['title', 'created_at', 'views', 'user_id', 'id'])->get();
+                    ->orderBy('created_at', 'DESC')->get();
         }
     }
 

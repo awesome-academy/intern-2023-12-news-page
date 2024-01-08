@@ -29,7 +29,7 @@ class UserRepository
 
     public function getUserById($userId)
     {
-        return User::where('id', $userId)->select(['name', 'avatar', 'created_at'])->first();
+        return User::where('id', $userId)->select(['name', 'avatar', 'created_at', 'verify'])->first();
     }
 
     public function updateStatus($userId, $getIdUpdateStatus)
