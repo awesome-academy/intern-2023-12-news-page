@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repository\ReportRepository;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class ReportService
 {
@@ -23,5 +24,10 @@ class ReportService
         }
 
         return $total;
+    }
+
+    public function getReportByTab($tab): LengthAwarePaginator
+    {
+        return $this->reportRepository->getReportByTab($tab);
     }
 }

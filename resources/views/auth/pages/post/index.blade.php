@@ -12,5 +12,5 @@
 @endsection
 
 <x-app-layout>
-    @include('components.pages.posts.containerPosts');
+    @include('components.pages.posts.containerPosts')
 </x-app-layout>

@@ -120,7 +120,7 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function editStatus(Request $request, $id): RedirectResponse
+    public function updateStatus(Request $request, $id): RedirectResponse
     {
         $status = $request['status'];
         $this->postService->updateStatusPost($id, $status);

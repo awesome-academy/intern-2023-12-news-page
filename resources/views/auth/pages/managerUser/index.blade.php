@@ -12,5 +12,5 @@
 @endsection
 
 <x-app-layout>
-    @include('components.pages.managerUser.containerManagerUser');
+    @include('components.pages.managerUser.containerManagerUser')
 </x-app-layout>

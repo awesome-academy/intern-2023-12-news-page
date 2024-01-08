@@ -101,7 +101,7 @@
                                         </td>
                                         <td style="flex-wrap: wrap;">
                                             @if ($item->status->slug === config('constants.post.postStatusSlugPublish'))
-                                                <form action="{{ route('post.editStatus',['post' => $item->id]) }}"
+                                                <form action="{{ route('post.updateStatus',['post' => $item->id]) }}"
                                                       method="post" class="position-relative"
                                                       id="posts" style="width: fit-content;margin: auto"
                                                       enctype="multipart/form-data">
@@ -114,7 +114,7 @@
                                                     </button>
                                                 </form>
                                             @elseif ($item->status->slug === config('constants.post.postStatusSlugHidden'))
-                                                <form action="{{route('post.editStatus',['post' => $item->id])}}"
+                                                <form action="{{route('post.updateStatus',['post' => $item->id])}}"
                                                       method="post" class="position-relative"
                                                       id="posts" style="width: fit-content;"
                                                       enctype="multipart/form-data">

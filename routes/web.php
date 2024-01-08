@@ -29,6 +29,8 @@ Route::post('/report', [LandingPageController::class, 'report'])->name('report')
 
 Route::middleware(['user.verify', 'user.status', 'user.permission:moderator'])->group(function () {
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
+    Route::patch('reports/{report}/update-status', [ReportController::class, 'updateStatus'])
+        ->name('report.updateStatus');
     Route::get('/manager-posts', [ManagerPostController::class, 'index'])->name('manager.post.index');
     Route::patch('/handle-manager-posts', [ManagerPostController::class, 'handle'])->name('handle.manager.post');
 });
@@ -54,7 +56,7 @@ Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
         ],
     ]);
 
-    Route::patch('posts/{post}/edit-status', [PostController::class, 'editStatus'])->name('post.editStatus');
+    Route::patch('posts/{post}/update-status', [PostController::class, 'updateStatus'])->name('post.updateStatus');
 });
 
 Route::get('language/{lang}', [LanguageController::class, 'changeLanguage'])->name('locale');
