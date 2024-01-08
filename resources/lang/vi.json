@@ -1171,5 +1171,14 @@
     "Report successfully": "Báo cáo thành công",
     "Post successfully, Reload the page to see you post": "Đã đăng thành công, Tải lại trang để xem",
     "Enter the title you want to search for": "Điền tiêu đề bạn cần tìm kiếm",
-    "Reviews": "Đánh giá"
+    "Enter the name you want to search for": "Điền tên bạn cần tìm kiếm",
+    "Reviews": "Đánh giá",
+    "Moderators": "Người điều hành",
+    "Admins": "Người quản trị",
+    "Verify": "Xác minh",
+    "Verified": "Đã xác thực",
+    "Not Verify Yet": "Chưa xác thực",
+    "Unban": "Bỏ cấm",
+    "Set Moderator": "Thiết lập người điều hành",
+    "Unset Moderator": "Bỏ đặt người điều hành"
 }

@@ -37,6 +37,10 @@ Route::middleware(['user.verify', 'user.status', 'user.permission:moderator'])->
 
 Route::middleware(['user.verify', 'user.status', 'user.permission:admin|moderator'])->group(function () {
     Route::get('/manager-users', [UserController::class, 'managerUsersIndex'])->name('manager.users.index');
+    Route::patch('manager-users/{user}/update-status', [UserController::class, 'updateStatus'])
+        ->name('user.updateStatus');
+    Route::patch('manager-users/{user}/update-role', [UserController::class, 'updateRole'])
+        ->name('user.updateRole');
 });
 
 Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
