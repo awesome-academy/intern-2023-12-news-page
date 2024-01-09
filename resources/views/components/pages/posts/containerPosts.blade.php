@@ -22,9 +22,9 @@
                                 class="tab-item {{ $tab === config('constants.post.postStatusSlugDelete') ? 'active' : '' }}">
                                 {{ __('Delete') }}
                             </a>
-                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugHidden')]) }}"
-                                class="tab-item {{ $tab === config('constants.post.postStatusSlugHidden') ? 'active' : '' }}">
-                                {{ __('Hidden') }}
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugBanned')]) }}"
+                                class="tab-item {{ $tab === config('constants.post.postStatusSlugBanned') ? 'active' : '' }}">
+                                {{ __('Banned') }}
                             </a>
                             <div class="line"></div>
                         </div>

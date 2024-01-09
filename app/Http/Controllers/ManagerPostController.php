@@ -21,7 +21,7 @@ class ManagerPostController
 
     public function __getDataTab($tab, $search): LengthAwarePaginator
     {
-        $tab = empty($tab) ? config('constants.post.postStatusSlugPending') : $tab;
+        $tab = empty($tab) ? config('constants.post.postStatusSlugVerify') : $tab;
 
         return $this->managerPostRepository->getPostByStatus($tab, $search);
     }

@@ -28,6 +28,31 @@
     color: #198754;
 }
 
+.info-detail h5{
+    width: fit-content;
+    position: relative;
+    padding-right: 16px;
+    margin-bottom: 5px;
+}
+
+.info-detail h5 svg{
+    width: 15px;
+    position: absolute;
+    top: 5px;
+    right: -1px;
+}
+
+.box-verify{
+    width: fit-content;
+    padding: 15px;
+    border: 1px solid #28a745;
+    border-radius: 10px;
+}
+
+.box-verify span{
+    color: #28a745;
+}
+
 .action-detail a:last-child {
     margin-left: 10px;
 }
