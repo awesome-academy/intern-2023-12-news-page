@@ -46,4 +46,15 @@ class HashtagRepository
 
         return $arrStore;
     }
+
+    public function getHashTagSearch($search, $limit = null)
+    {
+        $query = Hashtag::where('name', 'like', '%' . $search . '%');
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
+    }
 }

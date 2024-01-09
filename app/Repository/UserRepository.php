@@ -8,10 +8,12 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class UserRepository
 {
     protected $roleRepository;
+    protected $statusRepository;
 
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(RoleRepository $roleRepository, StatusRepository $statusRepository)
     {
         $this->roleRepository = $roleRepository;
+        $this->statusRepository = $statusRepository;
     }
 
     public function getPostByRole($tab, $search): LengthAwarePaginator
@@ -44,5 +46,22 @@ class UserRepository
         User::find($userId)->update([
             'role_id' => $getIdUpdateRole,
         ]);
+    }
+
+    public function getUserSearch($search, $limit = null)
+    {
+        $configUserSlug = config('constants.user.userStatusActive');
+        $configUserType = config('constants.user.userStatusType');
+        $statusId = $this->statusRepository->getIdBySlug($configUserSlug, $configUserType);
+
+        $query = User::with(['posts', 'role', 'followers'])->where('status_id', $statusId)
+            ->where('name', 'like', '%' . $search . '%')
+            ->select(['name', 'avatar', 'verify', 'id', 'role_id']);
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 }

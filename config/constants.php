@@ -164,6 +164,7 @@ return [
         'review' => 'published',
     ],
     'paginate' => 10,
+    'limit' => 11,
     'verify' => 1,
     'countStart' => 0,
 ];

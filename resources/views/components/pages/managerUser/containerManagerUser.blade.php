@@ -61,10 +61,10 @@
                                     <tr>
                                         <td class="text-center">{{ $item->id }}</td>
                                         <td class="text-center">{{ $item->name }}</td>
-                                        <td class="text-center" style="width: 40px; height: 40px;">
-                                            <img style="border-radius: 50%;"
-                                                title="Avatar của {{ Auth::user()->name }}" class="w-100 h-100"
-                                                src="{{ asset(!empty(Auth::user()->avatar) ? Auth::user()->avatar : 'images/avatar_default.png') }}">
+                                        <td class="text-center">
+                                            <img class="imgColumnTable"
+                                                title="Avatar của {{ $item->name }}"
+                                                src="{{ asset(!empty($item->avatar) ? Auth::user()->avatar : 'images/avatar_default.png') }}">
                                         </td>
                                         <td class="text-center">
                                             {{ $item->verify === 1 ? __('Verified') : __('Not Verify Yet') }}</td>

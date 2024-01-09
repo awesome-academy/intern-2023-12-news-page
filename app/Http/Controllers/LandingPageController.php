@@ -183,4 +183,33 @@ class LandingPageController extends Controller
 
         return response()->json();
     }
+
+    public function ajaxSearch(Request $request): JsonResponse
+    {
+        $search = $request['search'];
+        $limit = config('constants.limit');
+
+        $data = [
+            'dataPost' => $this->postRepository->getPostSearch($search, $limit),
+            'dataUser' => $this->userRepository->getUserSearch($search, $limit),
+            'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search, $limit),
+        ];
+
+        return response()->json($data);
+    }
+
+    public function searchNextPage(Request $request)
+    {
+        $search = $request['search'];
+        $dataView = [
+            'dataPost' => $this->postRepository->getPostSearch($search),
+            'dataUser' => $this->userRepository->getUserSearch($search),
+            'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search),
+            'search' => $search,
+            'categories' => $this->listCategory,
+            'hashtags' => $this->listHashtag,
+        ];
+
+        return view('searchInput')->with($dataView);
+    }
 }

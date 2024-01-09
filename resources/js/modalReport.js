@@ -4,21 +4,17 @@ import Toastify from "toastify-js";
 
 const $btnSubmitReport = $('.js-submit-report');
 const $textareaSubmit = $('#reportModal').find('textarea[name=content]');
-const $btnReport = $('.js-report');
 
-$btnReport.click((e) => {
+$(document).on('click','.js-report',function (e) {
     e.preventDefault();
     let $title = $(e.target).closest('.js-parent').find('.js-title-report').html();
     let $boxImportTitle = $('.js-import-title');
-
-    $boxImportTitle.html('');
-    $boxImportTitle.html($title);
-})
-
-$btnReport.click((e) => {
     let $this = $(e.target).closest('.js-report');
     let $id = $this.data('id');
     let $type = $this.data('type');
+
+    $boxImportTitle.html('');
+    $boxImportTitle.html($title);
 
     $btnSubmitReport.attr('data-id', $id);
     $btnSubmitReport.attr('data-type', $type);

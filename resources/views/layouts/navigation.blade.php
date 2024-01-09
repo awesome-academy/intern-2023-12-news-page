@@ -80,7 +80,7 @@
                                 transition duration-150 ease-in-out">
                                 <div class="flex items-center">
                                     <div style="width: 40px; height: 40px; margin-right: 10px;">
-                                        <img style="border-radius: 50%;" title="Avatar của {{ Auth::user()->name }}" class="w-100 h-100"
+                                        <img style="border-radius: 50%;" title="Avatar của {{ Auth::user()->name }}" class="h-full"
                                             src="{{ asset(!empty(Auth::user()->avatar) ? Auth::user()->avatar : 'images/avatar_default.png') }}">
                                     </div>
                                     <div>

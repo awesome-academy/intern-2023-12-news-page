@@ -25,3 +25,10 @@
     padding: 15px;
     border-radius: 16px;
 }
+
+.imgColumnTable {
+    margin: 0 auto;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}

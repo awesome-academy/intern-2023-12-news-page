@@ -5,6 +5,7 @@
 /public/js
 /public/icon
 /public/vendor
+/public/webfonts/
 /public/mix-manifest.json
 /public/bower_components/*
 /storage/*.key
