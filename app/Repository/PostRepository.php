@@ -33,14 +33,7 @@ class PostRepository
     {
         $paginate = config('constants.paginate');
 
-        if (empty($slug) || $slug === config('constants.post.postStatusDefault')) {
-            return Post::with(['category', 'status'])
-                ->where('user_id', $id)
-                ->where('title', 'like', '%' . $search . '%')
-                ->paginate($paginate);
-        }
-
-        return Post::with(['category', 'status'])
+        return Post::withTrashed()->with(['category', 'status'])
             ->where('user_id', $id)
             ->whereHas('status', function ($query) use ($slug) {
                 $query->where('slug', $slug)
@@ -65,7 +58,7 @@ class PostRepository
 
     public function getPostById($id)
     {
-        return Post::with(['category', 'status', 'hashtags'])->where('id', $id)->first();
+        return Post::withTrashed()->with(['category', 'status', 'hashtags'])->where('id', $id)->first();
     }
 
     public function handlePostIndexById($id, $statusId)
@@ -87,16 +80,28 @@ class PostRepository
         return Post::find($id);
     }
 
-    public function deletePost($post)
+    public function deletePost($post, $status)
     {
+        $post->update([
+            'status_id' => $status,
+        ]);
+
         $post->delete();
     }
 
-    public function updateStatusPost($id, $status)
+    public function updateStatusPost($id, $statusId, $status)
     {
-        Post::where('id', $id)->update([
-            'status_id' => $status,
-        ]);
+        $post = Post::withTrashed()->find($id);
+
+        if ($post) {
+            $post->update([
+                'status_id' => $statusId,
+            ]);
+
+            if ($status === config('constants.post.postStatusSlugPublish')) {
+                $post->restore();
+            }
+        }
     }
 
     public function getPostsWithCondition($status, $condition, $searchPostId = null, $typeSearchPost = null)
@@ -144,12 +149,12 @@ class PostRepository
 
     public function countViews($userId)
     {
-        return Post::where('user_id', $userId)->sum('views');
+        return Post::withTrashed()->where('user_id', $userId)->sum('views');
     }
 
-    public function countPosts($userId)
+    public function countPosts($userId): int
     {
-        return Post::where('user_id', $userId)->count();
+        return Post::withTrashed()->where('user_id', $userId)->count();
     }
 
     public function getPostsByUserId($userId, $statusId)

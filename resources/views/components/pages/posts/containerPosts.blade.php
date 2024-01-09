@@ -9,38 +9,30 @@
         <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md">
             @if (request()->routeIs('posts.index'))
                 <a href="{{ route('posts.create') }}"
-                   class="btn btn-md btn-success btn-add-post">{{ __('Create Post') }}</a>
+                    class="btn btn-md btn-success btn-add-post">{{ __('Create Post') }}</a>
                 <hr>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lgr">
                     <div class="flex justify-between items-center flex-wrap">
                         <div class="tabs-custom flex">
-                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusDefault')]) }}"
-                               class="tab-item {{ ($tab === null || $tab === config('constants.post.postStatusDefault')) ? 'active' : '' }}">
-                                {{ __('All') }}
-                            </a>
-                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPending')]) }}"
-                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugPending')) ? 'active' : '' }}">
-                                {{ __('Pending') }}
-                            </a>
                             <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugPublish')]) }}"
-                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugPublish')) ? 'active' : '' }}">
+                                class="tab-item {{ $tab === config('constants.post.postStatusSlugPublish') ? 'active' : '' }}">
                                 {{ __('Publish') }}
                             </a>
-                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugHidden')]) }}"
-                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugHidden')) ? 'active' : '' }}">
-                                {{ __('Hidden') }}
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugDelete')]) }}"
+                                class="tab-item {{ $tab === config('constants.post.postStatusSlugDelete') ? 'active' : '' }}">
+                                {{ __('Delete') }}
                             </a>
-                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugBanned')]) }}"
-                               class="tab-item {{ ($tab === config('constants.post.postStatusSlugBanned')) ? 'active' : '' }}">
-                                {{ __('Banned') }}
+                            <a href="{{ route('posts.index', ['tab' => config('constants.post.postStatusSlugHidden')]) }}"
+                                class="tab-item {{ $tab === config('constants.post.postStatusSlugHidden') ? 'active' : '' }}">
+                                {{ __('Hidden') }}
                             </a>
                             <div class="line"></div>
                         </div>
-                        <form method="get" action="{{route('posts.index')}}" id="form-search">
+                        <form method="get" action="{{ route('posts.index') }}" id="form-search">
                             <div class="position-relative container-form-search">
-                                <input name="tab" class="hidden" value="{{$tab ?? null}}">
+                                <input name="tab" class="hidden" value="{{ $tab ?? null }}">
                                 <input name="search" placeholder="{{ __('Enter the title you want to search for') }}"
-                                       class="p-4 bg-white border-b border-gray-200 w-full rounded-md">
+                                    class="p-4 bg-white border-b border-gray-200 w-full rounded-md">
                                 <button class="btn btn-success mt-2">{{ __('Search') }}</button>
                             </div>
                         </form>
@@ -56,81 +48,67 @@
                         <div class="tab-pane active">
                             <table class="table table-custom">
                                 <thead>
-                                <tr>
-                                    <th class="text-center" scope="col">{{ __('ID') }}</th>
-                                    <th class="text-center" width="10%" scope="col">{{ __('Title') }}</th>
-                                    <th class="text-center" scope="col">{{ __('Category') }}</th>
-                                    <th class="text-center" scope="col">{{ __('Views') }}</th>
-                                    <th class="text-center" scope="col">{{ __('Status') }}</th>
-                                    <th class="text-center" scope="col">{{ __('Created_at') }}</th>
-                                    <th class="text-center" scope="col">{{ __('Updated_at') }}</th>
-                                    <th class="text-center" width="30%" scope="col">{{ __('Handle') }}</th>
-                                    <th class="text-center" width="10%"
-                                        scope="col">{{ __('Action') . ' ' . __('Status') }}</th>
-                                </tr>
+                                    <tr>
+                                        <th class="text-center" scope="col">{{ __('ID') }}</th>
+                                        <th class="text-center" width="10%" scope="col">{{ __('Title') }}</th>
+                                        <th class="text-center" scope="col">{{ __('Category') }}</th>
+                                        <th class="text-center" scope="col">{{ __('Views') }}</th>
+                                        <th class="text-center" scope="col">{{ __('Status') }}</th>
+                                        <th class="text-center" scope="col">{{ __('Created_at') }}</th>
+                                        <th class="text-center" scope="col">{{ __('Updated_at') }}</th>
+                                        <th class="text-center" width="30%" scope="col">{{ __('Handle') }}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @foreach ($data as $item)
-                                    <tr>
-                                        <td class="text-center">{{ $item->id }}</td>
-                                        <td class="text-center">{{ $item->title }}</td>
-                                        <td class="text-center">{{ $item->category->name }}</td>
-                                        <td class="text-center">{{ $item->views }}</td>
-                                        <td class="text-center">{{ $item->status->name }}</td>
-                                        <td class="text-center">{{ formatDate($item->created_at) }}</td>
-                                        <td class="text-center">{{ formatDate($item->updated_at) }}</td>
-                                        <td class="flex text-center justify-center" style="flex-wrap: wrap;">
-                                            @if ($item->status->slug === config('constants.post.postStatusSlugPublish'))
-                                                <a href="{{ route('detail', ['id' => $item->id]) }}"
-                                                   style="margin-right: 5px;" target="_blank"
-                                                   class="btn btn-success">{{ __('Show') }}</a>
-                                            @endif
-                                            <a href="{{ route('posts.edit',[ 'post' => $item->id ]) }}"
-                                               style="margin-right: 5px;"
-                                               class="btn btn-warning">{{ __('Edit') }}</a>
-                                            <form action="{{ route('posts.destroy',['post' => $item->id]) }}"
-                                                  method="post" class="position-relative js-delete"
-                                                  id="posts" style="width: fit-content;"
-                                                  enctype="multipart/form-data">
-                                                @csrf
-                                                {{ method_field('DELETE') }}
-                                                <button
-                                                    data-ask="{{ __('Are you sure you want to delete this resource?') }}"
-                                                    class="btn btn-danger">{{ __('Delete') }}</button>
-                                            </form>
-                                        </td>
-                                        <td style="flex-wrap: wrap;">
-                                            @if ($item->status->slug === config('constants.post.postStatusSlugPublish'))
-                                                <form action="{{ route('post.updateStatus',['post' => $item->id]) }}"
-                                                      method="post" class="position-relative"
-                                                      id="posts" style="width: fit-content;margin: auto"
-                                                      enctype="multipart/form-data">
-                                                    @csrf
-                                                    {{ method_field('PATCH') }}
-                                                    <input name="status" class="hidden" type="text"
-                                                           value="{{ config('constants.post.postStatusSlugHidden') }}">
-                                                    <button class="btn btn-danger">
-                                                        {{ __('Hidden') }}
-                                                    </button>
-                                                </form>
-                                            @elseif ($item->status->slug === config('constants.post.postStatusSlugHidden'))
-                                                <form action="{{route('post.updateStatus',['post' => $item->id])}}"
-                                                      method="post" class="position-relative"
-                                                      id="posts" style="width: fit-content;"
-                                                      enctype="multipart/form-data">
-                                                    @csrf
-                                                    {{ method_field('PATCH') }}
-                                                    <input name="status" class="hidden" type="text"
-                                                           value="{{ config('constants.post.postStatusSlugPublish') }}">
-                                                    <button class="btn btn-success">
-                                                        {{ __('Publish') }}
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                {{ $data->appends(['tab' => $tab, 'search' => $search])->links() }}
+                                    @foreach ($data as $item)
+                                        <tr>
+                                            <td class="text-center">{{ $item->id }}</td>
+                                            <td class="text-center">{{ $item->title }}</td>
+                                            <td class="text-center">{{ $item->category->name }}</td>
+                                            <td class="text-center">{{ $item->views }}</td>
+                                            <td class="text-center">{{ $item->status->name }}</td>
+                                            <td class="text-center">{{ formatDate($item->created_at) }}</td>
+                                            <td class="text-center">{{ formatDate($item->updated_at) }}</td>
+                                            <td class="flex text-center justify-center" style="flex-wrap: wrap;">
+                                                @if ($item->status->slug === config('constants.post.postStatusSlugPublish'))
+                                                    <a href="{{ route('detail', ['id' => $item->id]) }}"
+                                                        target="_blank"
+                                                        class="btn btn-success mr-2">{{ __('Show') }}</a>
+                                                    <form action="{{ route('posts.destroy', ['post' => $item->id]) }}"
+                                                        method="post" class="position-relative js-delete mr-2"
+                                                        id="posts" style="width: fit-content;"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        {{ method_field('DELETE') }}
+                                                        <button
+                                                            data-ask="{{ __('Are you sure you want to delete this resource?') }}"
+                                                            class="btn btn-danger">{{ __('Delete') }}</button>
+                                                    </form>
+                                                @endif
+                                                <a href="{{ route('posts.edit', ['post' => $item->id]) }}"
+                                                    style="margin-right: 5px;"
+                                                    class="btn btn-warning">{{ __('Edit') }}</a>
+                                                @if ($tab === config('constants.post.postStatusSlugDelete'))
+                                                    <form
+                                                        action="{{ route('post.updateStatus', ['post' => $item->id]) }}"
+                                                        method="post" class="position-relative js-delete"
+                                                        id="posts" style="width: fit-content;"
+                                                        enctype="multipart/form-data">
+                                                        @csrf
+                                                        {{ method_field('PATCH') }}
+                                                        <input name="status" class="hidden" type="text"
+                                                            value="{{ config('constants.post.postStatusSlugPublish') }}">
+                                                        <button class="btn btn-success"
+                                                            data-ask="{{ __('Are you sure you want to delete this resource?') }}">
+                                                            {{ __('Publish') }}
+                                                        </button>
+                                                    </form>
+                                                @endif
+
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    {{ $data->appends(['tab' => $tab, 'search' => $search])->links() }}
                                 </tbody>
                             </table>
                         </div>
@@ -139,28 +117,28 @@
             @else
                 <table class="table table-custom mt-4">
                     <thead>
-                    <tr>
-                        <th scope="col">{{ __('ID') }}</th>
-                        <th scope="col">{{ __('Title') }}</th>
-                        <th scope="col">{{ __('Category') }}</th>
-                        <th scope="col">{{ __('Views') }}</th>
-                        <th scope="col">{{ __('Status') }}</th>
-                        <th scope="col">{{ __('Created_at') }}</th>
-                        <th scope="col">{{ __('Updated_at') }}</th>
-                    </tr>
+                        <tr>
+                            <th scope="col">{{ __('ID') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('Category') }}</th>
+                            <th scope="col">{{ __('Views') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col">{{ __('Created_at') }}</th>
+                            <th scope="col">{{ __('Updated_at') }}</th>
+                        </tr>
                     </thead>
                     <tbody>
-                    @foreach ($posts as $post)
-                        <tr>
-                            <td>{{ $post->id }}</td>
-                            <td>{{ $post->title }}</td>
-                            <td>{{ $post->category->name }}</td>
-                            <td>{{ $post->views }}</td>
-                            <td>{{ $post->status->name }}</td>
-                            <td>{{ formatDate($post->created_at) }}</td>
-                            <td>{{ formatDate($post->updated_at) }}</td>
-                        </tr>
-                    @endforeach
+                        @foreach ($posts as $post)
+                            <tr>
+                                <td>{{ $post->id }}</td>
+                                <td>{{ $post->title }}</td>
+                                <td>{{ $post->category->name }}</td>
+                                <td>{{ $post->views }}</td>
+                                <td>{{ $post->status->name }}</td>
+                                <td>{{ formatDate($post->created_at) }}</td>
+                                <td>{{ formatDate($post->updated_at) }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             @endif

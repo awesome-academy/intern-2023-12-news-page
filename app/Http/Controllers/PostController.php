@@ -39,7 +39,7 @@ class PostController extends Controller
 
     public function index(Request $request)
     {
-        $tab = $request['tab'];
+        $tab = empty($request['tab']) ? config('constants.post.postStatusSlugPublish') : $request['tab'];
         $search = $request['search'];
 
         $dataView = [
