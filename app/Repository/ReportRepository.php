@@ -38,7 +38,7 @@ class ReportRepository
         return Report::where('report_id', $reportId)->where('type', $type)->count();
     }
 
-    public function getReportByTab($tab): LengthAwarePaginator
+    public function getReportByTab($tab, $search): LengthAwarePaginator
     {
         if ($tab === config('constants.post.postType')) {
             $getIdStatus = $this->statusRepository
@@ -53,9 +53,13 @@ class ReportRepository
 
         return Report::where('type', $tab)
             ->with('userInfo')
+            ->when($search, function ($query) use ($search) {
+                return $query->where('report_id', $search);
+            })
             ->whereHas($tab, function ($query) use ($getIdStatus) {
                 $query->where('status_id', $getIdStatus);
-            })->paginate(config('constants.paginate'));
+            })->select(['content', 'report_id', 'created_at'])->orderBy('created_at', 'DESC')
+            ->paginate(config('constants.paginate'));
     }
 
     public function updateStatusByTabAndClearReport($id, $tab)

@@ -4,39 +4,37 @@ namespace App\Http\Controllers;
 
 use App\Repository\ReportRepository;
 use App\Repository\StatusRepository;
-use App\Services\ReportService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    protected $reportService;
     protected $reportRepository;
     protected $statusRepository;
 
     public function __construct(
-        ReportService $reportService,
         StatusRepository $statusRepository,
         ReportRepository $reportRepository
     ) {
-        $this->reportService = $reportService;
         $this->statusRepository = $statusRepository;
         $this->reportRepository = $reportRepository;
     }
 
-    public function __getDataTab($tab): LengthAwarePaginator
+    public function __getDataTab($tab, $search): LengthAwarePaginator
     {
-        return $this->reportService->getReportByTab($tab);
+        return $this->reportRepository->getReportByTab($tab, $search);
     }
 
     public function index(Request $request)
     {
         $tab = empty($request['tab']) ? config('constants.report.reportTabUser') : $request['tab'];
+        $search = $request['search'];
 
         $dataView = [
             'tab' => $tab,
-            'data' => $this->__getDataTab($tab),
+            'search' => $search,
+            'data' => $this->__getDataTab($tab, $search),
         ];
 
         return view('auth/pages/report/index')->with($dataView);
