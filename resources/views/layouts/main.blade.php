@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,13 +15,15 @@
     <script src="{{ asset('js/main.js') }}" defer></script>
     @yield('scripts')
 </head>
+
 <body>
-@include('components.pages.main.header')
-<div id="main-content">
-    @include('components.pages.main.nav')
-    @yield('content')
-</div>
-@include('components.pages.main.footer')
-@include('components.pages.main.subHeader')
+    @include('components.pages.main.header')
+    <div id="main-content">
+        @include('components.pages.main.nav')
+        @yield('content')
+    </div>
+    @include('components.pages.main.footer')
+    @include('components.pages.main.subHeader')
 </body>
+
 </html>

@@ -1,6 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -18,8 +17,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
                 <button type="button" class="btn btn-primary js-submit-report" data-route="{{ route('report') }}"
-                        data-validate-true="{{ __('Report successfully') }}" data-user-id="{{ Auth::user()->id ?? null }}"
-                        data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Send') }}</button>
+                    data-validate-true="{{ __('Report successfully') }}" data-user-id="{{ Auth::user()->id ?? null }}"
+                    data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Send') }}</button>
             </div>
         </div>
     </div>

@@ -48,6 +48,13 @@ class UserRepository
         ]);
     }
 
+    public function updateVerify($userId, $verify)
+    {
+        User::find($userId)->update([
+            'verify' => $verify,
+        ]);
+    }
+
     public function getUserSearch($search, $limit = null)
     {
         $configUserSlug = config('constants.user.userStatusActive');

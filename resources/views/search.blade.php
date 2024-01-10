@@ -15,10 +15,9 @@
                         <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">
-                                    <img
-                                        src="{{ asset(!empty($item->user->avatar) ? $item->user->avatar : 'images/avatar_default.png') }}"
+                                    <img src="{{ asset(!empty($item->user->avatar) ? $item->user->avatar : 'images/avatar_default.png') }}"
                                         title="Avatar của {{ $item->user->name }}" alt="">
-                                    <h5 class="text-dark d-flex align-items-center">
+                                    <h5 class="d-flex align-items-center">
                                         {{ $item->user->name }}
                                         @if ($item->user->verify)
                                             <div class="verify-user ml-1">
@@ -54,10 +53,9 @@
                         <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">
-                                    <img
-                                        src="{{ asset(!empty($item->user->avatar) ? $item->user->avatar : 'images/avatar_default.png') }}"
+                                    <img src="{{ asset(!empty($item->user->avatar) ? $item->user->avatar : 'images/avatar_default.png') }}"
                                         title="Avatar của {{ $item->user->name }}" alt="">
-                                    <h5 class="text-dark d-flex align-items-center">
+                                    <h5 class="d-flex align-items-center">
                                         {{ $item->user->name }}
                                         @if ($item->user->verify)
                                             <div class="verify-user ml-1">
@@ -93,10 +91,9 @@
                         <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">
-                                    <img
-                                        src="{{ asset(!empty($item->user->avatar) ? $item->user->avatar : 'images/avatar_default.png') }}"
+                                    <img src="{{ asset(!empty($item->user->avatar) ? $item->user->avatar : 'images/avatar_default.png') }}"
                                         title="Avatar của {{ $item->user->name }}" alt="">
-                                    <h5 class="text-dark d-flex align-items-center">
+                                    <h5 class="d-flex align-items-center">
                                         {{ $item->user->name }}
                                         @if ($item->user->verify)
                                             <div class="verify-user ml-1">

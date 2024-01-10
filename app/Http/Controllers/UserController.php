@@ -103,4 +103,15 @@ class UserController extends Controller
         return redirect()->route('manager.users.index')
             ->with('success', config('constants.notification.updateSuccess'));
     }
+
+    public function updateVerify(Request $request, $user): RedirectResponse
+    {
+        $userId = $user;
+        $updateVerify = $request['verify'];
+
+        $this->userRepository->updateVerify($userId, $updateVerify);
+
+        return redirect()->route('manager.users.index')
+            ->with('success', config('constants.notification.updateSuccess'));
+    }
 }
