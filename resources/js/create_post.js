@@ -12,7 +12,7 @@ import Toastify from "toastify-js";
     $('select').select2();
 
     let tagList = [];
-    let idList = [];
+    let slugList = [];
     let addList = [];
 
     const $tagList = $("#tagList");
@@ -29,7 +29,7 @@ import Toastify from "toastify-js";
 
             $dataUpdate.forEach(function (value) {
                 tagList.push(value.slug);
-                idList.push(value.id);
+                slugList.push(value.slug);
             });
         }
         tagList_render();
@@ -105,10 +105,9 @@ import Toastify from "toastify-js";
 
     $boxSearch.find('li').click((e) => {
         let $slug = $(e.target).attr('data-slug');
-        let $id = $(e.target).attr('data-id');
 
         if ($slug.replace(/\s/g, '') !== '' && !tagList.includes($slug)) {
-            idList.push($id);
+            slugList.push($slug);
             tagList.push($slug);
             $newTag.val('');
             tagList_render();
@@ -124,7 +123,9 @@ import Toastify from "toastify-js";
                 return value !== textTagAdd;
             });
         } else {
-            idList.splice(index, 1);
+            slugList = $.grep(slugList, function (value) {
+                return value !== textTagAdd;
+            });
         }
         tagList.splice(index, 1);
 
@@ -134,12 +135,13 @@ import Toastify from "toastify-js";
     $('#posts').one('submit', function (e) {
         e.preventDefault();
         $storageTag.val(null);
-        if (idList.length > 0) {
-            $storageTag.val(idList.join(','));
+        if (slugList.length > 0) {
+            $storageTag.val(slugList.join(','));
         }
         if (addList.length > 0) {
             $hashtagAdd.val(addList.join(','));
         }
+
         $(this).submit();
     });
 })();

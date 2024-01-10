@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Models\Hashtag;
 use App\Models\PostHashtag;
 use Carbon\Carbon;
 
@@ -12,13 +13,16 @@ class PostHashtagRepository
         PostHashtag::where('post_id', $id)->delete();
     }
 
-    public function insertPostHashtag($postId, $hashtags, $action)
+    public function insertPostHashtag($postId, $hashtags, $action, $arrHashtagCustom)
     {
         if ($action === config('constants.post.postUpdate')) {
             $this->deleteHashtagByPostId($postId);
         }
 
-        foreach ($hashtags as $hashtag) {
+        $getIdsHashTagBySlug = Hashtag::whereIn('slug', $hashtags)->select('id')->pluck('id');
+        $mergedCollection = $getIdsHashTagBySlug->merge($arrHashtagCustom);
+
+        foreach ($mergedCollection as $hashtag) {
             $dataInsert = [
                 'post_id' => $postId,
                 'hashtag_id' => $hashtag,
@@ -27,6 +31,11 @@ class PostHashtagRepository
 
             PostHashtag::create($dataInsert);
         }
+    }
+
+    public function removePostHashtag($postId)
+    {
+        PostHashtag::where('post_id', $postId)->delete();
     }
 
     public function listPostByHashtagId($id)

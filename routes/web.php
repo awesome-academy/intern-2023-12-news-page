@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\ManagerPostController;
@@ -48,6 +49,18 @@ Route::middleware(['user.verify', 'user.status', 'user.permission:admin|moderato
 });
 
 Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
+    Route::get('follows', [FollowController::class, 'index'])
+        ->name('follows.index');
+
+    Route::get('profile', [DashboardController::class, 'profile'])
+        ->name('profile');
+
+    Route::patch('update-profile', [DashboardController::class, 'updateProfile'])
+        ->name('update.profile');
+
+    Route::patch('update-password', [DashboardController::class, 'updatePassword'])
+        ->name('update.password');
+
     Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
 

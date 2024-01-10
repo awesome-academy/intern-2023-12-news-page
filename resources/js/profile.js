@@ -4,6 +4,7 @@ const previewContainer = document.querySelector('.preview-container');
 const previewImage = document.querySelector('.preview-image');
 const closeButton = document.querySelector('.close-button');
 const fileName = document.querySelector('.file-name');
+const avatarDefault = document.querySelector('.avatar-default');
 
 dropArea.addEventListener('dragover', (event) => {
     event.preventDefault();
@@ -31,6 +32,7 @@ fileInput.addEventListener('change', () => {
 closeButton.addEventListener('click', (event) => {
     event.preventDefault();
     fileInput.value = '';
+    avatarDefault.value = '';
     previewImage.style.backgroundImage = '';
     fileName.textContent = '';
     previewImage.classList.add('hidden');

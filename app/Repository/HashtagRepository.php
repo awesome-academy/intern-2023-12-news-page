@@ -27,12 +27,12 @@ class HashtagRepository
     {
         $arrStore = [];
 
-        foreach ($hashtags as $hashtag) {
-            $hashtag = Hashtag::where('name', $hashtag)->where('slug', Str::slug($hashtag))->first();
+        foreach ($hashtags as $item) {
+            $hashtag = Hashtag::where('name', $item)->where('slug', Str::slug($item))->first();
             if (empty($hashtag)) {
                 $dataInsert = [
-                    'name' => $hashtag,
-                    'slug' => Str::slug($hashtag),
+                    'name' => $item,
+                    'slug' => Str::slug($item),
                     'created_at' => Carbon::now(),
                 ];
 

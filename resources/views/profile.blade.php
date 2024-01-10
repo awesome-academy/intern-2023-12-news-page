@@ -18,7 +18,25 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form method="POST" action="">
+                    @if (!empty(session('success')))
+                        <div class="bg-success mb-6">
+                            <p>
+                                {{ __(session('success')) }}
+                            </p>
+                        </div>
+                    @endif
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ __($error) }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+                    <form method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data">
+                        @csrf
+                        {{ method_field('PATCH') }}
                         <h3 style="margin-bottom: 20px" class="h3 font-semibold text-xl text-gray-800 leading-tight">
                             {{ __('Info User') }} </h3>
                         <div style="margin-bottom: 20px;flex-wrap: wrap;"
@@ -34,11 +52,15 @@
                                     {{ __('Drop file or click to choose') }}
                                 </label>
 
-                                <input name="file" type="file" id="file-input" accept="image/*" class="hidden" />
+                                <input name="file" type="file" id="file-input" accept="image/*" class="hidden"/>
 
-                                <div class="preview-container hidden items-center justify-center flex-col">
-                                    <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md"></div>
-                                    <span class="file-name my-4 text-sm font-medium"></span>
+                                <input name="default" type="text" class="avatar-default hidden" value="{{ $user->avatar }}"/>
+
+                                <div
+                                    class="preview-container {{ !empty($user->avatar) ? 'flex' : 'hidden' }} items-center justify-center flex-col">
+                                    <div class="preview-image w-36 h-36 bg-cover bg-center rounded-md"
+                                        style="background-image: url({{ $user->avatar }})"></div>
+                                    <span class="file-name my-4 text-sm font-medium">{{ $user->avatar }}</span>
                                     <p
                                         class="close-button cursor-pointer transition-all mb-4 rounded-md px-3 py-1
                                         border text-xs text-red-500 border-red-500 hover:bg-red-500 hover:text-white">
@@ -54,8 +76,8 @@
                                 <input
                                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300
                                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"
-                                    id="name" type="text" name="name" required="required"
-                                    autofocus="autofocus">
+                                    value="{{ $user->name }}" id="name" type="text" name="name"
+                                    required="required" autofocus="autofocus">
                             </div>
                         </div>
                         <button type="submit"
@@ -75,7 +97,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form method="POST" action="">
+                    <form method="POST" action="{{ route('update.password') }}">
+                        @csrf
+                        {{ method_field('PATCH') }}
                         <h3 style="margin-bottom: 20px" class="h3 font-semibold text-xl text-gray-800 leading-tight">
                             {{ __('Password') }}
                         </h3>

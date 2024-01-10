@@ -858,6 +858,7 @@
     "Thanks for your continued support. We've attached a copy of your invoice for your records. Please let us know if you have any questions or concerns.": "Thanks for your continued support. We've attached a copy of your invoice for your records. Please let us know if you have any questions or concerns.",
     "Thanks!": "Thanks!",
     "Thanks,": "Thanks,",
+    "The :attribute is incorrect.": "The :attribute is incorrect.",
     "The :attribute must be a valid role.": "The :attribute must be a valid role.",
     "The :attribute must be at least :length characters and contain at least one number.": "The :attribute must be at least :length characters and contain at least one number.",
     "The :attribute must be at least :length characters and contain at least one special character and one number.": "The :attribute must be at least :length characters and contain at least one special character and one number.",
