@@ -1192,5 +1192,10 @@
     "match": "khớp",
     "with": "với",
     "users": "người dùng",
-    "hashtag": "thẻ"
+    "hashtag": "thẻ",
+    "user": "người dùng",
+    "success": "thành công",
+    "Login to follow this user": "Đăng nhập để theo dõi người dùng này",
+    "User": "Người dùng",
+    "Index": "STT"
 }

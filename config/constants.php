@@ -163,6 +163,10 @@ return [
         'post' => 'published',
         'review' => 'published',
     ],
+    'follow' => [
+        'followerTab' => 'follower',
+        'hadFollowedTab' => 'hadFollowed',
+    ],
     'paginate' => 10,
     'limit' => 11,
     'verify' => 1,

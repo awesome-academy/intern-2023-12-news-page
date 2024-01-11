@@ -1230,5 +1230,10 @@
     "match": "match",
     "with": "with",
     "users": "users",
-    "hashtag": "hashtag"
+    "hashtag": "hashtag",
+    "user": "user",
+    "success": "success",
+    "Login to follow this user": "Login to follow this user",
+    "User": "User",
+    "Index": "Index"
 }

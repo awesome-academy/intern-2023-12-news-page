@@ -44,8 +44,7 @@
                             <label class="block font-medium text-sm text-gray-700" for="email">
                                 {{ __('Profile Photo') }}
                             </label>
-                            <div
-                                class="drop-area w-full rounded-md border-2 border-dotted border-gray-200
+                            <div class="drop-area w-full rounded-md border-2 border-dotted border-gray-200
                                 transition-all hover:border-blue-600/30 text-center">
                                 <label for="file-input"
                                     class="block w-full h-full text-gray-500 p-4 text-sm cursor-pointer">
@@ -72,7 +71,7 @@
                         </div>
                         <div style="margin-bottom: 20px;" class="flex items-center">
                             <div style="width:100%">
-                                <x-label for="gender" :value="__('Name')" />
+                                <x-label for="name" :value="__('Name')" />
                                 <input
                                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300
                                     focus:ring focus:ring-indigo-200 focus:ring-opacity-50 block mt-1 w-full"

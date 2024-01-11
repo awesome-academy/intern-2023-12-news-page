@@ -6,6 +6,7 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/actionFollow.js') }}" defer></script>
     <script src="{{ asset('js/modalReport.js') }}" defer></script>
     <script src="{{ asset('js/detail.js') }}" defer></script>
 @endsection
@@ -57,9 +58,14 @@
                         data-id="{{ $post->id }}">
                         <h6 class="m-0">{{ __('Report') }}</h6>
                     </a>
-                    <a class="btn btn-success">
-                        <h6 class="m-0">{{ __('Follow') }}</h6>
-                    </a>
+                    @if (!empty(Auth::user()) && Auth::user()->id !== $post->user_id)
+                        <a href="{{ route('follow') }}" class="js-follow btn btn-success"
+                            data-reverse="{{ $checkFollow ? __('Follow') : __('Unfollow') }}"
+                            data-user-follow="{{ $post->user_id }}" data-user="{{ Auth::user()->id }}"
+                            data-toast-success = "{{ __('user') . ' ' . __('success') }}">
+                            <h6 class="m-0">{{ $checkFollow ? __('Unfollow') : __('Follow') }}</h6>
+                        </a>
+                    @endif
                 </div>
             </div>
             <div class="category-detail">

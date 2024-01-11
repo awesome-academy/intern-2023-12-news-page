@@ -77,7 +77,13 @@ Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
         ],
     ]);
 
+    Route::get('follows', [FollowController::class, 'index'])->name('follows.index');
+
+    Route::get('un-follow', [FollowController::class, 'unFollow'])->name('unFollow');
+
     Route::patch('posts/{post}/update-status', [PostController::class, 'updateStatus'])->name('post.updateStatus');
+
+    Route::post('/follow', [LandingPageController::class, 'follow'])->name('follow');
 });
 
 Route::get('language/{lang}', [LanguageController::class, 'changeLanguage'])->name('locale');

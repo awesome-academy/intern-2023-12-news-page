@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
+use App\Repository\FollowRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
 use App\Services\ReportService;
@@ -16,15 +17,18 @@ class DashboardController extends Controller
     protected $postRepository;
     protected $reportService;
     protected $userRepository;
+    protected $followRepository;
 
     public function __construct(
         PostRepository $postRepository,
         ReportService $reportService,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        FollowRepository $followRepository
     ) {
         $this->postRepository = $postRepository;
         $this->reportService = $reportService;
         $this->userRepository = $userRepository;
+        $this->followRepository = $followRepository;
     }
 
     public function dashboard()
@@ -34,7 +38,7 @@ class DashboardController extends Controller
         $dataView = [
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
-            'countFollows' => 0,
+            'countFollows' => $this->followRepository->countFollower($userId),
         ];
         if (in_array($role, config('constants.modSlug'))) {
             $dataView['countReports'] = $this->reportService->countReports();
