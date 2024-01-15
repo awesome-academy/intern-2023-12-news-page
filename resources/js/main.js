@@ -49,15 +49,15 @@ function performSearch($val, $route, $type, $tab = null)
                             '<div class="w-100 h-100 main-container__item">' +
                                 '<div class="info-post-item d-flex">' +
                                     '<img src="' + (value.user !== null && value.user.avatar !== null ? value.user.avatar : 'images/avatar_default.png') + '"' +
-                                        'title="Avatar của ' + value.user.name + '" alt="">' +
-                                        '<h5>' +
+                                        'title="Avatar của ' + value.user.name + '" alt="" class="post-item-avatar">' +
+                                        '<h5 class="ml-2">' +
                                             '<div class="d-flex align-items-center">' +
                                                 encodeHTML(value.user.name) +
                                                 '<div class="verify-user ml-1 ' + (value.user.verify === 1 ? "" : "d-none") + '">' +
                                                     '<i class="fa-solid fa-check"></i>' +
                                                 '</div>' +
                                             '</div>' +
-                                            '<div class="d-flex justify-content-between flex-wrap">' +
+                                            '<div class="d-flex justify-content-between flex-wrap mt-2">' +
                                                 '<span class="item-footer mr-2">' + moment(value.created_at, "YYYY-MM-DD HH:mm:ss").format("DD/MM/YYYY") + '</span>' +
                                                 '<div class="d-flex item-footer">' +
                                                     '<div class="mr-2">' +
@@ -98,15 +98,15 @@ function performSearch($val, $route, $type, $tab = null)
                             '<div class="w-100 h-100 main-container__item">' +
                                 '<div class="info-post-item d-flex">' +
                                     '<img src="' + (value.avatar !== null ? value.avatar : 'images/avatar_default.png') + '"' +
-                                        'title="Avatar của ' + value.name + '" alt="">' +
-                                    '<h5 class="">' +
+                                        'title="Avatar của ' + value.name + '" alt="" class="post-item-avatar">' +
+                                    '<h5 class="ml-2">' +
                                         '<div class="d-flex align-items-center">' +
                                             encodeHTML(value.name) +
                                             '<div class="verify-user ml-1 ' + (value.verify === 1 ? "" : "d-none") + '">' +
                                                 '<i class="fa-solid fa-check"></i>' +
                                             '</div>' +
                                         '</div>' +
-                                        '<div class="d-flex justify-content-between flex-wrap">' +
+                                        '<div class="d-flex justify-content-between flex-wrap mt-2">' +
                                             '<div class="d-flex item-footer">' +
                                                 '<div class="mr-2">' +
                                                     '<i class="fa-solid fa-newspaper text-dark mr-1"></i>' +

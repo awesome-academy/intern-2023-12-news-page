@@ -20,8 +20,8 @@
                 <div class="col-md-6">
                     <div class="info-post-item d-flex">
                         <img src="{{ asset(!empty($userInfo->avatar) ? $userInfo->avatar : 'images/avatar_default.png') }}"
-                            title="Avatar của {{ $userInfo->name }}" alt="">
-                        <div class="">
+                            title="Avatar của {{ $userInfo->name }}" alt="" class="post-item-avatar">
+                        <div class="ml-2">
                             <h5 class="d-flex align-items-center">
                                 {{ $userInfo->name }}
                                 @if ($userInfo->verify)
@@ -31,7 +31,7 @@
                                 @endif
                             </h5>
                             <div class="d-flex justify-content-between flex-wrap">
-                                <div class="d-flex item-footer mt-2 ml-2">
+                                <div class="d-flex item-footer">
                                     <span class="item-footer mr-3">{{ formatDate($userInfo->created_at) }}</span>
                                     <div class="mr-2">
                                         <i class="fa-solid fa-newspaper text-dark"></i>
