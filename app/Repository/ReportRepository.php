@@ -58,7 +58,7 @@ class ReportRepository
             })
             ->whereHas($tab, function ($query) use ($getIdStatus) {
                 $query->where('status_id', $getIdStatus);
-            })->select(['content', 'report_id', 'created_at'])->orderBy('created_at', 'DESC')
+            })->select(['content', 'report_id', 'created_at', 'user_id'])->orderBy('created_at', 'DESC')
             ->paginate(config('constants.paginate'));
     }
 

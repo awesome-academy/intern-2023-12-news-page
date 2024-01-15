@@ -7,7 +7,7 @@
                         @foreach ($categories as $item)
                             <li class="category-item" style="width: fit-content;">
                                 <a href="{{ route('search', ['slug' => $item->slug, 'type' => config('constants.category.categoryType')]) }}"
-                                   class="category-link">
+                                    class="category-link">
                                     {{ $item->name }}
                                 </a>
                             </li>

@@ -64,10 +64,11 @@
                                         <td class="text-center">
                                             <img class="imgColumnTable"
                                                 title="Avatar của {{ $item->name }}"
-                                                src="{{ asset(!empty($item->avatar) ? Auth::user()->avatar : 'images/avatar_default.png') }}">
+                                                src="{{ asset(!empty($item->avatar) ? $item->avatar : 'images/avatar_default.png') }}">
                                         </td>
                                         <td class="text-center">
-                                            {{ $item->verify === 1 ? __('Verified') : __('Not Verify Yet') }}</td>
+                                            {{ $item->verify === config('constants.verify') ? __('Verified') : __('Not Verify Yet') }}
+                                        </td>
                                         <td class="text-center">{{ $item->status->name }}</td>
                                         <td class="text-center">{{ $item->role->name }}</td>
                                         <td class="text-center">{{ formatDate($item->created_at) }}</td>
@@ -94,6 +95,26 @@
                                                         <button class="btn btn-success"
                                                             data-ask="{{ __('Are you sure you want to update this resource?') }}">
                                                             {{ __('Unban') }}
+                                                        </button>
+                                                    @endif
+                                                </form>
+                                                <form action="{{ route('user.updateVerify', ['user' => $item->id]) }}"
+                                                    method="post" class="position-relative js-delete"
+                                                    style="width: fit-content;margin: auto"
+                                                    enctype="multipart/form-data">
+                                                    @csrf
+                                                    <input name="verify" class="hidden"
+                                                        value="{{ $item->verify === config('constants.verify') ? config('constants.unVerify') : config('constants.verify') }}">
+                                                    {{ method_field('PATCH') }}
+                                                    @if (!$item->verify)
+                                                        <button class="btn btn-success ml-2"
+                                                            data-ask="{{ __('Are you sure you want to update this resource?') }}">
+                                                            {{ __('Verify') }}
+                                                        </button>
+                                                    @else
+                                                        <button class="btn btn-danger ml-2"
+                                                            data-ask="{{ __('Are you sure you want to update this resource?') }}">
+                                                            {{ __('Unverified') }}
                                                         </button>
                                                     @endif
                                                 </form>

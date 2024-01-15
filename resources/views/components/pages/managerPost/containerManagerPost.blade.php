@@ -67,8 +67,8 @@
                                         <td class="text-center">{{ formatDate($item->updated_at) }}</td>
                                         <td class="flex text-center justify-center" style="flex-wrap: wrap;">
                                             @if (empty($tab) || $tab === config('constants.post.postStatusSlugVerify'))
-                                                <a href="{{ route('detail', ['id' => $item->id]) }}"
-                                                    target="_blank" class="btn btn-success mr-2">{{ __('Show') }}</a>
+                                                <a href="{{ route('detail', ['id' => $item->id]) }}" target="_blank"
+                                                    class="btn btn-success mr-2">{{ __('Show') }}</a>
                                                 <form
                                                     action="{{ route('handle.manager.post', ['post' => $item->id, 'status' => config('constants.post.postStatusSlugBanned')]) }}"
                                                     method="post" class="position-relative js-delete"

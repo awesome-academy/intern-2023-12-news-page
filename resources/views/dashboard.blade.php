@@ -24,8 +24,8 @@
                     </h2>
                 </div>
                 <div class="flex card-dashboard-content items-center">
-                    <div class="counter card-dashboard-total text-green-600"
-                         data-target="{{ $countViews }}"></div> {{ __('views') }}
+                    <div class="counter card-dashboard-total text-green-600" data-target="{{ $countViews }}"></div>
+                    {{ __('views') }}
                 </div>
             </div>
             <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md card-dashboard">
@@ -35,8 +35,8 @@
                     </h2>
                 </div>
                 <div class="flex card-dashboard-content items-center">
-                    <div class="counter card-dashboard-total text-yellow"
-                         data-target="{{ $countPosts }}"></div> {{ __('posts') }}
+                    <div class="counter card-dashboard-total text-yellow" data-target="{{ $countPosts }}"></div>
+                    {{ __('posts') }}
                 </div>
             </div>
             <div class="p-6 bg-white border-b border-gray-200 w-full rounded-md card-dashboard">
@@ -46,8 +46,8 @@
                     </h2>
                 </div>
                 <div class="flex card-dashboard-content items-center">
-                    <div class="counter card-dashboard-total text-indigo-600"
-                         data-target="{{ $countFollows }}"></div> {{ __('follows') }}
+                    <div class="counter card-dashboard-total text-indigo-600" data-target="{{ $countFollows }}"></div>
+                    {{ __('follows') }}
                 </div>
             </div>
             @if (in_array(Auth::user()->role->slug, config('constants.modSlug')))
@@ -59,7 +59,8 @@
                     </div>
                     <div class="flex card-dashboard-content items-center">
                         <div class="counter card-dashboard-total text-red-600"
-                             data-target="{{ $countReports ?? config('constants.countStart') }}"></div> {{ __('reports') }}
+                            data-target="{{ $countReports ?? config('constants.countStart') }}"></div>
+                        {{ __('reports') }}
                     </div>
                 </div>
             @endif

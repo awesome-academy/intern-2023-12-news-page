@@ -43,6 +43,8 @@ Route::middleware(['user.verify', 'user.status', 'user.permission:admin|moderato
         ->name('user.updateStatus');
     Route::patch('manager-users/{user}/update-role', [UserController::class, 'updateRole'])
         ->name('user.updateRole');
+    Route::patch('manager-users/{user}/update-verify', [UserController::class, 'updateVerify'])
+        ->name('user.updateVerify');
 });
 
 Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
