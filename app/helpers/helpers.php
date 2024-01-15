@@ -58,6 +58,22 @@ if (!function_exists('uploadImageThumbnailPost')) {
     }
 }
 
+if (!function_exists('uploadAvatarProfile')) {
+    function uploadAvatarProfile($data): string
+    {
+        $filename = time() . $data->getClientOriginalName();
+        $pathImage = 'uploads/profile/avatar';
+        $directoryPath = public_path($pathImage);
+        if (!File::exists($directoryPath)) {
+            File::makeDirectory($directoryPath, 0777, true, true);
+        }
+
+        $data->move($directoryPath, $filename);
+
+        return $pathImage . '/' . $filename;
+    }
+}
+
 if (!function_exists('stringToArr')) {
     function stringToArr($string)
     {

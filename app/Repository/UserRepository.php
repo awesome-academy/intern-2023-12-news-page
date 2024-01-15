@@ -8,12 +8,10 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 class UserRepository
 {
     protected $roleRepository;
-    protected $statusRepository;
 
-    public function __construct(RoleRepository $roleRepository, StatusRepository $statusRepository)
+    public function __construct(RoleRepository $roleRepository)
     {
         $this->roleRepository = $roleRepository;
-        $this->statusRepository = $statusRepository;
     }
 
     public function getPostByRole($tab, $search): LengthAwarePaginator
@@ -70,5 +68,10 @@ class UserRepository
         }
 
         return $query->get();
+    }
+
+    public function updateProfile($userId, $dataUpdate)
+    {
+        User::find($userId)->update($dataUpdate);
     }
 }

@@ -852,6 +852,7 @@
     "Thanks for your continued support. We've attached a copy of your invoice for your records. Please let us know if you have any questions or concerns.": "Cảm ơn vì sự tiếp tục hỗ trợ từ bạn. Chúng tôi đã đính kèm một bản sao hóa đơn của bạn để lưu trữ. Vui lòng cho chúng tôi biết nếu bạn có bất kỳ câu hỏi hoặc thắc mắc nào.",
     "Thanks!": "Cảm ơn!",
     "Thanks,": "Cảm ơn,",
+    "The :attribute is incorrect.": ":attribute không chính xác",
     "The :attribute must be a valid role.": "Trường :attribute phải là một vai trò hợp lệ.",
     "The :attribute must be at least :length characters and contain at least one number.": "Trường :attribute phải có ít nhất :length kí tự và chứa ít nhất một chữ số.",
     "The :attribute must be at least :length characters and contain at least one special character and one number.": "Trường :attribute phải có ít nhất :length kí tự và chứ ít nhất một kí tự đặc biệt và một chữ số.",
