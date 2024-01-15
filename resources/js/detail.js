@@ -11,6 +11,7 @@ $('#comment').on('submit', function (e) {
 
     let $postId = $(e.target).find('button[type=submit]').data('post');
     let $userId = $(e.target).find('button[type=submit]').data('user');
+    let $routeUser = $(e.target).find('button[type=submit]').data('route-info');
     let $content = $(e.target).find('.emojionearea-editor').html();
     let $route = $(e.target).attr('action');
     let $csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -32,7 +33,8 @@ $('#comment').on('submit', function (e) {
         }).showToast();
     } else {
         $(e.target).find('.emojionearea-editor').html('');
-        const $textToast = $(e.target).find('button[type=submit]').data('validate-true');
+        let $textToast = $(e.target).find('button[type=submit]').data('validate-true');
+        let $nameIncognito = $(e.target).find('input[name=name]').val();
 
         $data.append('postId', $postId);
         $data.append('userId', $userId);
@@ -47,7 +49,32 @@ $('#comment').on('submit', function (e) {
             headers: {
                 'X-CSRF-Token': $csrfToken
             },
-            success: function () {
+            success: function (res) {
+                let $blockReview = $('.comments-detail');
+                let $html = '<div class="item-comment-detail js-parent">' +
+                    '<div class="d-flex flex-wrap">' +
+                        '<div class="icon-detail">' +
+                            '<img src="' + (res.user !== null && res.user.avatar !== null ? res.user.avatar : 'images/avatar_default.png') + '"' +
+                                'title="Avatar của ' + (res.user !== null ? res.user.name : $nameIncognito) + '" alt="">' +
+                        '</div>' +
+                        '<div class="info-detail d-flex flex-column">' +
+                            '<h5>' +
+                                '<a href="' + (res.user !== null ? $routeUser + "?id=" + res.user.id : "") + '">' + (res.user !== null ? res.user.name : $nameIncognito) + '</a>' +
+                                    '<span class="js-title-report ml-2">' + res.content + '</span>' +
+                            '</h5>' +
+                            '<div class="js-container-action">' +
+                                '<div class="mb-2 d-flex justify-content-between">' +
+                                    '<div class="d-flex item-footer">' +
+                                        '<a href="#" class="js-report" data-toggle="modal" data-target="#reportModal" data-id="' + res.id + '" data-type="review">' +
+                                            '<i class="fa-solid fa-flag"></i>' +
+                                        '</a>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+                $blockReview.append($html);
                 Toastify({
                     text: $textToast,
                     duration: 3000,

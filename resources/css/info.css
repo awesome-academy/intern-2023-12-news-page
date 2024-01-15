@@ -8,3 +8,15 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+
+.verify-user{
+    width: 15px;
+    height: 15px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+}

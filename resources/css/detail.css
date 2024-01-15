@@ -35,11 +35,26 @@
     margin-bottom: 5px;
 }
 
-.info-detail h5 svg{
+.info-detail h5 .verify-user{
     width: 15px;
-    position: absolute;
-    top: 5px;
-    right: -1px;
+    height: 15px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.verify-user{
+    width: 15px;
+    height: 15px;
+    background: #28a745;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
 }
 
 .box-verify{
@@ -142,11 +157,12 @@ h3.title-detail {
 
 .item-comment-detail .item-footer a {
     padding: 10px;
-    border-radius: 50%;
+    border-radius: 10px;
 }
 
 .item-comment-detail .item-footer a:hover {
     background: #e38b8b;
+    color: #fff;
 }
 
 .container-posts-category {

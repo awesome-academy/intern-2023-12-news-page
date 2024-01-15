@@ -10,15 +10,18 @@ class PostRepository
     protected $categoryRepository;
     protected $hashtagRepository;
     protected $postHashtagRepository;
+    protected $statusRepository;
 
     public function __construct(
         CategoryRepository $categoryRepository,
         HashtagRepository $hashtagRepository,
-        PostHashtagRepository $postHashtagRepository
+        PostHashtagRepository $postHashtagRepository,
+        StatusRepository $statusRepository
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->hashtagRepository = $hashtagRepository;
         $this->postHashtagRepository = $postHashtagRepository;
+        $this->statusRepository = $statusRepository;
     }
 
     public function getPostByCategoryId($categoryId, $statusId, $postId)
@@ -157,5 +160,23 @@ class PostRepository
     public function getPostsByUserId($userId, $statusId)
     {
         return Post::where('user_id', $userId)->where('status_id', $statusId)->get();
+    }
+
+    public function getPostSearch($search, $limit = null)
+    {
+        $configPostSlug = config('constants.post.postStatusSlugPublish');
+        $configPostType = config('constants.post.postType');
+        $statusId = $this->statusRepository->getIdBySlug($configPostSlug, $configPostType);
+
+        $query = Post::with(['reviews', 'user'])
+            ->where('status_id', $statusId)
+            ->where('title', 'like', '%' . $search . '%')
+            ->select(['title', 'verify', 'id', 'user_id', 'created_at', 'views']);
+
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query->get();
     }
 }

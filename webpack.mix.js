@@ -66,3 +66,6 @@ mix.js('resources/js/info.js', 'public/js')
         require('tailwindcss'),
         require('autoprefixer'),
     ]);
+
+mix.copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
+    .copy('node_modules/@fortawesome/fontawesome-free/css/all.min.css', 'public/css/fontawesome.css');

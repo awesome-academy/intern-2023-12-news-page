@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingPageController::class, 'landingPage'])->name('landingPage');
 Route::get('/search', [LandingPageController::class, 'search'])->name('search');
+Route::get('/ajax-search', [LandingPageController::class, 'ajaxSearch'])->name('ajax.search');
+Route::get('/search-next-page', [LandingPageController::class, 'searchNextPage'])->name('search.nextPage');
 Route::get('/detail', [LandingPageController::class, 'detail'])->name('detail');
 Route::post('/comment', [LandingPageController::class, 'comment'])->name('comment');
 Route::get('/info', [LandingPageController::class, 'info'])->name('info');
