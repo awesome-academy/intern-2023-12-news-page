@@ -45,7 +45,7 @@
                         <table class="table table-custom">
                             <thead>
                                 <tr>
-                                    <th class="text-center" scope="col">{{ __('ID') }}</th>
+                                    <th class="text-center" scope="col">{{ __('Index') }}</th>
                                     <th class="text-center" scope="col">{{ __('Name') }}</th>
                                     <th class="text-center" scope="col">{{ __('Avatar') }}</th>
                                     <th class="text-center" scope="col">{{ __('Verify') }}</th>
@@ -57,9 +57,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($data as $item)
+                                @foreach ($data as $key => $item)
                                     <tr>
-                                        <td class="text-center">{{ $item->id }}</td>
+                                        <td class="text-center">{{ $key + 1 }}</td>
                                         <td class="text-center">{{ $item->name }}</td>
                                         <td class="text-center">
                                             <img class="imgColumnTable"

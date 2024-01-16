@@ -162,7 +162,7 @@ class PostRepository
         return Post::where('user_id', $userId)->where('status_id', $statusId)->get();
     }
 
-    public function getPostSearch($search, $limit = null)
+    public function getPostSearch($search, $paginate = null)
     {
         $configPostSlug = config('constants.post.postStatusSlugPublish');
         $configPostType = config('constants.post.postType');
@@ -173,8 +173,8 @@ class PostRepository
             ->where('title', 'like', '%' . $search . '%')
             ->select(['title', 'verify', 'id', 'user_id', 'created_at', 'views']);
 
-        if ($limit !== null) {
-            $query->limit($limit);
+        if ($paginate !== null) {
+            return $query->paginate($paginate);
         }
 
         return $query->get();

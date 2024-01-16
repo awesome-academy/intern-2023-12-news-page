@@ -22,6 +22,11 @@ import Toastify from "toastify-js";
     const $btnAdd = $(".js-add-tag");
     const $hashtagAdd = $("input[name=newHashtag]");
 
+    function encodeHTML(s)
+    {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+
     $(document).ready(function () {
         let $type = $storageTag.attr('data-type');
         if ($type !== undefined) {
@@ -49,7 +54,7 @@ import Toastify from "toastify-js";
     {
         $tagList.empty();
         tagList.map(function (_tag) {
-            let temp = '<li><label>' + _tag + '</label><span class="rmTag">&times;</span></li>';
+            let temp = '<li><label>' + encodeHTML(_tag) + '</label><span class="rmTag">&times;</span></li>';
             $tagList.append(temp);
         });
     }

@@ -50,9 +50,9 @@
                 </div>
             </div>
             <div class="main-content__box">
-                <h4>{{ __('Authenticated Posts') }}</h4>
+                <h4>{{ __('Verified Posts') }}</h4>
                 <div class="main-content__list-item">
-                    @foreach ($authenticatedPosts as $item)
+                    @foreach ($verifiedPosts as $item)
                         <a href="{{ route('detail', ['id' => $item->id]) }}" class="main-content__item">
                             <div class="w-100 h-100 main-container__item">
                                 <div class="info-post-item d-flex">

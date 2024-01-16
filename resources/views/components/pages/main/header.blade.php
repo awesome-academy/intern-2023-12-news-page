@@ -30,19 +30,23 @@
                             <div class="content-result post-result">
                                 <h6>{{ __('Posts') }}</h6>
                                 <div class="js-post-search" data-route="{{ route('detail') }}"
-                                    data-text="{{ __('Show more') . ' ' . __('Posts') }}">
+                                    data-verify-post="{{ __('This post had been verified') }}"
+                                    data-text-more="{{ __('Show more') . ' ' . __('Posts') }}"
+                                    data-text-all="{{ __('Show all') . ' ' . __('Posts') }}">
                                 </div>
                             </div>
                             <div class="content-result post-result">
                                 <h6>{{ __('Users') }}</h6>
                                 <div class="js-user-search" data-route="{{ route('info') }}"
-                                    data-text="{{ __('Show more') . ' ' . __('Users') }}">
+                                    data-text-more="{{ __('Show more') . ' ' . __('Users') }}"
+                                    data-text-all="{{ __('Show all') . ' ' . __('Users') }}">
                                 </div>
                             </div>
                             <div class="content-result post-result">
                                 <h6>{{ __('Hashtag') }}</h6>
                                 <div class="js-hashtag-search flex-column d-flex"
-                                    data-text="{{ __('Show more') . ' ' . __('Hashtag') }}"
+                                    data-text-more="{{ __('Show more') . ' ' . __('Hashtag') }}"
+                                    data-text-all="{{ __('Show all') . ' ' . __('Hashtag') }}"
                                     data-route = "{{ route('search', ['type' => config('constants.hashtag.hashtagType')]) }}">
                                 </div>
                             </div>

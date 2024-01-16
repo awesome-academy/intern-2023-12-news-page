@@ -10,7 +10,7 @@ class HashtagRepository
 {
     public function getListHashtag()
     {
-        return Hashtag::all();
+        return Hashtag::select(['id', 'name', 'slug'])->get();
     }
 
     public function getIdBySlug($slug)
@@ -47,12 +47,12 @@ class HashtagRepository
         return $arrStore;
     }
 
-    public function getHashTagSearch($search, $limit = null)
+    public function getHashTagSearch($search, $paginate = null)
     {
         $query = Hashtag::where('name', 'like', '%' . $search . '%');
 
-        if ($limit !== null) {
-            $query->limit($limit);
+        if ($paginate !== null) {
+            return $query->paginate($paginate);
         }
 
         return $query->get();
