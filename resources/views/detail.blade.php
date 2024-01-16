@@ -15,7 +15,24 @@
 @section('content')
     <div class="container">
         <div class="main-content__box js-parent" data-id="{{ $post->id }}">
-            <div class="row">
+            <div class="category-detail mb-3">
+                <a class="category-text"
+                    href="{{ route('search', ['slug' => $post->category->slug, 'type' => config('constants.category.categoryType')]) }}">
+                    {{ $post->category->name }}
+                </a>
+            </div>
+            <h2 class="title-detail mb-3">
+                <span class="font-weight-bold position-relative">
+                    <span class="js-title-report">{{ $post->title }}</span>
+                    @if ($post->verify)
+                        <div class="verify-post ml-1 position-absolute"
+                            data-toggle="tooltip" data-placement="right" title="{{ __('This post had been verified') }}">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                    @endif
+                </span>
+            </h2>
+            <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="d-flex align-items-center flex-wrap">
                         <div class="icon-detail">
@@ -24,7 +41,7 @@
                         </div>
                         <div class="info-detail">
                             <h5 class="">
-                                <a class="d-flex align-items-center" href="{{ route('info', ['id' => $post->user_id]) }}">
+                                <a class="d-flex align-items-center text-dark" href="{{ route('info', ['id' => $post->user_id]) }}">
                                     {{ $post->user->name }}
                                     @if ($post->user->verify)
                                         <div class="verify-user ml-1">
@@ -69,23 +86,6 @@
                     @endif
                 </div>
             </div>
-            <div class="category-detail">
-                {{ __('Category') }}:<a
-                    href="{{ route('search', ['slug' => $post->category->slug, 'type' => config('constants.category.categoryType')]) }}">
-                    {{ $post->category->name }}</a>
-            </div>
-            <h3 class="title-detail">
-                <span class="js-title-report">
-                    {{ $post->title }}
-                </span>
-            </h3>
-            @if ($post->verify)
-                <h4 class="box-verify">
-                    <span class="js-title-report">
-                        {{ __('This post had been verified') }}
-                    </span>
-                </h4>
-            @endif
             <div id="main">
                 {!! $post->content !!}
             </div>
@@ -119,24 +119,24 @@
                                     title="Avatar của {{ $item->user->name ?? __('Incognito') }}" alt="">
                             </div>
                             <div class="info-detail d-flex flex-column">
-                                <h5>
+                                <h6>
                                     @if (!empty($item->user_id))
-                                        <a
-                                            href="{{ route('info', ['id' => $item->user_id]) }}">{{ $item->user->name }}</a>
+                                        <a class="name-comment"
+                                            href="{{ route('info', ['id' => $item->user_id]) }}">{{ $item->user->name }}:</a>
                                     @else
-                                        <a>{{ __('Incognito') }}</a>
+                                        <a class="name-comment">{{ __('Incognito') }}:</a>
                                     @endif
-                                    <span class="js-title-report">
+                                    <span class="js-title-report content-comment font-weight-bold">
                                         {!! $item->content !!}
                                     </span>
-                                </h5>
+                                </h6>
                                 <div class="js-container-action">
                                     <div class="mb-2 d-flex justify-content-between">
                                         <div class="d-flex item-footer">
-                                            <a href="#" class="js-report" data-toggle="modal"
+                                            <a href="#" class="js-report btn-report-comment" data-toggle="modal"
                                                 data-type="{{ config('constants.review.reviewType') }}"
                                                 data-target="#reportModal" data-id="{{ $item->id }}">
-                                                <i class="fa-solid fa-flag"></i>
+                                                <i class="fa-solid fa-flag text-dark"></i>
                                             </a>
                                         </div>
                                     </div>
