@@ -59,7 +59,7 @@
                     </div>
                     <div class="flex card-dashboard-content items-center">
                         <div class="counter card-dashboard-total text-red-600"
-                            data-target="{{ $countReports ?? config('constants.countStart') }}"></div>
+                            data-target="{{ $countReports }}"></div>
                         {{ __('reports') }}
                     </div>
                 </div>

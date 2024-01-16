@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repository\CategoryRepository;
+use App\Repository\FollowRepository;
 use App\Repository\HashtagRepository;
 use App\Repository\PostRepository;
 use App\Repository\ReportRepository;
@@ -28,6 +29,7 @@ class LandingPageController extends Controller
     protected $reportService;
     protected $reportRepository;
     protected $userRepository;
+    protected $followRepository;
     protected $listCategory;
     protected $listHashtag;
 
@@ -41,7 +43,8 @@ class LandingPageController extends Controller
         ReviewRepository $reviewRepository,
         ReportService $reportService,
         ReportRepository $reportRepository,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        FollowRepository $followRepository
     ) {
         $this->landingPageService = $landingPageService;
         $this->postService = $postService;
@@ -53,6 +56,7 @@ class LandingPageController extends Controller
         $this->reportService = $reportService;
         $this->reportRepository = $reportRepository;
         $this->userRepository = $userRepository;
+        $this->followRepository = $followRepository;
 
         $this->listCategory = $categoryRepository->getListCategory();
         $this->listHashtag = $hashtagRepository->getListHashtag();
@@ -109,17 +113,28 @@ class LandingPageController extends Controller
     {
         $getIdStatusPublishPost = $this->statusRepository
             ->getIdBySlug(config('constants.post.postStatusSlugPublish'), config('constants.post.postType'));
-        $role = Auth::user()->role->slug;
+        $role = Auth::user()->role->slug ?? null;
         $userId = $request['id'];
+        if (!empty(Auth::user())) {
+            $checkFollow = $this->followRepository->checkFollow(Auth::user()->id, $userId);
+        }
+
+        $followers = $this->followRepository->getFollow($userId, config('constants.follow.followerTab'))->followers;
+        $following = $this->followRepository
+            ->getFollow($userId, config('constants.follow.hadFollowedTab'))->following;
+
         $dataView = [
             'categories' => $this->listCategory,
             'hashtags' => $this->listHashtag,
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
             'posts' => $this->postRepository->getPostsByUserId($userId, $getIdStatusPublishPost),
-            'countFollows' => 0,
+            'countFollows' => $followers->count(),
             'userInfo' => $this->userRepository->getUserById($userId),
             'userId' => $userId,
+            'checkFollow' => !empty($checkFollow) ? $checkFollow->id : false,
+            'followers' => $followers,
+            'following' => $following,
         ];
 
         if (in_array($role, config('constants.modSlug'))) {
@@ -137,14 +152,20 @@ class LandingPageController extends Controller
             ->getIdBySlug(config('constants.review.reviewStatusPublish'), config('constants.review.reviewType'));
         $getPostById = $this->postService
             ->handlePostIndexById($request['id'], $getIdStatusPublishPost, $getIdStatusPublishReview);
+
         if ($getPostById) {
             $postSameCategory = $this->postRepository
                 ->getPostByCategoryId($getPostById->category_id, $getIdStatusPublishPost, $request['id']);
+            if (!empty(Auth::user())) {
+                $checkFollow = $this->followRepository->checkFollow(Auth::user()->id, $getPostById->user_id);
+            }
+
             $dataView = [
                 'categories' => $this->listCategory,
                 'hashtags' => $this->listHashtag,
                 'post' => $getPostById,
                 'postSameCategory' => $postSameCategory,
+                'checkFollow' => !empty($checkFollow ?? null),
             ];
 
             return view('detail')->with($dataView);
@@ -180,6 +201,18 @@ class LandingPageController extends Controller
         ];
 
         $this->reportRepository->insertReport($dataInsert);
+
+        return response()->json();
+    }
+
+    public function follow(Request $request): JsonResponse
+    {
+        $dataInsert = [
+            'user_id' => $request['userId'],
+            'follower_id' => $request['followId'],
+        ];
+
+        $this->followRepository->followAction($dataInsert);
 
         return response()->json();
     }

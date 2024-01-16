@@ -8,6 +8,14 @@
     overflow-x: auto;
     overflow-y: hidden;
 }
+.img-manager {
+    max-width: 40px;
+    max-height: 40px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
 
 .verify-user{
     width: 15px;
