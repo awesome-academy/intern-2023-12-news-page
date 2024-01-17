@@ -8,7 +8,7 @@ class CategoryRepository
 {
     public function getListCategory()
     {
-        return Category::all();
+        return Category::select(['id', 'name', 'slug'])->get();
     }
 
     public function getIdBySlug($slug)

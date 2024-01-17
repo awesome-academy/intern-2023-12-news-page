@@ -19,12 +19,12 @@ class PostHashtagRepository
             $this->deleteHashtagByPostId($postId);
         }
 
-        $getIdsHashTagBySlug = Hashtag::whereIn('slug', $hashtags)->select('id')->pluck('id');
-        $mergedCollection = $getIdsHashTagBySlug->merge($arrHashtagCustom);
+        $getIdsHashTagBySlug = Hashtag::whereIn('slug', $hashtags)->select('id')->pluck('id')->toArray();
+        $mergedCollection = array_merge($arrHashtagCustom, $getIdsHashTagBySlug);
 
         foreach ($mergedCollection as $hashtag) {
             $dataInsert = [
-                'post_id' => $postId,
+                'post_id' => (int) $postId,
                 'hashtag_id' => $hashtag,
                 'created_at' => Carbon::now(),
             ];

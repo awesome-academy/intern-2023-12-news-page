@@ -55,7 +55,7 @@ class UserRepository
         ]);
     }
 
-    public function getUserSearch($search, $limit = null)
+    public function getUserSearch($search, $paginate = null)
     {
         $configUserSlug = config('constants.user.userStatusActive');
         $configUserType = config('constants.user.userStatusType');
@@ -65,8 +65,8 @@ class UserRepository
             ->where('name', 'like', '%' . $search . '%')
             ->select(['name', 'avatar', 'verify', 'id', 'role_id']);
 
-        if ($limit !== null) {
-            $query->limit($limit);
+        if ($paginate !== null) {
+            return $query->paginate($paginate);
         }
 
         return $query->get();

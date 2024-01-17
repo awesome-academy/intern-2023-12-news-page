@@ -78,7 +78,7 @@
                     </div>
                     <div class="form-group">
                         <label class="mt-4" for="content">{{ __('Content') }}: </label>
-                        <textarea name="content" id="content" cols="30" rows="10">{!! $data->content !!}</textarea>
+                        <textarea name="content" id="content" cols="30" rows="10">{{ $data->content }}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="hashtag">{{ __('Hashtag') }}:

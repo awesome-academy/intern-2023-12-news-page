@@ -77,9 +77,9 @@ class PostService
             $arrHashtagCustom = $this->hashtagRepository->insertCustomPostHashtag($hashtagCustom);
         }
 
-        if (!empty($hashtags)) {
-            $this->postHashtagRepository->insertPostHashtag($postId, $hashtags, $action, $arrHashtagCustom ?? []);
-        } else {
+        $this->postHashtagRepository->insertPostHashtag($postId, $hashtags, $action, $arrHashtagCustom ?? []);
+
+        if (empty($hashtags) && empty($hashtagCustom)) {
             $this->postHashtagRepository->removePostHashtag($postId);
         }
     }

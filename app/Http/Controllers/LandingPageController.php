@@ -30,8 +30,6 @@ class LandingPageController extends Controller
     protected $reportRepository;
     protected $userRepository;
     protected $followRepository;
-    protected $listCategory;
-    protected $listHashtag;
 
     public function __construct(
         LandingPageService $landingPageService,
@@ -57,24 +55,21 @@ class LandingPageController extends Controller
         $this->reportRepository = $reportRepository;
         $this->userRepository = $userRepository;
         $this->followRepository = $followRepository;
-
-        $this->listCategory = $categoryRepository->getListCategory();
-        $this->listHashtag = $hashtagRepository->getListHashtag();
     }
 
     public function landingPage()
     {
         $getNewPosts = $this->landingPageService->getPostsByTab(config('constants.tab.tabNewPosts'));
-        $getAuthenticatedPosts = $this->landingPageService
+        $getVerifiedPosts = $this->landingPageService
             ->getPostsByTab(config('constants.tab.tabAuthenticatedPosts'));
         $getInteractionsPosts = $this->landingPageService
             ->getPostsByTab(config('constants.tab.tabHighInteractionsPosts'));
         $dataView = [
             'newPosts' => $getNewPosts,
-            'authenticatedPosts' => $getAuthenticatedPosts,
+            'verifiedPosts' => $getVerifiedPosts,
             'interactionsPosts' => $getInteractionsPosts,
-            'categories' => $this->listCategory,
-            'hashtags' => $this->listHashtag,
+            'categories' => $this->categoryRepository->getListCategory(),
+            'hashtags' => $this->hashtagRepository->getListHashtag(),
         ];
 
         return view('index')->with($dataView);
@@ -93,16 +88,16 @@ class LandingPageController extends Controller
         }
 
         $getNewPosts = $this->landingPageService->getPostsByTab(config('constants.tab.tabNewPosts'), $dataSearch);
-        $getAuthenticatedPosts = $this->landingPageService
+        $getVerifiedPosts = $this->landingPageService
             ->getPostsByTab(config('constants.tab.tabAuthenticatedPosts'), $dataSearch);
         $getInteractionsPosts = $this->landingPageService
             ->getPostsByTab(config('constants.tab.tabHighInteractionsPosts'), $dataSearch);
         $dataView = [
             'newPosts' => $getNewPosts,
-            'authenticatedPosts' => $getAuthenticatedPosts,
+            'verifiedPosts' => $getVerifiedPosts,
             'interactionsPosts' => $getInteractionsPosts,
-            'categories' => $this->listCategory,
-            'hashtags' => $this->listHashtag,
+            'categories' => $this->categoryRepository->getListCategory(),
+            'hashtags' => $this->hashtagRepository->getListHashtag(),
             'search' => $search,
         ];
 
@@ -124,8 +119,8 @@ class LandingPageController extends Controller
             ->getFollow($userId, config('constants.follow.hadFollowedTab'))->following;
 
         $dataView = [
-            'categories' => $this->listCategory,
-            'hashtags' => $this->listHashtag,
+            'categories' => $this->categoryRepository->getListCategory(),
+            'hashtags' => $this->hashtagRepository->getListHashtag(),
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
             'posts' => $this->postRepository->getPostsByUserId($userId, $getIdStatusPublishPost),
@@ -161,8 +156,8 @@ class LandingPageController extends Controller
             }
 
             $dataView = [
-                'categories' => $this->listCategory,
-                'hashtags' => $this->listHashtag,
+                'categories' => $this->categoryRepository->getListCategory(),
+                'hashtags' => $this->hashtagRepository->getListHashtag(),
                 'post' => $getPostById,
                 'postSameCategory' => $postSameCategory,
                 'checkFollow' => !empty($checkFollow ?? null),
@@ -220,13 +215,18 @@ class LandingPageController extends Controller
     public function ajaxSearch(Request $request): JsonResponse
     {
         $search = $request['search'];
-        $limit = config('constants.limit');
+        $tab = $request['tab'];
+        $paginate = config('constants.paginate');
 
         $data = [
-            'dataPost' => $this->postRepository->getPostSearch($search, $limit),
-            'dataUser' => $this->userRepository->getUserSearch($search, $limit),
-            'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search, $limit),
+            'dataPost' => $this->postRepository->getPostSearch($search, $paginate),
+            'dataUser' => $this->userRepository->getUserSearch($search, $paginate),
+            'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search, $paginate),
         ];
+
+        if (!empty($tab)) {
+            return response()->json([$tab => $data[$tab]]);
+        }
 
         return response()->json($data);
     }
@@ -239,8 +239,8 @@ class LandingPageController extends Controller
             'dataUser' => $this->userRepository->getUserSearch($search),
             'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search),
             'search' => $search,
-            'categories' => $this->listCategory,
-            'hashtags' => $this->listHashtag,
+            'categories' => $this->categoryRepository->getListCategory(),
+            'hashtags' => $this->hashtagRepository->getListHashtag(),
         ];
 
         return view('searchInput')->with($dataView);
