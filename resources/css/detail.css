@@ -1,6 +1,11 @@
 @import "emojionearea/dist/emojionearea.css";
 @import "toastify-js/src/toastify.css";
 
+#main {
+    border-top: 1px solid #ccc;
+    padding-top: 25px;
+}
+
 .toast-close{
     font-size: 12px;
 }
@@ -20,9 +25,10 @@
     border-radius: 50%;
     object-fit: cover;
 }
-.info-detail a,span {
-    color: #000;
+
+.info-detail .name-comment,.item-comment-detail .info-detail .content-comment {
     transition: all 0.3s ease-in-out;
+    color: #222;
 }
 
 .info-detail a:hover {
@@ -58,36 +64,33 @@
     font-size: 10px;
 }
 
-.box-verify{
-    width: fit-content;
-    padding: 15px;
-    border: 1px solid #28a745;
-    border-radius: 10px;
-}
-
-.box-verify span{
-    color: #28a745;
+.verify-post{
+    width: 20px;
+    height: 20px;
+    background: #2056b1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 10px;
+    left: 100%;
+    transform: translateY(-150%);
 }
 
 .action-detail a:last-child {
     margin-left: 10px;
 }
 
-.category-detail {
-    margin-top: 20px;
-}
-
-.category-detail a {
-    color: #757575;
-    transition: all 0.3s ease-in-out;
+.category-detail .category-text {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 22px;
+    color: #656565;
 }
 
 .category-detail a:hover {
     color: #0d6efd;
-}
-
-h3.title-detail {
-    margin: 15px 0!important;
 }
 
 #main img,figure {
@@ -143,9 +146,10 @@ h3.title-detail {
     margin-top: 20px;
 }
 
-.item-comment-detail span {
-    font-size:14px;
+.item-comment-detail .content-comment {
+    font-size: 18px;
     font-weight: 400;
+    color: #4f4f4f;
 }
 
 .item-comment-detail .info-detail.d-flex.flex-column {
@@ -156,14 +160,18 @@ h3.title-detail {
     filter: invert(0%) sepia(83%) saturate(7500%) hue-rotate(66deg) brightness(84%) contrast(114%)!important;
 }
 
-.item-comment-detail .item-footer a {
+.item-comment-detail .item-footer .btn-report-comment {
     padding: 10px;
     border-radius: 10px;
+    transition: all 0.3s ease-in-out;
 }
 
-.item-comment-detail .item-footer a:hover {
+.item-comment-detail .item-footer .btn-report-comment:hover {
     background: #e38b8b;
-    color: #fff;
+}
+
+.item-comment-detail .item-footer .btn-report-comment:hover i{
+    color: #fff!important;
 }
 
 .container-posts-category {

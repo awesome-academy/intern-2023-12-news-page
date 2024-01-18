@@ -6,6 +6,10 @@ $('.textarea-emoji').emojioneArea({
     pickerPosition: 'top',
 })
 
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+
 $('#comment').on('submit', function (e) {
     e.preventDefault();
 
@@ -58,15 +62,15 @@ $('#comment').on('submit', function (e) {
                                 'title="Avatar của ' + (res.user !== null ? res.user.name : $nameIncognito) + '" alt="">' +
                         '</div>' +
                         '<div class="info-detail d-flex flex-column">' +
-                            '<h5>' +
-                                '<a href="' + (res.user !== null ? $routeUser + "?id=" + res.user.id : "") + '">' + (res.user !== null ? res.user.name : $nameIncognito) + '</a>' +
-                                    '<span class="js-title-report ml-2">' + res.content + '</span>' +
-                            '</h5>' +
+                            '<h6>' +
+                                '<a class="name-comment" href="' + (res.user !== null ? $routeUser + "?id=" + res.user.id : "") + '">' + (res.user !== null ? res.user.name : $nameIncognito) + '</a>' +
+                                    '<span class="js-title-report ml-2 content-comment">' + res.content + '</span>' +
+                            '</h6>' +
                             '<div class="js-container-action">' +
                                 '<div class="mb-2 d-flex justify-content-between">' +
                                     '<div class="d-flex item-footer">' +
                                         '<a href="#" class="js-report" data-toggle="modal" data-target="#reportModal" data-id="' + res.id + '" data-type="review">' +
-                                            '<i class="fa-solid fa-flag"></i>' +
+                                            '<i class="fa-solid fa-flag text-dark"></i>' +
                                         '</a>' +
                                     '</div>' +
                                 '</div>' +
