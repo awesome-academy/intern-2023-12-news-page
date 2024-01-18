@@ -58,8 +58,7 @@
                         </h2>
                     </div>
                     <div class="flex card-dashboard-content items-center">
-                        <div class="counter card-dashboard-total text-red-600"
-                            data-target="{{ $countReports }}"></div>
+                        <div class="counter card-dashboard-total text-red-600" data-target="{{ $countReports }}"></div>
                         {{ __('reports') }}
                     </div>
                 </div>

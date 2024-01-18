@@ -32,7 +32,9 @@ fileInput.addEventListener('change', () => {
 closeButton.addEventListener('click', (event) => {
     event.preventDefault();
     fileInput.value = '';
-    avatarDefault.value = '';
+    if (avatarDefault !== null) {
+        avatarDefault.value = '';
+    }
     previewImage.style.backgroundImage = '';
     fileName.textContent = '';
     previewImage.classList.add('hidden');

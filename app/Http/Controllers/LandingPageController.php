@@ -70,6 +70,9 @@ class LandingPageController extends Controller
             'interactionsPosts' => $getInteractionsPosts,
             'categories' => $this->categoryRepository->getListCategory(),
             'hashtags' => $this->hashtagRepository->getListHashtag(),
+            'firstNewPost' => $getNewPosts->splice(0, 1)[0] ?? null,
+            'firstAuthenticatedPost' => $getVerifiedPosts->splice(0, 1)[0] ?? null,
+            'twoInteractionsPost' => $getInteractionsPosts->splice(0, 2) ?? [],
         ];
 
         return view('index')->with($dataView);

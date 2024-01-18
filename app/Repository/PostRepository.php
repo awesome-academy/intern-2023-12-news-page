@@ -171,7 +171,7 @@ class PostRepository
         $query = Post::with(['reviews', 'user'])
             ->where('status_id', $statusId)
             ->where('title', 'like', '%' . $search . '%')
-            ->select(['title', 'verify', 'id', 'user_id', 'created_at', 'views']);
+            ->select(['title', 'verify', 'id', 'user_id', 'created_at', 'views', 'thumbnail', 'description']);
 
         if ($paginate !== null) {
             return $query->paginate($paginate);
