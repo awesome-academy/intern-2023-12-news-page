@@ -167,6 +167,13 @@ return [
         'followerTab' => 'follower',
         'hadFollowedTab' => 'hadFollowed',
     ],
+    'dayQuery' => [
+        'dataQuerySelected' => [
+            '6' => 'Last 7 days',
+            '29' => 'Last 30 days',
+        ],
+        'dataQueryDefault' => '6',
+    ],
     'paginate' => 10,
     'limit' => 11,
     'verify' => 1,
