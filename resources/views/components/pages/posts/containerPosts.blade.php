@@ -89,8 +89,7 @@
                                                     style="margin-right: 5px;"
                                                     class="btn btn-warning">{{ __('Edit') }}</a>
                                                 @if ($tab === config('constants.post.postStatusSlugDelete'))
-                                                    <form
-                                                        action="{{ route('post.updateStatus', ['post' => $item->id]) }}"
+                                                    <form action="{{ route('update.status', ['post' => $item->id]) }}"
                                                         method="post" class="position-relative js-delete"
                                                         id="posts" style="width: fit-content;"
                                                         enctype="multipart/form-data">

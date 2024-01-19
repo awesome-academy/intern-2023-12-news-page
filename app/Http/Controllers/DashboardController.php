@@ -46,6 +46,7 @@ class DashboardController extends Controller
     {
         $userId = Auth::user()->id;
         $role = Auth::user()->role->slug;
+        $data = $this->getDataDateQuery($request['time'], $userId);
         $dataView = [
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
@@ -55,8 +56,10 @@ class DashboardController extends Controller
             'newestPost' => $this->postRepository->getNewestPost($userId),
             'selectDateQuery' => config('constants.dayQuery.dataQuerySelected'),
             'selectChoice' => $request['time'],
-            'data' => $this->getDataDateQuery($request['time'], $userId),
+            'data' => $data,
+            'lastUpdated' => !empty($data->last()->updated_at) ? $data->last()->updated_at : $data->last()->created_at,
         ];
+
         if (in_array($role, config('constants.modSlug'))) {
             $dataView['countReports'] = $this->reportService->countReports();
         }

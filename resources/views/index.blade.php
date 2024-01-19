@@ -12,7 +12,7 @@
                     @if (!empty($firstNewPost))
                         <a href="{{ route('detail', ['id' => $firstNewPost->id]) }}" class="item-top w-100">
                             <div class="w-100 h-100 main-container__item d-flex">
-                                <div class="mr-3 box-article-top">
+                                <div class="mr-3 box-article-top w-100">
                                     <img class="thumbnail-top-article thumbnail-top" loading="lazy"
                                         src="{{ $firstNewPost->thumbnail }}" alt="{{ $firstNewPost->title }}">
                                 </div>

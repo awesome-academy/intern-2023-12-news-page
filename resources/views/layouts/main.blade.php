@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     @yield('styles')
-
     <script src="{{ asset('js/main.js') }}" defer></script>
     @yield('scripts')
 </head>
@@ -24,6 +23,9 @@
     </div>
     @include('components.pages.main.footer')
     @include('components.pages.main.subHeader')
+    <div id = "followInfo" data-pusher="{{ env('PUSHER_APP_KEY') }}" data-user="{{ Auth::user()->id ?? null }}"
+         data-route-notification="{{ route('update.readNotification') }}" data-text-notification="{{ __('User') }}"
+         data-content-notification="{{ __('followed you') }}"></div>
 </body>
 
 </html>

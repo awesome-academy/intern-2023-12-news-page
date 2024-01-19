@@ -1,5 +1,6 @@
 import $ from "jquery"
 import moment from 'moment';
+import './notification';
 
 const $boxSearch = $('.result-search-box');
 let searchTimeout = 0;
@@ -8,7 +9,6 @@ function encodeHTML(s)
 {
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
 }
-
 function addNavSearch($textAll, $textMore, $actionNextPage, $val, index, item)
 {
     return $('<div class="d-flex align-center justify-content-center mb-2 js-nav-search">' +
@@ -16,7 +16,6 @@ function addNavSearch($textAll, $textMore, $actionNextPage, $val, index, item)
             '<a class="ml-2 js-show-more" data-type="' + index + '" data-text="' + $val + '" href="' + item.next_page_url + '">' + $textMore + '</a>' +
         '</div>');
 }
-
 function performSearch($val, $route, $type, $tab = null)
 {
     let $boxPostSearch = $('.js-post-search');
@@ -153,39 +152,38 @@ function performSearch($val, $route, $type, $tab = null)
             });
 
             $boxSearch.show();
-
         }
     });
 }
 
-$('#searchMain').keyup((e) => {
-    let $val = $(e.target).val();
+$(document).ready(function () {
+    $(document).on('click','.js-show-more',function (e) {
+        e.preventDefault();
+        let $route = $(e.target).closest('.js-show-more').attr('href');
+        let $val = $(e.target).closest('.js-show-more').attr('data-text');
+        let $tab = $(e.target).closest('.js-show-more').attr('data-type');
 
-    if ($val === '') {
-        $boxSearch.hide();
-    } else {
-        let $route = $(e.target).attr('data-route');
-        clearTimeout(searchTimeout);
+        $(e.target).closest('.js-nav-search').remove()
 
-        searchTimeout = setTimeout(function () {
-            performSearch($val, $route, 'search');
-        }, 1000);
-    }
-});
+        performSearch($val, $route, 'continue', $tab);
+    })
+    $(document).on('click', function (event) {
+        if ($(event.target).closest($boxSearch).length === 0 && $(event.target).closest('#searchMain').length === 0) {
+            $boxSearch.hide();
+        }
+    });
+    $('#searchMain').keyup((e) => {
+        let $val = $(e.target).val();
 
-$(document).on('click','.js-show-more',function (e) {
-    e.preventDefault();
-    let $route = $(e.target).closest('.js-show-more').attr('href');
-    let $val = $(e.target).closest('.js-show-more').attr('data-text');
-    let $tab = $(e.target).closest('.js-show-more').attr('data-type');
+        if ($val === '') {
+            $boxSearch.hide();
+        } else {
+            let $route = $(e.target).attr('data-route');
+            clearTimeout(searchTimeout);
 
-    $(e.target).closest('.js-nav-search').remove()
-
-    performSearch($val, $route, 'continue', $tab);
-})
-
-$(document).on('click', function (event) {
-    if ($(event.target).closest($boxSearch).length === 0 && $(event.target).closest('#searchMain').length === 0) {
-        $boxSearch.hide();
-    }
+            searchTimeout = setTimeout(function () {
+                performSearch($val, $route, 'search');
+            }, 1000);
+        }
+    });
 });

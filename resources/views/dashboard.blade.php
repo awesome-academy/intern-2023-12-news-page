@@ -86,6 +86,11 @@
                 <div class="container-chart w-full h-full">
                     <canvas id="pie-canvas" data-views="{{ $data }}"
                         data-info = "{{ __('Views vary from day to day') }}"></canvas>
+                    <div class="w-full text-right mt-3 mb-3">
+                        <span class="text-muted">
+                            {{ __('Last updated') }}: {{ formatDate($lastUpdated) }}
+                        </span>
+                    </div>
                     <div class="flex card-dashboard-sub mt-6 pt-4 w-full">
                         @if (!empty($highestViewPost))
                             <div class="post-top-chart">

@@ -5,6 +5,7 @@
 }
 .thumbnail-top-article{
     max-height: 370px !important;
+    width: 100%;
 }
 
 .thumbnail-subtop-article{
@@ -103,5 +104,11 @@
     .item-sub-top .thumbnail-subtop-article {
         max-height: 245px!important;
         margin-bottom: 1rem!important;
+    }
+}
+
+@media (max-width: 530px) {
+    .item-sub-top .thumbnail-subtop-article {
+        max-height: 150px!important;
     }
 }
