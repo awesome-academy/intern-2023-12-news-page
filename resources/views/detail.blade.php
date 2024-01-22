@@ -25,8 +25,8 @@
                 <span class="font-weight-bold position-relative">
                     <span class="js-title-report">{{ $post->title }}</span>
                     @if ($post->verify)
-                        <div class="verify-post ml-1 position-absolute"
-                            data-toggle="tooltip" data-placement="right" title="{{ __('This post had been verified') }}">
+                        <div class="verify-post ml-1 position-absolute" data-toggle="tooltip" data-placement="right"
+                            title="{{ __('This post had been verified') }}">
                             <i class="fa-solid fa-check"></i>
                         </div>
                     @endif
@@ -41,7 +41,8 @@
                         </div>
                         <div class="info-detail">
                             <h5 class="">
-                                <a class="d-flex align-items-center text-dark" href="{{ route('info', ['id' => $post->user_id]) }}">
+                                <a class="d-flex align-items-center text-dark"
+                                    href="{{ route('info', ['id' => $post->user_id]) }}">
                                     {{ $post->user->name }}
                                     @if ($post->user->verify)
                                         <div class="verify-user ml-1">

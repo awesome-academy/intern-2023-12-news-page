@@ -3,7 +3,10 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class PostRepository
 {
@@ -178,5 +181,37 @@ class PostRepository
         }
 
         return $query->get();
+    }
+
+    public function getHighestViewPost($userId)
+    {
+        return Post::with('reviews')->where('user_id', $userId)
+            ->orderBy('views', 'DESC')->first();
+    }
+
+    public function getHighestCommentPost($userId)
+    {
+        return Post::where('user_id', $userId)
+            ->withCount('reviews')
+            ->orderByDesc('reviews_count')
+            ->first();
+    }
+
+    public function getNewestPost($userId)
+    {
+        return Post::where('user_id', $userId)
+            ->orderBy('created_at', 'DESC')->first();
+    }
+
+    public function getDataDateQuery($dayStartQuery, $userId): Collection
+    {
+        $listPostById = Post::where('user_id', $userId)->select('id')->pluck('id')->toArray();
+
+        return DB::table('date_view_post')
+            ->whereIn('post_id', $listPostById)
+            ->whereBetween('created_at', [$dayStartQuery, Carbon::today()])
+            ->groupBy('created_at')
+            ->select('created_at', DB::raw('SUM(views) as total'))
+            ->get();
     }
 }

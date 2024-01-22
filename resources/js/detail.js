@@ -6,10 +6,6 @@ $('.textarea-emoji').emojioneArea({
     pickerPosition: 'top',
 })
 
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-})
-
 $('#comment').on('submit', function (e) {
     e.preventDefault();
 

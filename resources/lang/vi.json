@@ -1198,5 +1198,14 @@
     "success": "thành công",
     "Login to follow this user": "Đăng nhập để theo dõi người dùng này",
     "User": "Người dùng",
-    "Index": "STT"
+    "Index": "STT",
+    "Chart view by": "Biểu đồ xem theo",
+    "Last 7 days": "7 ngày qua",
+    "Last 30 days": "30 ngày qua",
+    "1 year ago": "1 năm đã qua",
+    "most viewed": "nhiều lượt xem nhất",
+    "most comments": "nhiều lượt bình luận nhất",
+    "New Post": "Bài viết mới nhất",
+    "Post": "Bài viết",
+    "Views vary from day to day": "Lượt xem thay đổi theo từng ngày"
 }

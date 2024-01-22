@@ -7,8 +7,11 @@ use App\Http\Requests\ProfileRequest;
 use App\Repository\FollowRepository;
 use App\Repository\PostRepository;
 use App\Repository\UserRepository;
+use App\Services\PostService;
 use App\Services\ReportService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,20 +21,28 @@ class DashboardController extends Controller
     protected $reportService;
     protected $userRepository;
     protected $followRepository;
+    protected $postService;
 
     public function __construct(
         PostRepository $postRepository,
         ReportService $reportService,
         UserRepository $userRepository,
-        FollowRepository $followRepository
+        FollowRepository $followRepository,
+        PostService $postService
     ) {
         $this->postRepository = $postRepository;
         $this->reportService = $reportService;
         $this->userRepository = $userRepository;
         $this->followRepository = $followRepository;
+        $this->postService = $postService;
     }
 
-    public function dashboard()
+    public function getDataDateQuery($time, $userId): Collection
+    {
+        return $this->postService->getDataDateQuery($time, $userId);
+    }
+
+    public function dashboard(Request $request)
     {
         $userId = Auth::user()->id;
         $role = Auth::user()->role->slug;
@@ -39,6 +50,12 @@ class DashboardController extends Controller
             'countViews' => $this->postRepository->countViews($userId),
             'countPosts' => $this->postRepository->countPosts($userId),
             'countFollows' => $this->followRepository->countFollower($userId),
+            'highestViewPost' => $this->postRepository->getHighestViewPost($userId),
+            'highestCommentPost' => $this->postRepository->getHighestCommentPost($userId),
+            'newestPost' => $this->postRepository->getNewestPost($userId),
+            'selectDateQuery' => config('constants.dayQuery.dataQuerySelected'),
+            'selectChoice' => $request['time'],
+            'data' => $this->getDataDateQuery($request['time'], $userId),
         ];
         if (in_array($role, config('constants.modSlug'))) {
             $dataView['countReports'] = $this->reportService->countReports();

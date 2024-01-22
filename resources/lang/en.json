@@ -1236,5 +1236,14 @@
     "success": "success",
     "Login to follow this user": "Login to follow this user",
     "User": "User",
-    "Index": "Index"
+    "Index": "Index",
+    "Chart view by": "Chart view by",
+    "Last 7 days": "Last 7 days",
+    "Last 30 days": "Last 30 days",
+    "1 year ago": "1 year ago",
+    "most viewed": "most viewed",
+    "most comments": "most comments",
+    "New Post": "New Post",
+    "Post": "Post",
+    "Views vary from day to day": "Views vary from day to day"
 }

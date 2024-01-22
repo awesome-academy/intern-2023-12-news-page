@@ -6,8 +6,10 @@ use App\Repository\HashtagRepository;
 use App\Repository\PostHashtagRepository;
 use App\Repository\PostRepository;
 use App\Repository\StatusRepository;
+use Carbon\Carbon;
 use DOMDocument;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class PostService
 {
@@ -120,5 +122,14 @@ class PostService
         }
 
         return false;
+    }
+
+    public function getDataDateQuery($time, $userId): Collection
+    {
+        $timeQuery = (int) !empty($time) ? $time : config('constants.dayQuery.dataQueryDefault');
+        $today = Carbon::today();
+        $dayStartQuery = $today->subDays($timeQuery);
+
+        return $this->postRepository->getDataDateQuery($dayStartQuery, $userId);
     }
 }
