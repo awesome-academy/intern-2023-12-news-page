@@ -49,8 +49,7 @@ Route::middleware(['user.verify', 'user.status', 'user.permission:admin|moderato
 });
 
 Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
-    Route::get('follows', [FollowController::class, 'index'])
-        ->name('follows.index');
+    Route::get('follows', [FollowController::class, 'index'])->name('follows.index');
 
     Route::get('profile', [DashboardController::class, 'profile'])
         ->name('profile');
@@ -77,13 +76,17 @@ Route::middleware(['auth', 'user.verify', 'user.status'])->group(function () {
         ],
     ]);
 
-    Route::get('follows', [FollowController::class, 'index'])->name('follows.index');
-
     Route::get('un-follow', [FollowController::class, 'unFollow'])->name('unFollow');
 
-    Route::patch('posts/{post}/update-status', [PostController::class, 'updateStatus'])->name('post.updateStatus');
+    Route::patch('posts/{post}/update-status', [PostController::class, 'updateStatus'])->name('update.status');
 
     Route::post('/follow', [LandingPageController::class, 'follow'])->name('follow');
+
+    Route::get('update-read-notification', [LandingPageController::class, 'updateReadNotification'])
+        ->name('update.readNotification');
+
+    Route::get('paginate-notification', [LandingPageController::class, 'paginateNotification'])
+        ->name('paginate.notification');
 });
 
 Route::get('language/{lang}', [LanguageController::class, 'changeLanguage'])->name('locale');

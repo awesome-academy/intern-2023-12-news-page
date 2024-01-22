@@ -1,4 +1,5 @@
 @import "bootstrap/dist/css/bootstrap.css";
+@import "toastify-js/src/toastify.css";
 
 html, body {
     background: #e1e1e1;
@@ -343,6 +344,127 @@ ul li{
 
 .container-footer a:hover {
     color: #97908F!important;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-drop {
+    font-family: 'Ubuntu', sans-serif;
+    color: #444;
+}
+.notification-drop .item {
+    padding: 10px;
+    font-size: 18px;
+    position: relative;
+    border-bottom: 1px solid #ddd;
+}
+.notification-drop .item:hover {
+    cursor: pointer;
+}
+
+.notification-drop .item .notification-drop-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    background: #fff;
+    left: -200px;
+    right: 0;
+    z-index: 1;
+    border-top: 1px solid #ddd;
+    max-height: 400px;
+    overflow-y: auto;
+}
+.notification-drop .item .notification-drop-content .notification-drop-item {
+    font-size: 16px;
+    padding: 15px;
+}
+.notification-drop .item .notification-drop-content .notification-drop-item:hover {
+    background: #ddd;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.notification-drop .item .notification-drop-content .notification-drop-item .fa-circle {
+    position: absolute;
+    top: 50%;
+    right: 5%;
+    font-size: 7px;
+    color: #28a745;
+}
+
+.show-more-notification {
+    font-size: 14px;
+}
+
+@media screen and (min-width: 500px) {
+    .notification-drop {
+        display: flex;
+        justify-content: flex-end;
+    }
+    .notification-drop .item {
+        border: none;
+    }
+}
+
+
+
+.notification-bell{
+    font-size: 20px;
+}
+
+.btn__badge {
+    background: #FF5D5D;
+    color: white;
+    font-size: 12px;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    padding:  3px 10px;
+    border-radius: 50%;
+}
+
+.pulse-button {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.5);
+    -webkit-animation: pulse 1.5s infinite;
+}
+
+.pulse-button:hover {
+    -webkit-animation: none;
+}
+
+@-webkit-keyframes pulse {
+    0% {
+        -moz-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+    70% {
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        box-shadow: 0 0 0 50px rgba(255, 0, 0, 0);
+    }
+    100% {
+        -moz-transform: scale(0.9);
+        -ms-transform: scale(0.9);
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+        box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+    }
+}
+
+.notification-text{
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.notification-text span{
+    float: right;
 }
 
 @media (max-width: 991px) {

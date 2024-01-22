@@ -1237,6 +1237,7 @@
     "Login to follow this user": "Login to follow this user",
     "User": "User",
     "Index": "Index",
+    "followed you": "followed you",
     "Chart view by": "Chart view by",
     "Last 7 days": "Last 7 days",
     "Last 30 days": "Last 30 days",
@@ -1245,5 +1246,6 @@
     "most comments": "most comments",
     "New Post": "New Post",
     "Post": "Post",
-    "Views vary from day to day": "Views vary from day to day"
+    "Views vary from day to day": "Views vary from day to day",
+    "Last updated": "Last updated"
 }

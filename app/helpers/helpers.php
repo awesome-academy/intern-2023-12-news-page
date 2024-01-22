@@ -1,16 +1,17 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 if (!function_exists('formatDate')) {
     function formatDate($date, string $format = 'd/m/Y')
     {
-        if ($date instanceof \Carbon\Carbon) {
+        if ($date instanceof Carbon) {
             return $date->format($format);
         }
 
-        return $date;
+        return Carbon::parse($date)->format('H:i d/m/Y');
     }
 }
 

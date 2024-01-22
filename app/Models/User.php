@@ -98,6 +98,11 @@ class User extends Authenticatable
         return $this->hasMany(Report::class, 'user_id', 'id');
     }
 
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'notifiable', 'id');
+    }
+
     public function getNameAttribute($value): string
     {
         return ucfirst($value);

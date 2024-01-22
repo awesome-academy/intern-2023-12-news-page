@@ -49,12 +49,16 @@ class StatisticalViewPostByDay extends Command
 
             if ($today->eq($itemDay)) {
                 DB::table('date_view_post')->where('post_id', $post->id)
-                    ->where('created_at', $today)->update(['views' => $post->views]);
+                    ->where('created_at', $today)->update([
+                        'views' => $post->views,
+                        'updated_at' => Carbon::now(),
+                    ]);
             } else {
                 DB::table('date_view_post')->insert([
                     'post_id' => $post->id,
                     'views' => $post->views,
                     'created_at' => Carbon::today(),
+                    'updated_at' => Carbon::now(),
                 ]);
             }
         }

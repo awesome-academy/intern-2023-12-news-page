@@ -4,15 +4,39 @@ namespace App\Repository;
 
 use App\Models\Follow;
 use App\Models\User;
+use App\Notifications\NotificationFollow;
+use Pusher\Pusher;
 
 class FollowRepository
 {
     public function followAction($data)
     {
-        $search = $this->checkFollow($data['user_id'], $data['follower_id']);
+        $search = $this->checkFollow($data['user_id'], $data['follower_id']); //id of the person being tracked
 
         if (empty($search)) {
             Follow::create($data);
+
+            $user = User::find($data['follower_id']);
+            $following = User::find($data['user_id']);
+
+            $user->notify(new NotificationFollow($following->name));
+
+            $options = [
+                'cluster' => 'ap1',
+                'encrypted' => true,
+            ];
+
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+
+            $pusher->trigger('NotificationEvent', 'send-notification', [
+                'following_id' => $data['follower_id'],
+                'name' => $following->name,
+            ]);
         } else {
             $search->delete();
         }

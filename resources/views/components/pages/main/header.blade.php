@@ -14,7 +14,7 @@
                 <a href="{{ route('locale', ['lang' => 'vi']) }}"
                     class="text-dark link-underline-light hidden-mb">{{ __('Vietnamese') }}</a>
             </div>
-            <div class="d-flex main-navbar__right align-items-center w-50">
+            <div class="d-flex main-navbar__right align-items-center w-75 ml-3">
                 <div class="main-nav__group position-relative flex-fill mr-1">
                     <form method="GET" action="{{ route('search.nextPage') }}" class="js-search-nextPage">
                         <label class="w-100">
@@ -56,8 +56,41 @@
                 @if (Route::has('login'))
                     <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                         @auth
-                            <a href="{{ url('/dashboard') }}"
-                                class="text-dark link-underline-light hidden-mb">{{ __('Dashboard') }}</a>
+                            <div class="d-flex align-items-center">
+                                <ul class="notification-drop">
+                                    <li class="item">
+                                        <span class="item-notification-drop">
+                                            <i class="fa-solid fa-bell notification-bell ml-2 mr-2" aria-hidden="true"></i>
+                                            <span class="btn__badge pulse-button js-count-notification">
+                                                {{ $countNotificationsNotReadingYet }}
+                                            </span>
+                                        </span>
+                                        <ul class="notification-drop-content">
+                                            @foreach ($notifications as $notification)
+                                                <li class="position-relative notification-drop-item js-read-notification"
+                                                    data-id="{{ $notification->id }}">
+                                                    {{ __('User') . ' ' . $notification->data . ' ' . __('followed you') }}
+                                                    @if (!$notification->read_at)
+                                                        <i class="fa-solid fa-circle js-toast-icon"></i>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+
+                                            @if ($notifications->currentPage() < $notifications->lastPage())
+                                                <div class="w-100 text-center">
+                                                    <a class="show-more-notification js-more-notification pb-3"
+                                                        data-tab="{{ $notifications->currentPage() + 1 }}"
+                                                        href="{{ route('paginate.notification') }}">
+                                                        {{ __('Show more') }}
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <a href="{{ url('/dashboard') }}"
+                                    class="text-dark link-underline-light hidden-mb ml-2">{{ __('Dashboard') }}</a>
+                            </div>
                         @else
                             <a href="{{ route('login') }}"
                                 class="text-dark link-underline-light hidden-mb">{{ __('Log in') }}</a>
