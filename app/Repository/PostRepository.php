@@ -210,8 +210,8 @@ class PostRepository
         return DB::table('date_view_post')
             ->whereIn('post_id', $listPostById)
             ->whereBetween('created_at', [$dayStartQuery, Carbon::today()])
-            ->groupBy('created_at', 'updated_at')
-            ->select('created_at', 'updated_at', DB::raw('SUM(views) as total'))
+            ->select('created_at', DB::raw('MAX(updated_at) as updated_at'), DB::raw('SUM(views) as total'))
+            ->groupBy('created_at')
             ->get();
     }
 }

@@ -10,6 +10,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['*'];
+
     protected $table = 'categories';
 
     public function posts(): HasMany

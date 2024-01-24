@@ -9,5 +9,7 @@ class PostHashtag extends Pivot
 {
     use HasFactory;
 
+    protected $fillable = ['*'];
+
     protected $table = 'post_hashtag';
 }

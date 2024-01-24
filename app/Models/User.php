@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use DragonCode\Support\Facades\Helpers\Str;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,6 +15,8 @@ class User extends Authenticatable
     use HasApiTokens;
     use HasFactory;
     use Notifiable;
+
+    protected $fillable = ['name', 'email', 'password', 'role_id', 'status_id', 'verify', 'avatar', 'remember_token'];
 
     protected $table = 'users';
     /**
@@ -111,10 +112,5 @@ class User extends Authenticatable
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = htmlspecialchars($value);
-    }
-
-    public function getSlugNameEmailAttribute(): string
-    {
-        return Str::hash("{$this->name} {$this->email}");
     }
 }
