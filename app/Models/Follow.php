@@ -9,5 +9,7 @@ class Follow extends Pivot
 {
     use HasFactory;
 
+    protected $fillable = ['*'];
+
     protected $table = 'follows';
 }

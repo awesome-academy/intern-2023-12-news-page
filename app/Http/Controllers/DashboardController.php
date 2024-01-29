@@ -57,11 +57,15 @@ class DashboardController extends Controller
             'selectDateQuery' => config('constants.dayQuery.dataQuerySelected'),
             'selectChoice' => $request['time'],
             'data' => $data,
-            'lastUpdated' => !empty($data->last()->updated_at) ? $data->last()->updated_at : $data->last()->created_at,
         ];
 
         if (in_array($role, config('constants.modSlug'))) {
             $dataView['countReports'] = $this->reportService->countReports();
+        }
+
+        if ($data->count() > 0) {
+            $dataView['lastUpdated'] = !empty($data->last()->updated_at) ? $data->last()->updated_at :
+                $data->last()->created_at;
         }
 
         return view('dashboard')->with($dataView);

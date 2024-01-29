@@ -128,6 +128,11 @@ return [
         'moderator',
         'admin',
     ],
+    'roleSlug' => [
+        'user',
+        'moderator',
+        'admin',
+    ],
     'review' => [
         'reviewStatusPublish' => 'published',
         'reviewStatusBan' => 'banned',
@@ -173,6 +178,10 @@ return [
             '29' => 'Last 30 days',
         ],
         'dataQueryDefault' => '6',
+        'dataQueryValue' => [
+            '6',
+            '29',
+        ],
     ],
     'paginate' => 10,
     'limit' => 11,
