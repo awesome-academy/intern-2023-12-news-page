@@ -3,14 +3,23 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use App\Repository\Resource\ManagerPostRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ManagerPostRepository
+class ManagerPostRepository extends BaseRepository implements ManagerPostRepositoryInterface
 {
+    protected $model;
+
+    public function __construct(Post $model)
+    {
+        $this->model = $model;
+        parent::__construct($model);
+    }
+
     public function getPostByStatus($slug, $search): LengthAwarePaginator
     {
         $paginate = config('constants.paginate');
-        $query = Post::with(['category', 'status']);
+        $query = $this->model->with(['category', 'status']);
 
         if (
             $slug === config('constants.post.postStatusSlugVerify') ||
@@ -37,6 +46,6 @@ class ManagerPostRepository
 
     public function changeStatusPostByManager($dataUpdate, $postId)
     {
-        Post::where('id', $postId)->update($dataUpdate);
+        $this->edit($postId, $dataUpdate);
     }
 }

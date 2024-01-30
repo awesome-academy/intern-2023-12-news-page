@@ -30,6 +30,7 @@
         <exclude name="Squiz.Classes.ClassFileName.NoMatch"/>
         <exclude name="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint.UselessVarAnnotation"/>
         <exclude name="SlevomatCodingStandard.Commenting.EmptyComment.EmptyComment"/>
+        <exclude name="SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix"/>
     </rule>
     <rule ref="SunAsterisk.Laravel.NoEnv.Found">
         <exclude-pattern>config</exclude-pattern>

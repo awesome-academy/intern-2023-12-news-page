@@ -3,24 +3,30 @@
 namespace App\Repository;
 
 use App\Models\Hashtag;
+use App\Repository\Resource\HashtagRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class HashtagRepository
+class HashtagRepository extends BaseRepository implements HashtagRepositoryInterface
 {
+    public function __construct(Hashtag $hashtag)
+    {
+        parent::__construct($hashtag);
+    }
+
     public function getListHashtag()
     {
-        return Hashtag::select(['id', 'name', 'slug'])->get();
+        return $this->get(['id', 'name', 'slug']);
     }
 
     public function getIdBySlug($slug)
     {
-        return Hashtag::where('slug', $slug)->select('id')->first()->id;
+        return $this->find(['slug' => $slug], ['id'])->id;
     }
 
     public function getNameBySlug($slug)
     {
-        return Hashtag::where('slug', $slug)->select('name')->first()->name;
+        return $this->find(['slug' => $slug], ['name'])->name;
     }
 
     public function insertCustomPostHashtag($hashtags): array
@@ -28,7 +34,10 @@ class HashtagRepository
         $arrStore = [];
 
         foreach ($hashtags as $item) {
-            $hashtag = Hashtag::where('name', $item)->where('slug', Str::slug($item))->first();
+            $hashtag = $this->find([
+                'name' => $item,
+                'slug' => Str::slug($item),
+            ]);
             if (empty($hashtag)) {
                 $dataInsert = [
                     'name' => $item,
@@ -36,7 +45,7 @@ class HashtagRepository
                     'created_at' => Carbon::now(),
                 ];
 
-                $createdHashtag = Hashtag::create($dataInsert);
+                $createdHashtag = $this->store($dataInsert);
 
                 $arrStore[] = (int) $createdHashtag->id;
             } else {
@@ -49,12 +58,6 @@ class HashtagRepository
 
     public function getHashTagSearch($search, $paginate = null)
     {
-        $query = Hashtag::where('name', 'like', '%' . $search . '%');
-
-        if ($paginate !== null) {
-            return $query->paginate($paginate);
-        }
-
-        return $query->get();
+        return $this->searchLike('name', $search, $paginate);
     }
 }

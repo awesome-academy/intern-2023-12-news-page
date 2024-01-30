@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\CategoryRepository;
-use App\Repository\FollowRepository;
-use App\Repository\HashtagRepository;
-use App\Repository\NotificationRepository;
-use App\Repository\PostRepository;
-use App\Repository\ReportRepository;
-use App\Repository\ReviewRepository;
-use App\Repository\StatusRepository;
-use App\Repository\UserRepository;
+use App\Repository\Resource\CategoryRepositoryInterface;
+use App\Repository\Resource\FollowRepositoryInterface;
+use App\Repository\Resource\HashtagRepositoryInterface;
+use App\Repository\Resource\NotificationRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
+use App\Repository\Resource\ReportRepositoryInterface;
+use App\Repository\Resource\ReviewRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
+use App\Repository\Resource\UserRepositoryInterface;
 use App\Services\LandingPageService;
 use App\Services\PostService;
 use App\Services\ReportService;
@@ -20,45 +20,45 @@ use Illuminate\Support\Facades\Auth;
 
 class LandingPageController extends Controller
 {
-    protected $landingPageService;
-    protected $categoryRepository;
-    protected $hashtagRepository;
-    protected $postRepository;
-    protected $postService;
-    protected $statusRepository;
-    protected $reviewRepository;
     protected $reportService;
-    protected $reportRepository;
-    protected $userRepository;
-    protected $followRepository;
-    protected $notificationRepository;
+    protected $postService;
+    protected $landingPageService;
+    protected $categoryRepositoryInterface;
+    protected $hashtagRepositoryInterface;
+    protected $postRepositoryInterface;
+    protected $statusRepositoryInterface;
+    protected $reviewRepositoryInterface;
+    protected $reportRepositoryInterface;
+    protected $userRepositoryInterface;
+    protected $followRepositoryInterface;
+    protected $notificationRepositoryInterface;
 
     public function __construct(
         LandingPageService $landingPageService,
         PostService $postService,
-        CategoryRepository $categoryRepository,
-        HashtagRepository $hashtagRepository,
-        PostRepository $postRepository,
-        StatusRepository $statusRepository,
-        ReviewRepository $reviewRepository,
         ReportService $reportService,
-        ReportRepository $reportRepository,
-        UserRepository $userRepository,
-        FollowRepository $followRepository,
-        NotificationRepository $notificationRepository
+        CategoryRepositoryInterface $categoryRepositoryInterface,
+        HashtagRepositoryInterface $hashtagRepositoryInterface,
+        PostRepositoryInterface $postRepositoryInterface,
+        StatusRepositoryInterface $statusRepositoryInterface,
+        ReviewRepositoryInterface $reviewRepositoryInterface,
+        ReportRepositoryInterface $reportRepositoryInterface,
+        UserRepositoryInterface $userRepositoryInterface,
+        FollowRepositoryInterface $followRepositoryInterface,
+        NotificationRepositoryInterface $notificationRepositoryInterface
     ) {
         $this->landingPageService = $landingPageService;
         $this->postService = $postService;
-        $this->categoryRepository = $categoryRepository;
-        $this->hashtagRepository = $hashtagRepository;
-        $this->postRepository = $postRepository;
-        $this->statusRepository = $statusRepository;
-        $this->reviewRepository = $reviewRepository;
         $this->reportService = $reportService;
-        $this->reportRepository = $reportRepository;
-        $this->userRepository = $userRepository;
-        $this->followRepository = $followRepository;
-        $this->notificationRepository = $notificationRepository;
+        $this->categoryRepositoryInterface = $categoryRepositoryInterface;
+        $this->hashtagRepositoryInterface = $hashtagRepositoryInterface;
+        $this->postRepositoryInterface = $postRepositoryInterface;
+        $this->statusRepositoryInterface = $statusRepositoryInterface;
+        $this->reviewRepositoryInterface = $reviewRepositoryInterface;
+        $this->reportRepositoryInterface = $reportRepositoryInterface;
+        $this->userRepositoryInterface = $userRepositoryInterface;
+        $this->followRepositoryInterface = $followRepositoryInterface;
+        $this->notificationRepositoryInterface = $notificationRepositoryInterface;
     }
 
     public function landingPage()
@@ -73,13 +73,13 @@ class LandingPageController extends Controller
             'newPosts' => $getNewPosts,
             'verifiedPosts' => $getVerifiedPosts,
             'interactionsPosts' => $getInteractionsPosts,
-            'categories' => $this->categoryRepository->getListCategory(),
-            'hashtags' => $this->hashtagRepository->getListHashtag(),
+            'categories' => $this->categoryRepositoryInterface->getListCategory(),
+            'hashtags' => $this->hashtagRepositoryInterface->getListHashtag(),
             'firstNewPost' => $getNewPosts->splice(0, 1)[0] ?? null,
             'firstAuthenticatedPost' => $getVerifiedPosts->splice(0, 1)[0] ?? null,
             'twoInteractionsPost' => $getInteractionsPosts->splice(0, 2) ?? [],
-            'notifications' => $this->notificationRepository->getNotificationsByUserId($userId),
-            'countNotificationsNotReadingYet' => $this->notificationRepository
+            'notifications' => $this->notificationRepositoryInterface->getNotificationsByUserId($userId),
+            'countNotificationsNotReadingYet' => $this->notificationRepositoryInterface
                 ->countNotificationsNotReadingYet($userId),
             'route' => route('landingPage'),
         ];
@@ -95,9 +95,9 @@ class LandingPageController extends Controller
             'type' => $request['type'],
         ];
         if ($request['type'] === config('constants.category.categoryType')) {
-            $search = $this->categoryRepository->getNameBySlug($request['slug']);
+            $search = $this->categoryRepositoryInterface->getNameBySlug($request['slug']);
         } else {
-            $search = $this->hashtagRepository->getNameBySlug($request['slug']);
+            $search = $this->hashtagRepositoryInterface->getNameBySlug($request['slug']);
         }
 
         $getNewPosts = $this->landingPageService->getPostsByTab(config('constants.tab.tabNewPosts'), $dataSearch);
@@ -109,11 +109,11 @@ class LandingPageController extends Controller
             'newPosts' => $getNewPosts,
             'verifiedPosts' => $getVerifiedPosts,
             'interactionsPosts' => $getInteractionsPosts,
-            'categories' => $this->categoryRepository->getListCategory(),
-            'hashtags' => $this->hashtagRepository->getListHashtag(),
+            'categories' => $this->categoryRepositoryInterface->getListCategory(),
+            'hashtags' => $this->hashtagRepositoryInterface->getListHashtag(),
             'search' => $search,
-            'notifications' => $this->notificationRepository->getNotificationsByUserId($userId),
-            'countNotificationsNotReadingYet' => $this->notificationRepository
+            'notifications' => $this->notificationRepositoryInterface->getNotificationsByUserId($userId),
+            'countNotificationsNotReadingYet' => $this->notificationRepositoryInterface
                 ->countNotificationsNotReadingYet($userId),
         ];
 
@@ -123,32 +123,33 @@ class LandingPageController extends Controller
     public function info(Request $request)
     {
         $userLoginId = userAuth()->id ?? null;
-        $getIdStatusPublishPost = $this->statusRepository
+        $getIdStatusPublishPost = $this->statusRepositoryInterface
             ->getIdBySlug(config('constants.post.postStatusSlugPublish'), config('constants.post.postType'));
         $role = Auth::user()->role->slug ?? null;
         $userId = $request['id'];
         if (!empty(Auth::user())) {
-            $checkFollow = $this->followRepository->checkFollow(Auth::user()->id, $userId);
+            $checkFollow = $this->followRepositoryInterface->checkFollow(Auth::user()->id, $userId);
         }
 
-        $followers = $this->followRepository->getFollow($userId, config('constants.follow.followerTab'))->followers;
-        $following = $this->followRepository
+        $followers = $this->followRepositoryInterface
+            ->getFollow($userId, config('constants.follow.followerTab'))->followers;
+        $following = $this->followRepositoryInterface
             ->getFollow($userId, config('constants.follow.hadFollowedTab'))->following;
 
         $dataView = [
-            'categories' => $this->categoryRepository->getListCategory(),
-            'hashtags' => $this->hashtagRepository->getListHashtag(),
-            'countViews' => $this->postRepository->countViews($userId),
-            'countPosts' => $this->postRepository->countPosts($userId),
-            'posts' => $this->postRepository->getPostsByUserId($userId, $getIdStatusPublishPost),
+            'categories' => $this->categoryRepositoryInterface->getListCategory(),
+            'hashtags' => $this->hashtagRepositoryInterface->getListHashtag(),
+            'countViews' => $this->postRepositoryInterface->countViews($userId),
+            'countPosts' => $this->postRepositoryInterface->countPosts($userId),
+            'posts' => $this->postRepositoryInterface->getPostsByUserId($userId, $getIdStatusPublishPost),
             'countFollows' => $followers->count(),
-            'userInfo' => $this->userRepository->getUserById($userId),
+            'userInfo' => $this->userRepositoryInterface->getUserById($userId),
             'userId' => $userId,
             'checkFollow' => !empty($checkFollow) ? $checkFollow->id : false,
             'followers' => $followers,
             'following' => $following,
-            'notifications' => $this->notificationRepository->getNotificationsByUserId($userLoginId),
-            'countNotificationsNotReadingYet' => $this->notificationRepository
+            'notifications' => $this->notificationRepositoryInterface->getNotificationsByUserId($userLoginId),
+            'countNotificationsNotReadingYet' => $this->notificationRepositoryInterface
                 ->countNotificationsNotReadingYet($userLoginId),
         ];
 
@@ -162,28 +163,28 @@ class LandingPageController extends Controller
     public function detail(Request $request)
     {
         $userId = userAuth()->id ?? null;
-        $getIdStatusPublishPost = $this->statusRepository
+        $getIdStatusPublishPost = $this->statusRepositoryInterface
             ->getIdBySlug(config('constants.post.postStatusSlugPublish'), config('constants.post.postType'));
-        $getIdStatusPublishReview = $this->statusRepository
+        $getIdStatusPublishReview = $this->statusRepositoryInterface
             ->getIdBySlug(config('constants.review.reviewStatusPublish'), config('constants.review.reviewType'));
         $getPostById = $this->postService
             ->handlePostIndexById($request['id'], $getIdStatusPublishPost, $getIdStatusPublishReview);
 
         if ($getPostById) {
-            $postSameCategory = $this->postRepository
+            $postSameCategory = $this->postRepositoryInterface
                 ->getPostByCategoryId($getPostById->category_id, $getIdStatusPublishPost, $request['id']);
             if (!empty(userAuth())) {
-                $checkFollow = $this->followRepository->checkFollow($userId, $getPostById->user_id);
+                $checkFollow = $this->followRepositoryInterface->checkFollow($userId, $getPostById->user_id);
             }
 
             $dataView = [
-                'categories' => $this->categoryRepository->getListCategory(),
-                'hashtags' => $this->hashtagRepository->getListHashtag(),
+                'categories' => $this->categoryRepositoryInterface->getListCategory(),
+                'hashtags' => $this->hashtagRepositoryInterface->getListHashtag(),
                 'post' => $getPostById,
                 'postSameCategory' => $postSameCategory,
                 'checkFollow' => !empty($checkFollow ?? null),
-                'notifications' => $this->notificationRepository->getNotificationsByUserId($userId),
-                'countNotificationsNotReadingYet' => $this->notificationRepository
+                'notifications' => $this->notificationRepositoryInterface->getNotificationsByUserId($userId),
+                'countNotificationsNotReadingYet' => $this->notificationRepositoryInterface
                     ->countNotificationsNotReadingYet($userId),
             ];
 
@@ -195,7 +196,7 @@ class LandingPageController extends Controller
 
     public function comment(Request $request): JsonResponse
     {
-        $getIdStatusPublishReview = $this->statusRepository
+        $getIdStatusPublishReview = $this->statusRepositoryInterface
             ->getIdBySlug(config('constants.review.reviewStatusPublish'), config('constants.review.reviewType'));
         $dataInsert = [
             'post_id' => $request['postId'],
@@ -204,8 +205,8 @@ class LandingPageController extends Controller
             'status_id' => $getIdStatusPublishReview,
         ];
 
-        $reviewId = $this->reviewRepository->insertReviewGetId($dataInsert);
-        $review = $this->reviewRepository->getReviewById($reviewId);
+        $reviewId = $this->reviewRepositoryInterface->insertReviewGetId($dataInsert);
+        $review = $this->reviewRepositoryInterface->getReviewById($reviewId);
 
         return response()->json($review);
     }
@@ -219,7 +220,7 @@ class LandingPageController extends Controller
             'user_id' => $request['user_id'],
         ];
 
-        $this->reportRepository->insertReport($dataInsert);
+        $this->reportRepositoryInterface->insertReport($dataInsert);
 
         return response()->json();
     }
@@ -231,7 +232,7 @@ class LandingPageController extends Controller
             'follower_id' => $request['followId'],
         ];
 
-        $this->followRepository->followAction($dataInsert);
+        $this->followRepositoryInterface->followAction($dataInsert);
 
         return response()->json();
     }
@@ -243,9 +244,9 @@ class LandingPageController extends Controller
         $paginate = config('constants.paginate');
 
         $data = [
-            'dataPost' => $this->postRepository->getPostSearch($search, $paginate),
-            'dataUser' => $this->userRepository->getUserSearch($search, $paginate),
-            'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search, $paginate),
+            'dataPost' => $this->postRepositoryInterface->getPostSearch($search, $paginate),
+            'dataUser' => $this->userRepositoryInterface->getUserSearch($search, $paginate),
+            'dataHashtag' => $this->hashtagRepositoryInterface->getHashTagSearch($search, $paginate),
         ];
 
         if (!empty($tab)) {
@@ -260,14 +261,14 @@ class LandingPageController extends Controller
         $userId = userAuth()->id ?? null;
         $search = $request['search'];
         $dataView = [
-            'dataPost' => $this->postRepository->getPostSearch($search),
-            'dataUser' => $this->userRepository->getUserSearch($search),
-            'dataHashtag' => $this->hashtagRepository->getHashTagSearch($search),
+            'dataPost' => $this->postRepositoryInterface->getPostSearch($search),
+            'dataUser' => $this->userRepositoryInterface->getUserSearch($search),
+            'dataHashtag' => $this->hashtagRepositoryInterface->getHashTagSearch($search),
             'search' => $search,
-            'categories' => $this->categoryRepository->getListCategory(),
-            'hashtags' => $this->hashtagRepository->getListHashtag(),
-            'notifications' => $this->notificationRepository->getNotificationsByUserId($userId),
-            'countNotificationsNotReadingYet' => $this->notificationRepository
+            'categories' => $this->categoryRepositoryInterface->getListCategory(),
+            'hashtags' => $this->hashtagRepositoryInterface->getListHashtag(),
+            'notifications' => $this->notificationRepositoryInterface->getNotificationsByUserId($userId),
+            'countNotificationsNotReadingYet' => $this->notificationRepositoryInterface
                 ->countNotificationsNotReadingYet($userId),
         ];
 
@@ -278,7 +279,7 @@ class LandingPageController extends Controller
     {
         $tab = $request['tab'];
         $userId = userAuth()->id ?? null;
-        $data = $this->notificationRepository->getNotificationsByUserId($userId, $tab);
+        $data = $this->notificationRepositoryInterface->getNotificationsByUserId($userId, $tab);
 
         return response()->json($data);
     }
@@ -287,6 +288,6 @@ class LandingPageController extends Controller
     {
         $id = $request['id'];
 
-        $this->notificationRepository->updateReadNotification($id);
+        $this->notificationRepositoryInterface->updateReadNotification($id);
     }
 }

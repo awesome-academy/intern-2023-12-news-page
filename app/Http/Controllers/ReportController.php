@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\ReportRepository;
-use App\Repository\StatusRepository;
+use App\Repository\Resource\ReportRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
-    protected $reportRepository;
-    protected $statusRepository;
+    protected $reportRepositoryInterface;
+    protected $statusRepositoryInterface;
 
     public function __construct(
-        StatusRepository $statusRepository,
-        ReportRepository $reportRepository
+        StatusRepositoryInterface $statusRepositoryInterface,
+        ReportRepositoryInterface $reportRepositoryInterface
     ) {
-        $this->statusRepository = $statusRepository;
-        $this->reportRepository = $reportRepository;
+        $this->statusRepositoryInterface = $statusRepositoryInterface;
+        $this->reportRepositoryInterface = $reportRepositoryInterface;
     }
 
     public function __getDataTab($tab, $search): LengthAwarePaginator
     {
-        return $this->reportRepository->getReportByTab($tab, $search);
+        return $this->reportRepositoryInterface->getReportByTab($tab, $search);
     }
 
     public function index(Request $request)
@@ -45,8 +45,8 @@ class ReportController extends Controller
         $banId = $report;
         $tab = $request['tab'];
 
-        $this->reportRepository->updateStatusByTabAndClearReport($banId, $tab);
-        $this->reportRepository->__deleteReportAfterAction($banId, $tab);
+        $this->reportRepositoryInterface->updateStatusByTabAndClearReport($banId, $tab);
+        $this->reportRepositoryInterface->__deleteReportAfterAction($banId, $tab);
 
         return redirect()->route('reports.index')
             ->with('success', config('constants.notification.updateSuccess'));

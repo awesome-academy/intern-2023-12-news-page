@@ -137,7 +137,7 @@
                                         <td class="text-center">
                                             <a href="{{ route('info', ['id' => $user->id]) }}" class="btn btn-success"
                                                 target="__blank">{{ __('Show') }}</a>
-                                            @if ((int) $userId === isset(Auth::user()->id) ? Auth::user()->id : null)
+                                            @if (isset(Auth::user()->id) && (int) $userId === Auth::user()->id)
                                                 <a href="{{ route('unFollow', ['userId' => $user->id]) }}"
                                                     class="btn btn-danger">{{ __('Unfollow') }}</a>
                                             @endif

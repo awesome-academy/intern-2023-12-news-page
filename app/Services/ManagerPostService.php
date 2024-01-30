@@ -2,18 +2,20 @@
 
 namespace App\Services;
 
-use App\Repository\ManagerPostRepository;
-use App\Repository\StatusRepository;
+use App\Repository\Resource\ManagerPostRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
 
 class ManagerPostService
 {
-    protected $managerPostRepository;
-    protected $statusRepository;
+    protected $managerPostRepositoryInterface;
+    protected $statusRepositoryInterface;
 
-    public function __construct(ManagerPostRepository $managerPostRepository, StatusRepository $statusRepository)
-    {
-        $this->managerPostRepository = $managerPostRepository;
-        $this->statusRepository = $statusRepository;
+    public function __construct(
+        ManagerPostRepositoryInterface $managerPostRepositoryInterface,
+        StatusRepositoryInterface $statusRepositoryInterface
+    ) {
+        $this->managerPostRepositoryInterface = $managerPostRepositoryInterface;
+        $this->statusRepositoryInterface = $statusRepositoryInterface;
     }
 
     public function changeStatusPostByManager($data)
@@ -28,11 +30,11 @@ class ManagerPostService
             ];
         } else {
             $dataUpdate = [
-                'status_id' => $this->statusRepository
+                'status_id' => $this->statusRepositoryInterface
                     ->getIdBySlug($data['status_id'], config('constants.post.postType')),
             ];
         }
 
-        $this->managerPostRepository->changeStatusPostByManager($dataUpdate, $postId);
+        $this->managerPostRepositoryInterface->changeStatusPostByManager($dataUpdate, $postId);
     }
 }

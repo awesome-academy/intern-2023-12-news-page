@@ -44,7 +44,7 @@ class StatisticalViewPostByDay extends Command
             $item = DB::table('date_view_post')
                 ->where('post_id', $post->id)
                 ->orderBy('created_at', 'DESC')->select('created_at')->first();
-            $itemDay = $item->created_at;
+            $itemDay = $item->created_at ?? null;
             $today = Carbon::today();
 
             if ($today->eq($itemDay)) {

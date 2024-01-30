@@ -3,28 +3,36 @@
 namespace App\Repository;
 
 use App\Models\Notification;
+use App\Repository\Resource\NotificationRepositoryInterface;
 
-class NotificationRepository
+class NotificationRepository extends BaseRepository implements NotificationRepositoryInterface
 {
+    protected $model;
+
+    public function __construct(Notification $notification)
+    {
+        $this->model = $notification;
+        parent::__construct($notification);
+    }
+
     public function getNotificationsByUserId($userId, $tab = null)
     {
         if (empty($tab)) {
-            return Notification::where('notifiable', $userId)
-                ->orderBy('created_at', 'DESC')->paginate(config('constants.paginate'));
+            return $this->paginate(config('constants.paginate'), ['notifiable' => $userId]);
         }
 
-        return Notification::where('notifiable', $userId)
+        return $this->model->where('notifiable', $userId)
             ->orderBy('created_at', 'DESC')->paginate(config('constants.paginate'), ['*'], 'page', $tab);
     }
 
     public function countNotificationsNotReadingYet($userId)
     {
-        return Notification::where('notifiable', $userId)->where('read_at', false)->count();
+        return $this->model->where('notifiable', $userId)->where('read_at', false)->count();
     }
 
     public function updateReadNotification($id)
     {
-        return Notification::where('id', $id)->update([
+        return $this->edit($id, [
             'read_at' => true,
         ]);
     }

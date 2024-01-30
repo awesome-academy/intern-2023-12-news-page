@@ -4,13 +4,23 @@ namespace App\Repository;
 
 use App\Models\Hashtag;
 use App\Models\PostHashtag;
+use App\Repository\Resource\PostHashTagRepositoryInterface;
 use Carbon\Carbon;
 
-class PostHashtagRepository
+class PostHashtagRepository extends BaseRepository implements PostHashTagRepositoryInterface
 {
+    protected $model;
+
+    public function __construct(PostHashtag $model)
+    {
+        $this->model = $model;
+
+        parent::__construct($model);
+    }
+
     public function deleteHashtagByPostId($id)
     {
-        PostHashtag::where('post_id', $id)->delete();
+        $this->model->where('post_id', $id)->delete();
     }
 
     public function insertPostHashtag($postId, $hashtags, $action, $arrHashtagCustom)
@@ -29,17 +39,12 @@ class PostHashtagRepository
                 'created_at' => Carbon::now(),
             ];
 
-            PostHashtag::create($dataInsert);
+            $this->model->insert($dataInsert);
         }
-    }
-
-    public function removePostHashtag($postId)
-    {
-        PostHashtag::where('post_id', $postId)->delete();
     }
 
     public function listPostByHashtagId($id)
     {
-        return PostHashtag::where('hashtag_id', $id)->select('post_id')->pluck('post_id');
+        return $this->model->where('hashtag_id', $id)->select('post_id')->pluck('post_id');
     }
 }
