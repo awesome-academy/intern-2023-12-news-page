@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
-use App\Repository\CategoryRepository;
-use App\Repository\HashtagRepository;
-use App\Repository\PostRepository;
+use App\Repository\Resource\CategoryRepositoryInterface;
+use App\Repository\Resource\HashtagRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
 use App\Services\PostService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
@@ -14,20 +14,20 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     protected $postService;
-    protected $postRepository;
-    protected $hashtagRepository;
-    protected $categoryRepository;
+    protected $postRepositoryInterface;
+    protected $hashtagRepositoryInterface;
+    protected $categoryRepositoryInterface;
 
     public function __construct(
         PostService $postService,
-        CategoryRepository $categoryRepository,
-        HashtagRepository $hashtagRepository,
-        PostRepository $postRepository
+        CategoryRepositoryInterface $categoryRepositoryInterface,
+        HashtagRepositoryInterface $hashtagRepositoryInterface,
+        PostRepositoryInterface $postRepositoryInterface
     ) {
         $this->postService = $postService;
-        $this->categoryRepository = $categoryRepository;
-        $this->hashtagRepository = $hashtagRepository;
-        $this->postRepository = $postRepository;
+        $this->categoryRepositoryInterface = $categoryRepositoryInterface;
+        $this->hashtagRepositoryInterface = $hashtagRepositoryInterface;
+        $this->postRepositoryInterface = $postRepositoryInterface;
     }
 
     public function __getDataTab($tab, $search): LengthAwarePaginator
@@ -53,8 +53,8 @@ class PostController extends Controller
 
     public function create()
     {
-        $listCategory = $this->categoryRepository->getListCategory();
-        $listHashtag = $this->hashtagRepository->getListHashtag();
+        $listCategory = $this->categoryRepositoryInterface->getListCategory();
+        $listHashtag = $this->hashtagRepositoryInterface->getListHashtag();
         $dataView = [
             'categories' => $listCategory,
             'hashtags' => $listHashtag,
@@ -84,9 +84,9 @@ class PostController extends Controller
 
     public function edit($id)
     {
-        $listCategory = $this->categoryRepository->getListCategory();
-        $listHashtag = $this->hashtagRepository->getListHashtag();
-        $data = $this->postRepository->getPostById($id);
+        $listCategory = $this->categoryRepositoryInterface->getListCategory();
+        $listHashtag = $this->hashtagRepositoryInterface->getListHashtag();
+        $data = $this->postRepositoryInterface->getPostById($id);
         $dataView = [
             'data' => $data,
             'categories' => $listCategory,

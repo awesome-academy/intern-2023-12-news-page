@@ -3,24 +3,33 @@
 namespace App\Repository;
 
 use App\Models\User;
+use App\Repository\Resource\StatusRepositoryInterface;
+use App\Repository\Resource\UserRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class UserRepository
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     protected $roleRepository;
-    protected $statusRepository;
+    protected $statusRepositoryI;
+    protected $model;
 
-    public function __construct(RoleRepository $roleRepository, StatusRepository $statusRepository)
-    {
+    public function __construct(
+        RoleRepository $roleRepository,
+        StatusRepositoryInterface $statusRepositoryI,
+        User $model
+    ) {
         $this->roleRepository = $roleRepository;
-        $this->statusRepository = $statusRepository;
+        $this->statusRepositoryI = $statusRepositoryI;
+        $this->model = $model;
+
+        parent::__construct($model);
     }
 
     public function getPostByRole($tab, $search): LengthAwarePaginator
     {
         $roleId = $this->roleRepository->getIdBySlug($tab);
 
-        $query = User::with(['status', 'role'])->where('role_id', $roleId);
+        $query = $this->model->with(['status', 'role'])->where('role_id', $roleId);
 
         if (!empty($search)) {
             $query->where('name', 'like', '%' . $search . '%');
@@ -31,26 +40,26 @@ class UserRepository
 
     public function getUserById($userId)
     {
-        return User::where('id', $userId)->select(['name', 'avatar', 'created_at', 'verify'])->first();
+        return $this->find(['id' => $userId], ['name', 'avatar', 'created_at', 'verify']);
     }
 
     public function updateStatus($userId, $getIdUpdateStatus)
     {
-        User::find($userId)->update([
+        $this->edit($userId, [
             'status_id' => $getIdUpdateStatus,
         ]);
     }
 
     public function updateRole($userId, $getIdUpdateRole)
     {
-        User::find($userId)->update([
+        $this->edit($userId, [
             'role_id' => $getIdUpdateRole,
         ]);
     }
 
     public function updateVerify($userId, $verify)
     {
-        User::find($userId)->update([
+        $this->edit($userId, [
             'verify' => $verify,
         ]);
     }
@@ -59,9 +68,9 @@ class UserRepository
     {
         $configUserSlug = config('constants.user.userStatusActive');
         $configUserType = config('constants.user.userStatusType');
-        $statusId = $this->statusRepository->getIdBySlug($configUserSlug, $configUserType);
+        $statusId = $this->statusRepositoryI->getIdBySlug($configUserSlug, $configUserType);
 
-        $query = User::with(['posts', 'role', 'followers'])->where('status_id', $statusId)
+        $query = $this->model->with(['posts', 'role', 'followers'])->where('status_id', $statusId)
             ->where('name', 'like', '%' . $search . '%')
             ->select(['name', 'avatar', 'verify', 'id', 'role_id']);
 
@@ -74,6 +83,6 @@ class UserRepository
 
     public function updateProfile($userId, $dataUpdate)
     {
-        User::find($userId)->update($dataUpdate);
+        $this->edit($userId, $dataUpdate);
     }
 }

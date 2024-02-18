@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
-use App\Repository\FollowRepository;
-use App\Repository\PostRepository;
-use App\Repository\UserRepository;
+use App\Repository\Resource\FollowRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
+use App\Repository\Resource\UserRepositoryInterface;
 use App\Services\PostService;
 use App\Services\ReportService;
 use Illuminate\Http\RedirectResponse;
@@ -17,24 +17,24 @@ use Illuminate\Support\Facades\Hash;
 
 class DashboardController extends Controller
 {
-    protected $postRepository;
     protected $reportService;
-    protected $userRepository;
-    protected $followRepository;
     protected $postService;
+    protected $postRepositoryInterface;
+    protected $userRepositoryInterface;
+    protected $followRepositoryInterface;
 
     public function __construct(
-        PostRepository $postRepository,
         ReportService $reportService,
-        UserRepository $userRepository,
-        FollowRepository $followRepository,
-        PostService $postService
+        PostService $postService,
+        PostRepositoryInterface $postRepositoryInterface,
+        UserRepositoryInterface $userRepositoryInterface,
+        FollowRepositoryInterface $followRepositoryInterface
     ) {
-        $this->postRepository = $postRepository;
         $this->reportService = $reportService;
-        $this->userRepository = $userRepository;
-        $this->followRepository = $followRepository;
         $this->postService = $postService;
+        $this->userRepositoryInterface = $userRepositoryInterface;
+        $this->followRepositoryInterface = $followRepositoryInterface;
+        $this->postRepositoryInterface = $postRepositoryInterface;
     }
 
     public function getDataDateQuery($time, $userId): Collection
@@ -48,12 +48,12 @@ class DashboardController extends Controller
         $role = Auth::user()->role->slug;
         $data = $this->getDataDateQuery($request['time'], $userId);
         $dataView = [
-            'countViews' => $this->postRepository->countViews($userId),
-            'countPosts' => $this->postRepository->countPosts($userId),
-            'countFollows' => $this->followRepository->countFollower($userId),
-            'highestViewPost' => $this->postRepository->getHighestViewPost($userId),
-            'highestCommentPost' => $this->postRepository->getHighestCommentPost($userId),
-            'newestPost' => $this->postRepository->getNewestPost($userId),
+            'countViews' => $this->postRepositoryInterface->countViews($userId),
+            'countPosts' => $this->postRepositoryInterface->countPosts($userId),
+            'countFollows' => $this->followRepositoryInterface->countFollower($userId),
+            'highestViewPost' => $this->postRepositoryInterface->getHighestViewPost($userId),
+            'highestCommentPost' => $this->postRepositoryInterface->getHighestCommentPost($userId),
+            'newestPost' => $this->postRepositoryInterface->getNewestPost($userId),
             'selectDateQuery' => config('constants.dayQuery.dataQuerySelected'),
             'selectChoice' => $request['time'],
             'data' => $data,
@@ -93,7 +93,7 @@ class DashboardController extends Controller
             $dataUpdate['avatar'] = $request['default'];
         }
 
-        $this->userRepository->updateProfile($userId, $dataUpdate);
+        $this->userRepositoryInterface->updateProfile($userId, $dataUpdate);
 
         return redirect()->route('profile')->with('success', config('constants.notification.updateSuccess'));
     }
@@ -105,7 +105,7 @@ class DashboardController extends Controller
             'password' => Hash::make($request['new_password']),
         ];
 
-        $this->userRepository->updateProfile($userId, $dataUpdate);
+        $this->userRepositoryInterface->updateProfile($userId, $dataUpdate);
 
         return redirect()->route('profile')->with('success', config('constants.notification.updateSuccess'));
     }

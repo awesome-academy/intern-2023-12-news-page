@@ -2,12 +2,18 @@
 
 namespace App\Repository;
 
-use Illuminate\Support\Facades\DB;
+use App\Models\Role;
+use App\Repository\Resource\RoleRepositoryInterface;
 
-class RoleRepository
+class RoleRepository extends BaseRepository implements RoleRepositoryInterface
 {
+    public function __construct(Role $model)
+    {
+        parent::__construct($model);
+    }
+
     public function getIdBySlug($tab)
     {
-        return DB::table('roles')->where('slug', $tab)->select('id')->first()->id;
+        return $this->find(['slug' => $tab], ['id'])->id;
     }
 }

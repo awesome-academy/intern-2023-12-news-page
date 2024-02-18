@@ -3,21 +3,27 @@
 namespace App\Repository;
 
 use App\Models\Category;
+use App\Repository\Resource\CategoryRepositoryInterface;
 
-class CategoryRepository
+class CategoryRepository extends BaseRepository implements CategoryRepositoryInterface
 {
+    public function __construct(Category $category)
+    {
+        parent::__construct($category);
+    }
+
     public function getListCategory()
     {
-        return Category::select(['id', 'name', 'slug'])->get();
+        return $this->get(['id', 'name', 'slug']);
     }
 
     public function getIdBySlug($slug)
     {
-        return Category::where('slug', $slug)->select('id')->first()->id;
+        return $this->find(['slug' => $slug], ['id'])->id;
     }
 
     public function getNameBySlug($slug)
     {
-        return Category::where('slug', $slug)->select('name')->first()->name;
+        return $this->find(['slug' => $slug], ['name'])->name;
     }
 }

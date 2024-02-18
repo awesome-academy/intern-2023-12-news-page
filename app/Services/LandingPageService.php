@@ -2,38 +2,38 @@
 
 namespace App\Services;
 
-use App\Repository\CategoryRepository;
-use App\Repository\HashtagRepository;
-use App\Repository\PostRepository;
-use App\Repository\StatusRepository;
+use App\Repository\Resource\CategoryRepositoryInterface;
+use App\Repository\Resource\HashtagRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
 
 class LandingPageService
 {
-    protected $postRepository;
-    protected $statusRepository;
-    protected $categoryRepository;
-    protected $hashtagRepository;
+    protected $postRepositoryInterface;
+    protected $statusRepositoryInterface;
+    protected $categoryRepositoryInterface;
+    protected $hashtagRepositoryInterface;
 
     public function __construct(
-        PostRepository $postRepository,
-        StatusRepository $statusRepository,
-        CategoryRepository $categoryRepository,
-        HashtagRepository $hashtagRepository
+        PostRepositoryInterface $postRepositoryInterface,
+        StatusRepositoryInterface $statusRepositoryInterface,
+        CategoryRepositoryInterface $categoryRepositoryInterface,
+        HashtagRepositoryInterface $hashtagRepositoryInterface
     ) {
-        $this->postRepository = $postRepository;
-        $this->statusRepository = $statusRepository;
-        $this->categoryRepository = $categoryRepository;
-        $this->hashtagRepository = $hashtagRepository;
+        $this->postRepositoryInterface = $postRepositoryInterface;
+        $this->statusRepositoryInterface = $statusRepositoryInterface;
+        $this->categoryRepositoryInterface = $categoryRepositoryInterface;
+        $this->hashtagRepositoryInterface = $hashtagRepositoryInterface;
     }
 
     public function getPostsByTab($tab, $dataSearch = [])
     {
-        $getIdStatusPublishPost = $this->statusRepository
+        $getIdStatusPublishPost = $this->statusRepositoryInterface
             ->getIdBySlug(config('constants.post.postStatusSlugPublish'), config('constants.post.postType'));
         if (!empty($dataSearch)) {
-            return $this->postRepository->searchPostsWithCondition($getIdStatusPublishPost, $tab, $dataSearch);
+            return $this->postRepositoryInterface->searchPostsWithCondition($getIdStatusPublishPost, $tab, $dataSearch);
         }
 
-        return $this->postRepository->getPostsWithCondition($getIdStatusPublishPost, $tab);
+        return $this->postRepositoryInterface->getPostsWithCondition($getIdStatusPublishPost, $tab);
     }
 }

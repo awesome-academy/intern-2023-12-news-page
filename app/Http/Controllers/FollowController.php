@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\FollowRepository;
+use App\Repository\Resource\FollowRepositoryInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-    protected $followRepository;
+    protected $followRepositoryInterface;
 
-    public function __construct(FollowRepository $followRepository)
+    public function __construct(FollowRepositoryInterface $followRepositoryInterface)
     {
-        $this->followRepository = $followRepository;
+        $this->followRepositoryInterface = $followRepositoryInterface;
     }
 
     public function __getDataTab($tab, $search)
     {
         $id = userAuth()->id;
 
-        return $this->followRepository->getFollow($id, $tab, $search);
+        return $this->followRepositoryInterface->getFollow($id, $tab, $search);
     }
 
     public function index(Request $request)
@@ -44,7 +44,7 @@ class FollowController extends Controller
         $authId = Auth::user()->id;
         $userId = $request['userId'];
 
-        $this->followRepository->unFollow($userId, $authId);
+        $this->followRepositoryInterface->unFollow($userId, $authId);
 
         return redirect()->route('follows.index')
             ->with('success', config('constants.notification.updateSuccess'));

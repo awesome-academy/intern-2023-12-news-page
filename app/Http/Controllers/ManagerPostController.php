@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\ManagerPostRepository;
+use App\Repository\Resource\ManagerPostRepositoryInterface;
 use App\Services\ManagerPostService;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
@@ -11,11 +11,13 @@ use Illuminate\Http\Request;
 class ManagerPostController
 {
     protected $managerPostService;
-    protected $managerPostRepository;
+    protected $managerPostRepositoryInterface;
 
-    public function __construct(ManagerPostService $managerPostService, ManagerPostRepository $managerPostRepository)
-    {
-        $this->managerPostRepository = $managerPostRepository;
+    public function __construct(
+        ManagerPostService $managerPostService,
+        ManagerPostRepositoryInterface $managerPostRepositoryInterface
+    ) {
+        $this->managerPostRepositoryInterface = $managerPostRepositoryInterface;
         $this->managerPostService = $managerPostService;
     }
 
@@ -23,7 +25,7 @@ class ManagerPostController
     {
         $tab = empty($tab) ? config('constants.post.postStatusSlugVerify') : $tab;
 
-        return $this->managerPostRepository->getPostByStatus($tab, $search);
+        return $this->managerPostRepositoryInterface->getPostByStatus($tab, $search);
     }
 
     public function index(Request $request)

@@ -2,67 +2,32 @@
 
 namespace App\Http\Controllers;
 
-use App\Repository\RoleRepository;
-use App\Repository\StatusRepository;
-use App\Repository\UserRepository;
+use App\Repository\Resource\RoleRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
+use App\Repository\Resource\UserRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    protected $userRepository;
-    protected $statusRepository;
-    protected $roleRepository;
+    protected $userRepositoryInterface;
+    protected $statusRepositoryInterface;
+    protected $roleRepositoryInterface;
 
     public function __construct(
-        UserRepository $userRepository,
-        StatusRepository $statusRepository,
-        RoleRepository $roleRepository
+        UserRepositoryInterface $userRepositoryInterface,
+        StatusRepositoryInterface $statusRepositoryInterface,
+        RoleRepositoryInterface $roleRepositoryInterface
     ) {
-        $this->userRepository = $userRepository;
-        $this->statusRepository = $statusRepository;
-        $this->roleRepository = $roleRepository;
-    }
-
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        $this->userRepositoryInterface = $userRepositoryInterface;
+        $this->statusRepositoryInterface = $statusRepositoryInterface;
+        $this->roleRepositoryInterface = $roleRepositoryInterface;
     }
 
     public function __getDataTab($tab, $search): LengthAwarePaginator
     {
-        return $this->userRepository->getPostByRole($tab, $search);
+        return $this->userRepositoryInterface->getPostByRole($tab, $search);
     }
 
     public function managerUsersIndex(Request $request)
@@ -84,9 +49,9 @@ class UserController extends Controller
         $userId = $user;
         $slug = $request['slug'];
         $type = config('constants.user.userStatusType');
-        $getIdUpdateStatus = $this->statusRepository->getIdBySlug($slug, $type);
+        $getIdUpdateStatus = $this->statusRepositoryInterface->getIdBySlug($slug, $type);
 
-        $this->userRepository->updateStatus($userId, $getIdUpdateStatus);
+        $this->userRepositoryInterface->updateStatus($userId, $getIdUpdateStatus);
 
         return redirect()->route('manager.users.index')
             ->with('success', config('constants.notification.updateSuccess'));
@@ -96,9 +61,9 @@ class UserController extends Controller
     {
         $userId = $user;
         $slug = $request['slug'];
-        $getIdUpdateRole = $this->roleRepository->getIdBySlug($slug);
+        $getIdUpdateRole = $this->roleRepositoryInterface->getIdBySlug($slug);
 
-        $this->userRepository->updateRole($userId, $getIdUpdateRole);
+        $this->userRepositoryInterface->updateRole($userId, $getIdUpdateRole);
 
         return redirect()->route('manager.users.index')
             ->with('success', config('constants.notification.updateSuccess'));
@@ -109,7 +74,7 @@ class UserController extends Controller
         $userId = $user;
         $updateVerify = $request['verify'];
 
-        $this->userRepository->updateVerify($userId, $updateVerify);
+        $this->userRepositoryInterface->updateVerify($userId, $updateVerify);
 
         return redirect()->route('manager.users.index')
             ->with('success', config('constants.notification.updateSuccess'));

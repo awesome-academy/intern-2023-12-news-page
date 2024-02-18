@@ -6,9 +6,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Requests\PasswordRequest;
 use App\Http\Requests\ProfileRequest;
 use App\Models\User;
-use App\Repository\FollowRepository;
-use App\Repository\PostRepository;
-use App\Repository\UserRepository;
+use App\Repository\Resource\FollowRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
+use App\Repository\Resource\UserRepositoryInterface;
 use App\Services\PostService;
 use App\Services\ReportService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -35,11 +35,11 @@ class DashboardControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->mockPostRepository = Mockery::mock(PostRepository::class);
         $this->mockReportService = Mockery::mock(ReportService::class);
-        $this->mockUserRepository = Mockery::mock(UserRepository::class);
-        $this->mockFollowRepository = Mockery::mock(FollowRepository::class);
         $this->mockPostService = Mockery::mock(PostService::class);
+        $this->mockPostRepository = Mockery::mock(PostRepositoryInterface::class);
+        $this->mockUserRepository = Mockery::mock(UserRepositoryInterface::class);
+        $this->mockFollowRepository = Mockery::mock(FollowRepositoryInterface::class);
 
         $this->app->instance('App\Repository\PostRepository', $this->mockPostRepository);
         $this->app->instance('App\Repository\FollowRepository', $this->mockFollowRepository);
@@ -51,11 +51,11 @@ class DashboardControllerTest extends TestCase
         $this->artisan('db:seed', ['--class' => 'StatusesSeeder', '--database' => 'testing']);
 
         $this->controller = new DashboardController(
-            $this->mockPostRepository,
             $this->mockReportService,
+            $this->mockPostService,
+            $this->mockPostRepository,
             $this->mockUserRepository,
-            $this->mockFollowRepository,
-            $this->mockPostService
+            $this->mockFollowRepository
         );
     }
 

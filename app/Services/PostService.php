@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Repository\HashtagRepository;
-use App\Repository\PostHashtagRepository;
-use App\Repository\PostRepository;
-use App\Repository\StatusRepository;
+use App\Repository\Resource\HashtagRepositoryInterface;
+use App\Repository\Resource\PostHashTagRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
 use Carbon\Carbon;
 use DOMDocument;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
@@ -13,26 +13,26 @@ use Illuminate\Support\Collection;
 
 class PostService
 {
-    protected $postRepository;
-    protected $postHashtagRepository;
-    protected $statusRepository;
-    protected $hashtagRepository;
+    protected $postRepositoryInterface;
+    protected $postHashtagRepositoryInterface;
+    protected $statusRepositoryInterface;
+    protected $hashtagRepositoryInterface;
 
     public function __construct(
-        PostRepository $postRepository,
-        PostHashtagRepository $postHashtagRepository,
-        StatusRepository $statusRepository,
-        HashtagRepository $hashtagRepository
+        PostRepositoryInterface $postRepositoryInterface,
+        PostHashTagRepositoryInterface $postHashtagRepositoryInterface,
+        StatusRepositoryInterface $statusRepositoryInterface,
+        HashtagRepositoryInterface $hashtagRepositoryInterface
     ) {
-        $this->postRepository = $postRepository;
-        $this->postHashtagRepository = $postHashtagRepository;
-        $this->statusRepository = $statusRepository;
-        $this->hashtagRepository = $hashtagRepository;
+        $this->postRepositoryInterface = $postRepositoryInterface;
+        $this->postHashtagRepositoryInterface = $postHashtagRepositoryInterface;
+        $this->statusRepositoryInterface = $statusRepositoryInterface;
+        $this->hashtagRepositoryInterface = $hashtagRepositoryInterface;
     }
 
     public function getPostByStatus($id, $slug = null, $search = null): LengthAwarePaginator
     {
-        return $this->postRepository->getPostByStatus($id, $slug, $search);
+        return $this->postRepositoryInterface->getPostByStatus($id, $slug, $search);
     }
 
     public function handlePost($dataHandle, $action, $id = null)
@@ -65,7 +65,7 @@ class PostService
             'content' => $content,
             'user_id' => userAuth()->id,
             'category_id' => $dataHandle['category'],
-            'status_id' => $this->statusRepository->getIdBySlug($configPostSlug, $configPostType),
+            'status_id' => $this->statusRepositoryInterface->getIdBySlug($configPostSlug, $configPostType),
         ];
 
         if (!empty($dataHandle['thumbnail'])) {
@@ -73,16 +73,16 @@ class PostService
             $dataAction['thumbnail'] = $thumbnail;
         }
 
-        $postId = $this->postRepository->handlePost($dataAction, $action, $id);
+        $postId = $this->postRepositoryInterface->handlePost($dataAction, $action, $id);
 
         if (!empty($hashtagCustom)) {
-            $arrHashtagCustom = $this->hashtagRepository->insertCustomPostHashtag($hashtagCustom);
+            $arrHashtagCustom = $this->hashtagRepositoryInterface->insertCustomPostHashtag($hashtagCustom);
         }
 
-        $this->postHashtagRepository->insertPostHashtag($postId, $hashtags, $action, $arrHashtagCustom ?? []);
+        $this->postHashtagRepositoryInterface->insertPostHashtag($postId, $hashtags, $action, $arrHashtagCustom ?? []);
 
         if (empty($hashtags) && empty($hashtagCustom)) {
-            $this->postHashtagRepository->removePostHashtag($postId);
+            $this->postHashtagRepositoryInterface->deleteHashtagByPostId($postId);
         }
     }
 
@@ -90,35 +90,35 @@ class PostService
     {
         $configPostSlug = config('constants.post.postStatusSlugDelete');
         $configPostType = config('constants.post.postType');
-        $status = $this->statusRepository->getIdBySlug($configPostSlug, $configPostType);
+        $status = $this->statusRepositoryInterface->getIdBySlug($configPostSlug, $configPostType);
 
-        $post = $this->postRepository->getPostNotRelationshipById($id);
+        $post = $this->postRepositoryInterface->getPostNotRelationshipById($id);
 
         libxml_use_internal_errors(true);
         $dom = new DOMDocument();
         $dom->loadHTML('<?xml encoding="UTF-8">' . $post->content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
         libxml_clear_errors();
 
-        $this->postRepository->deletePost($post, $status);
-        $this->postHashtagRepository->deleteHashtagByPostId($id);
+        $this->postRepositoryInterface->deletePost($post, $status);
+        $this->postHashtagRepositoryInterface->deleteHashtagByPostId($id);
     }
 
     public function updateStatusPost($id, $status)
     {
         $configPostType = config('constants.post.postType');
-        $statusUpdate = $this->statusRepository->getIdBySlug($status, $configPostType);
+        $statusUpdate = $this->statusRepositoryInterface->getIdBySlug($status, $configPostType);
 
-        $this->postRepository->updateStatusPost($id, $statusUpdate, $status);
+        $this->postRepositoryInterface->updateStatusPost($id, $statusUpdate, $status);
     }
 
     public function handlePostIndexById($id, $statusId, $statusIdReview)
     {
-        $post = $this->postRepository->getPostNotRelationshipById($id);
+        $post = $this->postRepositoryInterface->getPostNotRelationshipById($id);
         if ($post && $post->status_id === $statusId) {
             $post->views += 1;
             $post->save();
 
-            return $this->postRepository->handlePostIndexById($id, $statusIdReview);
+            return $this->postRepositoryInterface->handlePostIndexById($id, $statusIdReview);
         }
 
         return false;
@@ -130,6 +130,6 @@ class PostService
         $today = Carbon::today();
         $dayStartQuery = $today->subDays($timeQuery);
 
-        return $this->postRepository->getDataDateQuery($dayStartQuery, $userId);
+        return $this->postRepositoryInterface->getDataDateQuery($dayStartQuery, $userId);
     }
 }

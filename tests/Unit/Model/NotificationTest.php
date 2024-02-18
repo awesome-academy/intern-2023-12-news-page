@@ -11,7 +11,7 @@ class NotificationTest extends ModelTestCase
     {
         $this->runConfigurationAssertions(
             new Notification(),
-            ['id', 'type', 'notifiable', 'data'],
+            ['id', 'type', 'notifiable', 'data', 'read_at'],
             [],
             ['*'],
             [],
@@ -20,5 +20,12 @@ class NotificationTest extends ModelTestCase
             'id',
             'notifications'
         );
+    }
+
+    public function testConstructorDefaultValues()
+    {
+        $notification = new Notification();
+
+        $this->assertFalse($notification->read_at);
     }
 }

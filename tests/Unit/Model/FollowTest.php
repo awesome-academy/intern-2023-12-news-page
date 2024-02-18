@@ -11,7 +11,7 @@ class FollowTest extends ModelTestCase
     {
         $this->runConfigurationAssertions(
             new Follow(),
-            ['*'],
+            ['follower_id', 'user_id'],
             [],
             [],
             [],

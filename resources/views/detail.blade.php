@@ -108,7 +108,7 @@
                     <div class="w-100 text-end">
                         <button type="submit" class="btn btn-success mt-2 mb-2" data-user="{{ Auth::user()->id ?? null }}"
                             data-post="{{ $post->id }}" data-route-info={{ route('info') }}
-                            data-validate-true="{{ __('Post successfully, Reload the page to see you post') }}"
+                            data-validate-true="{{ __('Post successfully') }}"
                             data-validate-false="{{ __('Please do not leave it blank') }}">{{ __('Save') }}</button>
                     </div>
                 </form>

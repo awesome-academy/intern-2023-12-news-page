@@ -5,16 +5,33 @@ namespace App\Repository;
 use App\Models\Follow;
 use App\Models\User;
 use App\Notifications\NotificationFollow;
+use App\Repository\Resource\FollowRepositoryInterface;
+use Carbon\Carbon;
 use Pusher\Pusher;
 
-class FollowRepository
+class FollowRepository extends BaseRepository implements FollowRepositoryInterface
 {
+    protected $model;
+
+    public function __construct(Follow $model)
+    {
+        $this->model = $model;
+        parent::__construct($model);
+    }
+
     public function followAction($data)
     {
-        $search = $this->checkFollow($data['user_id'], $data['follower_id']); //id of the person being tracked
+        $search = $this->find([
+            'user_id' => $data['user_id'],
+            'follower_id' => $data['follower_id'],
+        ]);
 
         if (empty($search)) {
-            Follow::create($data);
+            $this->store([
+                'user_id' => $data['user_id'],
+                'follower_id' => $data['follower_id'],
+                'created_at' => Carbon::now(),
+            ]);
 
             $user = User::find($data['follower_id']);
             $following = User::find($data['user_id']);
@@ -44,7 +61,10 @@ class FollowRepository
 
     public function checkFollow($userId, $followerId)
     {
-        return Follow::where('user_id', $userId)->where('follower_id', $followerId)->first();
+        return $this->find([
+            'user_id' => $userId,
+            'follower_id' => $followerId,
+        ]);
     }
 
     public function getFollow($userId, $tab, $search = null)
@@ -70,11 +90,14 @@ class FollowRepository
 
     public function unFollow($userId, $authId)
     {
-        $this->checkFollow($authId, $userId)->delete();
+        $this->find([
+            'user_id' => $authId,
+            'follower_id' => $userId,
+        ])->delete();
     }
 
     public function countFollower($userId)
     {
-        return Follow::where('follower_id', $userId)->count();
+        return $this->model->where('follower_id', $userId)->count();
     }
 }

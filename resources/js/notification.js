@@ -89,7 +89,7 @@ $(document).ready(function () {
             },
             success: function (data) {
                 let $newNotificationHtml = $.map(data.data, function (value) {
-                    return '<li class="position-relative notification-drop-item js-read-notification">' +
+                    return '<li class="position-relative notification-drop-item js-read-notification" data-id="' + value.id + '">' +
                         textUserNotifyFirst + " " + value.data + " " + textUserContentNotifyFirst +
                         '<i class="fa-solid fa-circle js-toast-icon ' + (value.read_at ? 'd-none' : '') + '"></i>' +
                     '</li>';

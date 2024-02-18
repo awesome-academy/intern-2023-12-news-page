@@ -3,33 +3,42 @@
 namespace App\Repository;
 
 use App\Models\Post;
+use App\Repository\Resource\CategoryRepositoryInterface;
+use App\Repository\Resource\HashtagRepositoryInterface;
+use App\Repository\Resource\PostRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
-class PostRepository
+class PostRepository extends BaseRepository implements PostRepositoryInterface
 {
-    protected $categoryRepository;
-    protected $hashtagRepository;
+    protected $categoryRepositoryI;
+    protected $hashtagRepositoryI;
     protected $postHashtagRepository;
-    protected $statusRepository;
+    protected $statusRepositoryI;
+    protected $model;
 
     public function __construct(
-        CategoryRepository $categoryRepository,
-        HashtagRepository $hashtagRepository,
+        CategoryRepositoryInterface $categoryRepositoryI,
+        HashtagRepositoryInterface $hashtagRepositoryI,
         PostHashtagRepository $postHashtagRepository,
-        StatusRepository $statusRepository
+        StatusRepositoryInterface $statusRepositoryI,
+        Post $model
     ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->hashtagRepository = $hashtagRepository;
+        $this->categoryRepositoryI = $categoryRepositoryI;
+        $this->hashtagRepositoryI = $hashtagRepositoryI;
         $this->postHashtagRepository = $postHashtagRepository;
-        $this->statusRepository = $statusRepository;
+        $this->statusRepositoryI = $statusRepositoryI;
+        $this->model = $model;
+
+        parent::__construct($model);
     }
 
     public function getPostByCategoryId($categoryId, $statusId, $postId)
     {
-        return Post::where('category_id', $categoryId)
+        return $this->model->where('category_id', $categoryId)
             ->where('status_id', $statusId)
             ->where('id', '!=', $postId)
             ->get();
@@ -39,7 +48,7 @@ class PostRepository
     {
         $paginate = config('constants.paginate');
 
-        return Post::withTrashed()->with(['category', 'status'])
+        return $this->model->withTrashed()->with(['category', 'status'])
             ->where('user_id', $id)
             ->whereHas('status', function ($query) use ($slug) {
                 $query->where('slug', $slug)
@@ -52,24 +61,24 @@ class PostRepository
     public function handlePost($data, $action, $id)
     {
         if ($action === config('constants.post.postStore')) {
-            $post = Post::create($data);
+            $post = $this->store($data);
 
             return $post->id;
         }
 
-        Post::where('id', $id)->update($data);
+        $this->edit($id, $data);
 
         return $id;
     }
 
     public function getPostById($id)
     {
-        return Post::withTrashed()->with(['category', 'status', 'hashtags'])->where('id', $id)->first();
+        return $this->model->withTrashed()->with(['category', 'status', 'hashtags'])->where('id', $id)->first();
     }
 
     public function handlePostIndexById($id, $statusId)
     {
-        return Post::with([
+        return $this->model->with([
             'category',
             'status',
             'hashtags',
@@ -83,7 +92,7 @@ class PostRepository
 
     public function getPostNotRelationshipById($id)
     {
-        return Post::find($id);
+        return $this->find(['id' => $id]);
     }
 
     public function deletePost($post, $status)
@@ -97,7 +106,7 @@ class PostRepository
 
     public function updateStatusPost($id, $statusId, $status)
     {
-        $post = Post::withTrashed()->find($id);
+        $post = $this->model->withTrashed()->find($id);
 
         if ($post) {
             $post->update([
@@ -112,7 +121,7 @@ class PostRepository
 
     public function getPostsWithCondition($status, $condition, $searchPostId = null, $typeSearchPost = null)
     {
-        $query = Post::with(['user', 'reviews'])->where('status_id', $status);
+        $query = $this->model->with(['user', 'reviews'])->where('status_id', $status);
         if (!empty($searchPostId) && !empty($typeSearchPost)) {
             if ($typeSearchPost === config('constants.category.categoryType')) {
                 $query->where('category_id', $searchPostId);
@@ -138,40 +147,43 @@ class PostRepository
     public function searchPostsWithCondition($status, $condition, $dataSearch)
     {
         if ($dataSearch['type'] !== config('constants.category.categoryType')) {
-            $queryId = $this->hashtagRepository->getIdBySlug($dataSearch['slug']);
+            $queryId = $this->hashtagRepositoryI->getIdBySlug($dataSearch['slug']);
             $listPostId = $this->postHashtagRepository->listPostByHashtagId($queryId);
 
             return $this
                 ->getPostsWithCondition($status, $condition, $listPostId, $dataSearch['type']);
         }
 
-        $queryId = $this->categoryRepository->getIdBySlug($dataSearch['slug']);
+        $queryId = $this->categoryRepositoryI->getIdBySlug($dataSearch['slug']);
 
         return $this->getPostsWithCondition($status, $condition, $queryId, $dataSearch['type']);
     }
 
     public function countViews($userId)
     {
-        return Post::withTrashed()->where('user_id', $userId)->sum('views');
+        return $this->model->withTrashed()->where('user_id', $userId)->sum('views');
     }
 
     public function countPosts($userId): int
     {
-        return Post::withTrashed()->where('user_id', $userId)->count();
+        return $this->model->withTrashed()->where('user_id', $userId)->count();
     }
 
     public function getPostsByUserId($userId, $statusId)
     {
-        return Post::where('user_id', $userId)->where('status_id', $statusId)->get();
+        return $this->get(['*'], [
+            'user_id' => $userId,
+            'status_id' => $statusId,
+        ]);
     }
 
     public function getPostSearch($search, $paginate = null)
     {
         $configPostSlug = config('constants.post.postStatusSlugPublish');
         $configPostType = config('constants.post.postType');
-        $statusId = $this->statusRepository->getIdBySlug($configPostSlug, $configPostType);
+        $statusId = $this->statusRepositoryI->getIdBySlug($configPostSlug, $configPostType);
 
-        $query = Post::with(['reviews', 'user'])
+        $query = $this->model->with(['reviews', 'user'])
             ->where('status_id', $statusId)
             ->where('title', 'like', '%' . $search . '%')
             ->select(['title', 'verify', 'id', 'user_id', 'created_at', 'views', 'thumbnail', 'description']);
@@ -185,13 +197,13 @@ class PostRepository
 
     public function getHighestViewPost($userId)
     {
-        return Post::with('reviews')->where('user_id', $userId)
+        return $this->model->with('reviews')->where('user_id', $userId)
             ->orderBy('views', 'DESC')->first();
     }
 
     public function getHighestCommentPost($userId)
     {
-        return Post::where('user_id', $userId)
+        return $this->model->where('user_id', $userId)
             ->withCount('reviews')
             ->orderByDesc('reviews_count')
             ->first();
@@ -199,13 +211,12 @@ class PostRepository
 
     public function getNewestPost($userId)
     {
-        return Post::where('user_id', $userId)
-            ->orderBy('created_at', 'DESC')->first();
+        return $this->findNewest(['user_id' => $userId]);
     }
 
     public function getDataDateQuery($dayStartQuery, $userId): Collection
     {
-        $listPostById = Post::where('user_id', $userId)->select('id')->pluck('id')->toArray();
+        $listPostById = $this->model->where('user_id', $userId)->select('id')->pluck('id')->toArray();
 
         return DB::table('date_view_post')
             ->whereIn('post_id', $listPostById)

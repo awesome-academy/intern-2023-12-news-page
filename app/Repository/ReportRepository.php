@@ -6,26 +6,32 @@ use App\Models\Post;
 use App\Models\Report;
 use App\Models\Review;
 use App\Models\User;
+use App\Repository\Resource\ReportRepositoryInterface;
+use App\Repository\Resource\StatusRepositoryInterface;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
-class ReportRepository
+class ReportRepository extends BaseRepository implements ReportRepositoryInterface
 {
-    protected $statusRepository;
+    protected $statusRepositoryI;
+    protected $model;
 
-    public function __construct(StatusRepository $statusRepository)
+    public function __construct(StatusRepositoryInterface $statusRepositoryI, Report $model)
     {
-        $this->statusRepository = $statusRepository;
+        $this->statusRepositoryI = $statusRepositoryI;
+        $this->model = $model;
+
+        parent::__construct($model);
     }
 
     public function insertReport($data)
     {
-        Report::create($data);
+        $this->store($data);
     }
 
     public function countReports($type, $reportId)
     {
         if ($type !== config('constants.user.userType')) {
-            $query = Report::with($type)->where('type', $type);
+            $query = $this->model->with($type)->where('type', $type);
             if ($reportId !== null) {
                 $query->whereHas($type, function ($query) use ($reportId) {
                     $query->where('user_id', $reportId);
@@ -35,23 +41,23 @@ class ReportRepository
             return $query->count();
         }
 
-        return Report::where('report_id', $reportId)->where('type', $type)->count();
+        return $this->model->where('report_id', $reportId)->where('type', $type)->count();
     }
 
     public function getReportByTab($tab, $search): LengthAwarePaginator
     {
         if ($tab === config('constants.post.postType')) {
-            $getIdStatus = $this->statusRepository
+            $getIdStatus = $this->statusRepositoryI
                 ->getIdBySlug(config('constants.post.postStatusSlugPublish'), $tab);
         } elseif ($tab === config('constants.review.reviewType')) {
-            $getIdStatus = $this->statusRepository
+            $getIdStatus = $this->statusRepositoryI
                 ->getIdBySlug(config('constants.review.reviewStatusPublish'), $tab);
         } else {
-            $getIdStatus = $this->statusRepository
+            $getIdStatus = $this->statusRepositoryI
                 ->getIdBySlug(config('constants.user.userStatusActive'), config('constants.user.userStatusType'));
         }
 
-        return Report::where('type', $tab)
+        return $this->model->where('type', $tab)
             ->with('userInfo')
             ->when($search, function ($query) use ($search) {
                 return $query->where('report_id', $search);
@@ -66,7 +72,7 @@ class ReportRepository
     {
         switch ($tab) {
             case config('constants.user.userType'):
-                $getIdStatus = $this->statusRepository->getIdBySlug(
+                $getIdStatus = $this->statusRepositoryI->getIdBySlug(
                     config('constants.user.userStatusBan'),
                     config('constants.user.userStatusType')
                 );
@@ -76,7 +82,7 @@ class ReportRepository
 
                 break;
             case config('constants.post.postType'):
-                $getIdStatus = $this->statusRepository->getIdBySlug(
+                $getIdStatus = $this->statusRepositoryI->getIdBySlug(
                     config('constants.post.postStatusSlugBanned'),
                     config('constants.post.postType')
                 );
@@ -86,7 +92,7 @@ class ReportRepository
 
                 break;
             case config('constants.review.reviewType'):
-                $getIdStatus = $this->statusRepository->getIdBySlug(
+                $getIdStatus = $this->statusRepositoryI->getIdBySlug(
                     config('constants.review.reviewStatusBan'),
                     config('constants.review.reviewType')
                 );
@@ -100,6 +106,6 @@ class ReportRepository
 
     public function __deleteReportAfterAction($id, $type)
     {
-        Report::where('report_id', $id)->where('type', $type)->delete();
+        $this->model->where('report_id', $id)->where('type', $type)->delete();
     }
 }

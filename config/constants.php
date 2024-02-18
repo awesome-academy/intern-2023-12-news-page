@@ -135,7 +135,7 @@ return [
     ],
     'review' => [
         'reviewStatusPublish' => 'published',
-        'reviewStatusBan' => 'banned',
+        'reviewStatusBan' => 'ban',
         'reviewType' => 'review',
     ],
     'notification' => [

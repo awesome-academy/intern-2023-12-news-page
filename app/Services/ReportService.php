@@ -2,24 +2,24 @@
 
 namespace App\Services;
 
-use App\Repository\ReportRepository;
+use App\Repository\Resource\ReportRepositoryInterface;
 
 class ReportService
 {
-    protected $reportRepository;
+    protected $reportRepositoryInterface;
 
-    public function __construct(ReportRepository $reportRepository)
+    public function __construct(ReportRepositoryInterface $reportRepositoryInterface)
     {
-        $this->reportRepository = $reportRepository;
+        $this->reportRepositoryInterface = $reportRepositoryInterface;
     }
 
-    public function countReports($reportId = null)
+    public function countReports($reportId = null): int
     {
         $typesReport = config('constants.reportType');
         $total = 0;
 
         foreach ($typesReport as $item) {
-            $total += $this->reportRepository->countReports($item, $reportId);
+            $total += $this->reportRepositoryInterface->countReports($item, $reportId);
         }
 
         return $total;

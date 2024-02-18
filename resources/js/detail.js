@@ -60,12 +60,12 @@ $('#comment').on('submit', function (e) {
                         '<div class="info-detail d-flex flex-column">' +
                             '<h6>' +
                                 '<a class="name-comment" href="' + (res.user !== null ? $routeUser + "?id=" + res.user.id : "") + '">' + (res.user !== null ? res.user.name : $nameIncognito) + '</a>' +
-                                    '<span class="js-title-report ml-2 content-comment">' + res.content + '</span>' +
+                                    '<span class="js-title-report content-comment font-weight-bold">' + res.content + '</span>' +
                             '</h6>' +
                             '<div class="js-container-action">' +
                                 '<div class="mb-2 d-flex justify-content-between">' +
                                     '<div class="d-flex item-footer">' +
-                                        '<a href="#" class="js-report" data-toggle="modal" data-target="#reportModal" data-id="' + res.id + '" data-type="review">' +
+                                        '<a href="#" class="js-report btn-report-comment" data-toggle="modal" data-target="#reportModal" data-id="' + res.id + '" data-type="review">' +
                                             '<i class="fa-solid fa-flag text-dark"></i>' +
                                         '</a>' +
                                     '</div>' +
