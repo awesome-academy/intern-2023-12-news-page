@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CheckStatusUser
 {
@@ -20,7 +21,9 @@ class CheckStatusUser
         $ruleMiddleware = config('constants.userBanned');
 
         if ($statusUser->slug === $ruleMiddleware['slug'] && $statusUser->type === $ruleMiddleware['type']) {
-            abort(404);
+            Auth::logout();
+
+            return redirect()->route('login')->with('reason', $statusUser->reason);
         }
 
         return $next($request);
