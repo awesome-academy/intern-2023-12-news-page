@@ -88,7 +88,7 @@
                         data-info = "{{ __('Views vary from day to day') }}"></canvas>
                     <div class="w-full text-right mt-3 mb-3">
                         <span class="text-muted">
-                            {{ __('Last updated') }}: {{ formatDate($lastUpdated) }}
+                            {{ __('Last updated') }}: {{ isset($lastUpdated) ? formatDate($lastUpdated) : '--/--/----' }}
                         </span>
                     </div>
                     <div class="flex card-dashboard-sub mt-6 pt-4 w-full">

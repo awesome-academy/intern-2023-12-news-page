@@ -22,6 +22,12 @@
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
+        @if (session('reason'))
+            <ul class="mt-3 mb-3 list-disc list-inside text-sm text-red-600">
+                <li>{{ __(session('reason')) }}</li>
+            </ul>
+        @endif
+
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
