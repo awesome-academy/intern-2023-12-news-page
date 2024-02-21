@@ -41,11 +41,6 @@ class DashboardControllerTest extends TestCase
         $this->mockUserRepository = Mockery::mock(UserRepositoryInterface::class);
         $this->mockFollowRepository = Mockery::mock(FollowRepositoryInterface::class);
 
-        $this->app->instance('App\Repository\PostRepository', $this->mockPostRepository);
-        $this->app->instance('App\Repository\FollowRepository', $this->mockFollowRepository);
-        $this->app->instance('App\Services\ReportService', $this->mockReportService);
-        $this->app->instance('App\Services\PostService', $this->mockPostService);
-
         $this->artisan('db:seed', ['--class' => 'CategoriesSeeder', '--database' => 'testing']);
         $this->artisan('db:seed', ['--class' => 'RolesSeeder', '--database' => 'testing']);
         $this->artisan('db:seed', ['--class' => 'StatusesSeeder', '--database' => 'testing']);
