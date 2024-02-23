@@ -19,12 +19,12 @@ class FollowRepository extends BaseRepository implements FollowRepositoryInterfa
         parent::__construct($model);
     }
 
-    public function followAction($data)
+    public function followAction($data, $pusher = null): bool
     {
-        $search = $this->find([
+        $search = $this->model->where([
             'user_id' => $data['user_id'],
             'follower_id' => $data['follower_id'],
-        ]);
+        ])->first();
 
         if (empty($search)) {
             $this->store([
@@ -43,20 +43,26 @@ class FollowRepository extends BaseRepository implements FollowRepositoryInterfa
                 'encrypted' => true,
             ];
 
-            $pusher = new Pusher(
-                env('PUSHER_APP_KEY'),
-                env('PUSHER_APP_SECRET'),
-                env('PUSHER_APP_ID'),
-                $options
-            );
+            if (empty($pusher)) {
+                $pusher = new Pusher(
+                    env('PUSHER_APP_KEY'),
+                    env('PUSHER_APP_SECRET'),
+                    env('PUSHER_APP_ID'),
+                    $options
+                );
+            }
 
             $pusher->trigger('NotificationEvent', 'send-notification', [
                 'following_id' => $data['follower_id'],
                 'name' => $following->name,
             ]);
-        } else {
-            $search->delete();
+
+            return true;
         }
+
+        $search->delete();
+
+        return false;
     }
 
     public function checkFollow($userId, $followerId)
